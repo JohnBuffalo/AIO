@@ -1,0 +1,75 @@
+{
+    "FileVersion": "2.2.5",
+    "EnableAddressable": true,
+    "LocationToLower": false,
+    "IncludeAssetGUID": true,
+    "OutputNameStyle": 2,
+    "BuildBundleType": 2,
+    "BuildPipeline": "ScriptableBuildPipeline",
+    "PackageName": "DefaultPackage",
+    "PackageVersion": "2025-02-08-841",
+    "PackageNote": "2025/2/8 14:02:42",
+    "AssetList": [
+        {
+            "Address": "scenes_launch",
+            "AssetPath": "Assets/ArtAssets/Scenes/launch.unity",
+            "AssetGUID": "99c9720ab356a0642a771bea13969a05",
+            "AssetTags": [],
+            "BundleID": 0
+        },
+        {
+            "Address": "scenes_level1",
+            "AssetPath": "Assets/ArtAssets/Scenes/level1.unity",
+            "AssetGUID": "07b661fd71a510e41a3100996b16378e",
+            "AssetTags": [],
+            "BundleID": 1
+        }
+    ],
+    "BundleList": [
+        {
+            "BundleName": "assets_artassets_scenes_launch.bundle",
+            "UnityCRC": 3380154204,
+            "FileHash": "5e75d23700671c842a85f807677eb7f2",
+            "FileCRC": "fb3a0fdc",
+            "FileSize": 101234,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": [
+                2,
+                3
+            ]
+        },
+        {
+            "BundleName": "assets_artassets_scenes_level1.bundle",
+            "UnityCRC": 3855151855,
+            "FileHash": "fd85af4f364a991632aa6284905c2efc",
+            "FileCRC": "a979a98c",
+            "FileSize": 100953,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": [
+                3
+            ]
+        },
+        {
+            "BundleName": "share_assets_settings.bundle",
+            "UnityCRC": 2045606249,
+            "FileHash": "1cd1219b88cd807ee9df747afcdade05",
+            "FileCRC": "d752bfc2",
+            "FileSize": 3470,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "unityshaders.bundle",
+            "UnityCRC": 3781246008,
+            "FileHash": "403993cf2baad80746f31d5c40b93890",
+            "FileCRC": "1957005c",
+            "FileSize": 20062,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        }
+    ]
+}

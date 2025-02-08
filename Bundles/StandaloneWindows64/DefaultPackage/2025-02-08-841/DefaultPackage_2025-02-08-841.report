@@ -1,0 +1,114 @@
+{
+    "Summary": {
+        "YooVersion": "2.2.9",
+        "UnityVersion": "2022.3.5f1",
+        "BuildDate": "2025/2/8 14:02:58",
+        "BuildSeconds": 14,
+        "BuildTarget": 19,
+        "BuildPipeline": "ScriptableBuildPipeline",
+        "BuildBundleType": 2,
+        "BuildPackageName": "DefaultPackage",
+        "BuildPackageVersion": "2025-02-08-841",
+        "BuildPackageNote": "2025/2/8 14:02:42",
+        "UniqueBundleName": false,
+        "EnableAddressable": true,
+        "LocationToLower": false,
+        "IncludeAssetGUID": true,
+        "AutoCollectShaders": true,
+        "IgnoreRuleName": "YooAsset.Editor.NormalIgnoreRule",
+        "ClearBuildCacheFiles": true,
+        "UseAssetDependencyDB": true,
+        "EnableSharePackRule": true,
+        "EncryptionClassName": "null",
+        "FileNameStyle": 2,
+        "CompressOption": 2,
+        "DisableWriteTypeTree": false,
+        "IgnoreTypeTreeChanges": true,
+        "AssetFileTotalCount": 3,
+        "MainAssetTotalCount": 2,
+        "AllBundleTotalCount": 4,
+        "AllBundleTotalSize": 225719,
+        "EncryptedBundleTotalCount": 0,
+        "EncryptedBundleTotalSize": 0
+    },
+    "AssetInfos": [
+        {
+            "Address": "scenes_launch",
+            "AssetPath": "Assets/ArtAssets/Scenes/launch.unity",
+            "AssetGUID": "99c9720ab356a0642a771bea13969a05",
+            "AssetTags": [],
+            "MainBundleName": "assets_artassets_scenes_launch.bundle",
+            "MainBundleSize": 101234,
+            "DependAssets": [
+                "Assets/Settings/SampleSceneProfile.asset"
+            ]
+        },
+        {
+            "Address": "scenes_level1",
+            "AssetPath": "Assets/ArtAssets/Scenes/level1.unity",
+            "AssetGUID": "07b661fd71a510e41a3100996b16378e",
+            "AssetTags": [],
+            "MainBundleName": "assets_artassets_scenes_level1.bundle",
+            "MainBundleSize": 100953,
+            "DependAssets": []
+        }
+    ],
+    "BundleInfos": [
+        {
+            "BundleName": "assets_artassets_scenes_launch.bundle",
+            "FileName": "assets_artassets_scenes_launch_5e75d23700671c842a85f807677eb7f2.bundle",
+            "FileHash": "5e75d23700671c842a85f807677eb7f2",
+            "FileCRC": "fb3a0fdc",
+            "FileSize": 101234,
+            "Encrypted": false,
+            "Tags": [],
+            "DependBundles": [
+                "share_assets_settings.bundle",
+                "unityshaders.bundle"
+            ],
+            "AllBuiltinAssets": [
+                "Assets/ArtAssets/Scenes/launch.unity"
+            ]
+        },
+        {
+            "BundleName": "assets_artassets_scenes_level1.bundle",
+            "FileName": "assets_artassets_scenes_level1_fd85af4f364a991632aa6284905c2efc.bundle",
+            "FileHash": "fd85af4f364a991632aa6284905c2efc",
+            "FileCRC": "a979a98c",
+            "FileSize": 100953,
+            "Encrypted": false,
+            "Tags": [],
+            "DependBundles": [
+                "unityshaders.bundle"
+            ],
+            "AllBuiltinAssets": [
+                "Assets/ArtAssets/Scenes/level1.unity"
+            ]
+        },
+        {
+            "BundleName": "share_assets_settings.bundle",
+            "FileName": "share_assets_settings_1cd1219b88cd807ee9df747afcdade05.bundle",
+            "FileHash": "1cd1219b88cd807ee9df747afcdade05",
+            "FileCRC": "d752bfc2",
+            "FileSize": 3470,
+            "Encrypted": false,
+            "Tags": [],
+            "DependBundles": [],
+            "AllBuiltinAssets": [
+                "Assets/Settings/SampleSceneProfile.asset"
+            ]
+        },
+        {
+            "BundleName": "unityshaders.bundle",
+            "FileName": "unityshaders_403993cf2baad80746f31d5c40b93890.bundle",
+            "FileHash": "403993cf2baad80746f31d5c40b93890",
+            "FileCRC": "1957005c",
+            "FileSize": 20062,
+            "Encrypted": false,
+            "Tags": [],
+            "DependBundles": [],
+            "AllBuiltinAssets": []
+        }
+    ],
+    "IndependAssets": []
+}
