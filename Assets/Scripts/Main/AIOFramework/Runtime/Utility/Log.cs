@@ -8,7 +8,7 @@
 using GameFramework;
 using System.Diagnostics;
 
-namespace AIO.Framework.Runtime
+namespace AIOFramework.Runtime
 {
     /// <summary>
     /// 日志工具集。

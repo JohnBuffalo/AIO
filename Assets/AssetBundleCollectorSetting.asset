@@ -24,7 +24,7 @@ MonoBehaviour:
     AutoCollectShaders: 1
     IgnoreRuleName: NormalIgnoreRule
     Groups:
-    - GroupName: scenes
+    - GroupName: Scenes
       GroupDesc: 
       AssetTags: 
       ActiveRuleName: EnableGroup
@@ -32,8 +32,47 @@ MonoBehaviour:
       - CollectPath: Assets/ArtAssets/Scenes
         CollectorGUID: 510b0c939aa468245ae2fe8db54d3bc0
         CollectorType: 0
-        AddressRuleName: AddressByGroupAndFileName
+        AddressRuleName: AddressByFolderAndFileName
         PackRuleName: PackSeparately
         FilterRuleName: CollectScene
+        AssetTags: 
+        UserData: 
+    - GroupName: Effects
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/ArtAssets/Effects/Actor
+        CollectorGUID: 22c14f49013437645a3994dfacd2f452
+        CollectorType: 0
+        AddressRuleName: AddressByFolderAndFileName
+        PackRuleName: PackTopDirectory
+        FilterRuleName: CollectPrefab
+        AssetTags: 
+        UserData: 
+    - GroupName: Textures
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/ArtAssets/Textures
+        CollectorGUID: 6f3c9533359c9db4db65b8987b845b41
+        CollectorType: 0
+        AddressRuleName: AddressByFolderAndFileName
+        PackRuleName: PackSeparately
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+    - GroupName: Materials
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/ArtAssets/Materials
+        CollectorGUID: 86c72476cf688af49927a92e899858eb
+        CollectorType: 0
+        AddressRuleName: AddressByFolderAndFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
         AssetTags: 
         UserData: 

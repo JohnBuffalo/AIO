@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AIO.Framework.Runtime
+namespace AIOFramework.Runtime
 {
     public abstract class GameFrameworkComponent : MonoBehaviour
     {

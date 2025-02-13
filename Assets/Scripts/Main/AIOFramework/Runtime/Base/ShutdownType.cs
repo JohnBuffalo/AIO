@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
-namespace AIO.Framework.Runtime
+namespace AIOFramework.Runtime
 {
     /// <summary>
     /// 关闭游戏框架类型。

@@ -4,7 +4,7 @@ using GameFramework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace AIO.Framework.Runtime
+namespace AIOFramework.Runtime
 {
     public static class GameEntry
     {

@@ -1,22 +1,23 @@
 ﻿using System.Collections.Generic;
+using GameFramework;
 using UnityEngine;
 using YooAsset;
 
-namespace AIO.Framework.Runtime
+namespace AIOFramework.Runtime
 {
-    public class ResourceComponent : GameFrameworkComponent
+    public partial class ResourceComponent : GameFrameworkComponent
     {
         [SerializeField] 
-        private string PackageName = "DefaultPackage";
-
-        private EPlayMode playMode = EPlayMode.EditorSimulateMode;
-
+        private string m_PackageName = "DefaultPackage";
+        public string PackageName => m_PackageName; 
+        
+        private EPlayMode m_PlayMode = EPlayMode.EditorSimulateMode;
         public EPlayMode PlayMode
         {
             get
             {
 #if UNITY_EDITOR
-                return playMode;
+                return m_PlayMode;
 #elif UNITY_WEBGL
                 return EPlayMode.WebPlayMode;
 #else
@@ -24,31 +25,16 @@ namespace AIO.Framework.Runtime
 #endif
             }
         }
+
+        [SerializeField]
+        [Tooltip("异步操作每帧最大时间切片(毫秒)")]
+        private long m_TimeSlice = 1000L;
+        public long TimeSlice => m_TimeSlice;
         
-        private ResourcePackage m_ResourcePackage;
-        public ResourcePackage ResourcePackage
-        {
-            get
-            {
-                if (m_ResourcePackage == null)
-                {
-                    m_ResourcePackage = YooAssets.GetPackage(PackageName);
-                }
-
-                return m_ResourcePackage;
-            }
-        }
-        
-        /// <summary>
-        /// 资源句柄集合
-        /// </summary>
-        private readonly Dictionary<string, HandleBase> m_Handles = new();
-        public Dictionary<string, HandleBase> Handles => m_Handles;
-
-
         protected override void Awake()
         {
             base.Awake();
+            Initialize();
         }
     }
 }

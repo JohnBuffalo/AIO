@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GameFramework;
 
-namespace AIO.Framework.Runtime
+namespace AIOFramework.Runtime
 {
     /// <summary>
     /// 基础组件,
@@ -17,7 +18,7 @@ namespace AIO.Framework.Runtime
         [SerializeField] private float m_GameSpeed = 1f;
         [SerializeField] private bool m_RunInBackground = true;
         [SerializeField] private bool m_NeverSleep = true;
-        
+        [SerializeField] private string m_LogHelperTypeName = "UnityGameFramework.Runtime.DefaultLogHelper";
         /// <summary>
         /// 获取或设置游戏帧率。
         /// </summary>
@@ -110,7 +111,7 @@ namespace AIO.Framework.Runtime
 
             // InitTextHelper();
             // InitVersionHelper();
-            // InitLogHelper();
+            InitLogHelper();
 
 #if UNITY_5_3_OR_NEWER || UNITY_5_3
             // InitCompressionHelper();
@@ -133,6 +134,7 @@ namespace AIO.Framework.Runtime
 #if UNITY_5_6_OR_NEWER
             Application.lowMemory += OnLowMemory;
 #endif
+            DontDestroyOnLoad(this);
         }
         
         private void Update()
@@ -213,6 +215,28 @@ namespace AIO.Framework.Runtime
             // {
             //     resourceCompoent.ForceUnloadUnusedAssets(true);
             // }
+        }
+        
+        private void InitLogHelper()
+        {
+            if (string.IsNullOrEmpty(m_LogHelperTypeName))
+            {
+                return;
+            }
+
+            Type logHelperType = Utility.Assembly.GetType(m_LogHelperTypeName);
+            if (logHelperType == null)
+            {
+                throw new GameFrameworkException(Utility.Text.Format("Can not find log helper type '{0}'.", m_LogHelperTypeName));
+            }
+
+            GameFrameworkLog.ILogHelper logHelper = (GameFrameworkLog.ILogHelper)Activator.CreateInstance(logHelperType);
+            if (logHelper == null)
+            {
+                throw new GameFrameworkException(Utility.Text.Format("Can not create log helper instance '{0}'.", m_LogHelperTypeName));
+            }
+
+            GameFrameworkLog.SetLogHelper(logHelper);
         }
     }
 }
