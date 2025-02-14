@@ -60,27 +60,7 @@ namespace AIOFramework.Runtime
         {
             return YooAssets.TryGetPackage(packageName);
         }
-
-        public async UniTask<bool> InitPackageAsync(string packageName, string hostServerURL,
-            string fallbackHostServerURL, bool isDefaultPackage = false)
-        {
-            m_ResourcePackage = GetAssetsPackage(packageName) ?? CreateAssetsPackage(packageName);
-            if (isDefaultPackage) SetDefaultAssetsPackage(m_ResourcePackage);
-
-            InitializationOperation initOperation =
-                CreateInitializationOperationHandler(m_ResourcePackage, hostServerURL, fallbackHostServerURL);
-
-            await initOperation.ToUniTask();
-
-            if (initOperation.Status != EOperationStatus.Succeed)
-            {
-                Log.Warning($"{initOperation.Error}");
-                return false;
-            }
-
-            return true;
-        }
-
+        
         /// <summary>
         /// 是否需要下载
         /// </summary>

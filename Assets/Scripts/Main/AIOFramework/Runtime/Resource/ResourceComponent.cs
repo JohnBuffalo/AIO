@@ -5,6 +5,8 @@ using YooAsset;
 
 namespace AIOFramework.Runtime
 {
+    [DisallowMultipleComponent]
+    [AddComponentMenu("AIOFramework/Resource")]
     public partial class ResourceComponent : GameFrameworkComponent
     {
         [SerializeField] 
