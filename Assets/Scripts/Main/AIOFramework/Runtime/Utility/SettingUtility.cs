@@ -1,8 +1,9 @@
 ﻿
 using System;
+using AIOFramework.Runtime;
 using UnityEngine;
 
-namespace AIOFramework.Runtime.Setting
+namespace AIOFramework.Setting
 {
     public static class SettingUtility
     {

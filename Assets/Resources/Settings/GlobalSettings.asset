@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GameSetting:
     m_ServerType: 1
+    m_Version: 0.0.0
     m_CleanCommitPathRes: 0
-    m_InnerResourceSourceUrl: http://127.0.0.1:8081
-    m_ExtraResourceSourceUrl: http://127.0.0.1:8081
-    m_FormalResourceSourceUrl: http://127.0.0.1:8081
+    m_InnerResourceSourceUrl: http://127.0.0.1
+    m_ExtraResourceSourceUrl: http://127.0.0.1
+    m_FormalResourceSourceUrl: http://127.0.0.1

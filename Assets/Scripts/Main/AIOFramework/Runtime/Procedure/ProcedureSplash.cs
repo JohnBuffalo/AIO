@@ -13,7 +13,7 @@ namespace AIOFramework.Runtime
         protected internal override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
-
+            Log.Info("Enter ProcedureSplash");
             Splash();
         }
 

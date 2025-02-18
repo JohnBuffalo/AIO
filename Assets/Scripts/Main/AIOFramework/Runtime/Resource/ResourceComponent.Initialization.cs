@@ -3,9 +3,8 @@ using Cysharp.Threading.Tasks;
 
 namespace AIOFramework.Runtime
 {
-    public partial class ResourceComponent 
+    public partial class ResourceComponent
     {
-        
         /// <summary>
         /// 异步初始化资源包
         /// </summary>
@@ -27,18 +26,19 @@ namespace AIOFramework.Runtime
 
             if (initOperation.Status != EOperationStatus.Succeed)
             {
-                Log.Warning($"{initOperation.Error}");
+                Log.Error($"{initOperation.Error}");
                 return false;
             }
 
             return true;
         }
-        
+
         /// <summary>
         /// 根据运行模式创建初始化操作数据
         /// </summary>
         /// <returns></returns>
-        private InitializationOperation CreateInitializationOperationHandler(ResourcePackage resourcePackage, string hostServerURL, string fallbackHostServerURL)
+        private InitializationOperation CreateInitializationOperationHandler(ResourcePackage resourcePackage,
+            string hostServerURL, string fallbackHostServerURL)
         {
             switch (PlayMode)
             {
@@ -74,23 +74,25 @@ namespace AIOFramework.Runtime
             var buildResult = EditorSimulateModeHelper.SimulateBuild(PackageName);
             var packageRoot = buildResult.PackageRootDirectory;
             var createParameters = new EditorSimulateModeParameters();
-            createParameters.EditorFileSystemParameters = FileSystemParameters.CreateDefaultEditorFileSystemParameters(packageRoot);
+            createParameters.EditorFileSystemParameters =
+                FileSystemParameters.CreateDefaultEditorFileSystemParameters(packageRoot);
             return resourcePackage.InitializeAsync(createParameters);
         }
 
         private InitializationOperation InitializeYooAssetOfflinePlayMode(ResourcePackage resourcePackage)
         {
             var createParameters = new OfflinePlayModeParameters();
-            createParameters.BuildinFileSystemParameters = FileSystemParameters.CreateDefaultBuildinFileSystemParameters();
+            createParameters.BuildinFileSystemParameters =
+                FileSystemParameters.CreateDefaultBuildinFileSystemParameters();
             return resourcePackage.InitializeAsync(createParameters);
         }
 
-        private InitializationOperation InitializeYooAssetWebPlayMode(ResourcePackage resourcePackage, string hostServerURL, string fallbackHostServerURL)
+        private InitializationOperation InitializeYooAssetWebPlayMode(ResourcePackage resourcePackage,
+            string hostServerURL, string fallbackHostServerURL)
         {
             var initParameters = new WebPlayModeParameters();
             FileSystemParameters webFileSystem = null;
 #if UNITY_WEBGL
-
 #if ENABLE_DOUYIN_MINI_GAME
             // 创建字节小游戏文件系统
             if (hostServerURL.IsNullOrWhiteSpace())
@@ -123,12 +125,15 @@ namespace AIOFramework.Runtime
             return resourcePackage.InitializeAsync(initParameters);
         }
 
-        private InitializationOperation InitializeYooAssetHostPlayMode(ResourcePackage resourcePackage, string hostServerURL, string fallbackHostServerURL)
+        private InitializationOperation InitializeYooAssetHostPlayMode(ResourcePackage resourcePackage,
+            string hostServerURL, string fallbackHostServerURL)
         {
             IRemoteServices remoteServices = new RemoteServices(hostServerURL, fallbackHostServerURL);
             var createParameters = new HostPlayModeParameters();
-            createParameters.BuildinFileSystemParameters = FileSystemParameters.CreateDefaultBuildinFileSystemParameters();
-            createParameters.CacheFileSystemParameters = FileSystemParameters.CreateDefaultCacheFileSystemParameters(remoteServices);
+            createParameters.BuildinFileSystemParameters =
+                FileSystemParameters.CreateDefaultBuildinFileSystemParameters();
+            createParameters.CacheFileSystemParameters =
+                FileSystemParameters.CreateDefaultCacheFileSystemParameters(remoteServices);
             return resourcePackage.InitializeAsync(createParameters);
         }
     }

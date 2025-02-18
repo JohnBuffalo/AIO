@@ -11,8 +11,9 @@ namespace AIOFramework.Runtime
     {
         [SerializeField] 
         private string m_PackageName = "DefaultPackage";
-        public string PackageName => m_PackageName; 
+        public string PackageName => m_PackageName;
         
+        [SerializeField] 
         private EPlayMode m_PlayMode = EPlayMode.EditorSimulateMode;
         public EPlayMode PlayMode
         {

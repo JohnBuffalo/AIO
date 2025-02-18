@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AIOFramework.Runtime.Setting
+namespace AIOFramework.Setting
 {
     [CreateAssetMenu(fileName = "GlobalSettings", menuName = "AIOFramework/GlobalSettings")]
     public class GlobalSettings : ScriptableObject

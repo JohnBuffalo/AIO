@@ -427,6 +427,7 @@ Transform:
   m_Children:
   - {fileID: 772932732}
   - {fileID: 1921008258}
+  - {fileID: 1188920581}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &772932731
@@ -474,6 +475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PackageName: DefaultPackage
+  m_PlayMode: 2
   m_TimeSlice: 1000
 --- !u!1 &832575517
 GameObject:
@@ -524,6 +526,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1188920580
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1188920581}
+  - component: {fileID: 1188920582}
+  m_Layer: 0
+  m_Name: Event
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1188920581
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188920580}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 526598567}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1188920582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188920580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e37c1e003f4e9d9fdfac9e69bc9d2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1215771326
 GameObject:
   m_ObjectHideFlags: 0
@@ -612,8 +658,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed5601f0f371448a9000fcb8ff51388a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AvailableProcedureTypeNames: []
-  m_EntranceProcedureTypeName: 
+  m_AvailableProcedureTypeNames:
+  - AIOFramework.Runtime.ProcedureDownloadPackageFiles
+  - AIOFramework.Runtime.ProcedureDownloadPackageFinish
+  - AIOFramework.Runtime.ProcedureInitPackage
+  - AIOFramework.Runtime.ProcedureLaunch
+  - AIOFramework.Runtime.ProcedurePackageDownloader
+  - AIOFramework.Runtime.ProcedureSplash
+  - AIOFramework.Runtime.ProcedureUpdateDone
+  - AIOFramework.Runtime.ProcedureUpdatePackageManifest
+  - AIOFramework.Runtime.ProcedureUpdatePackageVersion
+  m_EntranceProcedureTypeName: AIOFramework.Runtime.ProcedureLaunch
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

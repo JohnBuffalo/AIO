@@ -1,9 +1,8 @@
-﻿using AIOFramework.Runtime.Setting;
+﻿using AIOFramework.Setting;
 using GameFramework.Procedure;
 using YooAsset;
 using Cysharp.Threading.Tasks;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
-using AIOFramework.Runtime.Setting;
 
 namespace AIOFramework.Runtime
 {
@@ -15,36 +14,39 @@ namespace AIOFramework.Runtime
         protected internal override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
-            
+            Log.Info("Enter ProcedureInitPackage");
+            Entrance.Event.Fire(this, PatchStateChangeEvent.Create("InitPackage"));
             InitPackage(procedureOwner).Forget();
         }
 
-        private async UniTaskVoid InitPackage(ProcedureOwner procedureOwner)
+        private async UniTask InitPackage(ProcedureOwner procedureOwner)
         {
             var playMode = Entrance.Resource.PlayMode;
             var packageName = Entrance.Resource.PackageName;
-        
+
             procedureOwner.SetData<VarInt32>("PlayMode", (int)playMode);
             procedureOwner.SetData<VarString>("PackageName", packageName);
-        
+
             Log.Info($"InitPackage , playMode : {playMode}, packageName : {packageName}");
 
-            var initSuccess = await Entrance.Resource.InitPackageAsync(packageName, GetHostServerURL(), GetDefaultServerURL(), true);
+            var initSuccess =
+                await Entrance.Resource.InitPackageAsync(packageName, GetHostServerURL(), GetDefaultServerURL(), true);
 
             if (initSuccess)
             {
-                // ChangeState<ProcedureUpdatePackageVersion>(procedureOwner);
+                ChangeState<ProcedureUpdatePackageVersion>(procedureOwner);
             }
             else
             {
-                
+                Entrance.Event.Fire(this, InitPackageFailedEvent.Create());
             }
         }
-        
+
         private string GetHostServerURL()
         {
             var serverType = SettingUtility.GlobalSettings.GameSetting.ServerType;
             string url;
+            string platform = SettingUtility.PlatformName();
             switch (serverType)
             {
                 case ServerTypeEnum.Intranet:
@@ -60,13 +62,15 @@ namespace AIOFramework.Runtime
                     url = string.Empty;
                     break;
             }
-            return url;
+
+            return $"{url}/{platform}/";
         }
 
         private string GetDefaultServerURL()
         {
-            return "http://127.0.0.1";
+            string platform = SettingUtility.PlatformName();
+            string url = "http://127.0.0.1";
+            return $"{url}/{platform}/";
         }
     }
-
 }

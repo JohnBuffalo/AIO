@@ -24,7 +24,7 @@ public enum ServerTypeEnum
     Formal = 3
 }
 
-namespace AIOFramework.Runtime.Setting
+namespace AIOFramework.Setting
 {
     [Serializable]
     public class GameSetting
@@ -43,18 +43,18 @@ namespace AIOFramework.Runtime.Setting
 
 
         [Tooltip("Dev内网资源地址")] [SerializeField]
-        private string m_InnerResourceSourceUrl = "http://127.0.0.1:8081";
+        private string m_InnerResourceSourceUrl = "http://127.0.0.1";
 
         public string InnerResourceSourceUrl => m_InnerResourceSourceUrl;
 
         [Tooltip("Dev外网资源地址")] [SerializeField]
-        private string m_ExtraResourceSourceUrl = "http://127.0.0.1:8081";
+        private string m_ExtraResourceSourceUrl = "http://127.0.0.1";
 
         public string ExtraResourceSourceUrl => m_ExtraResourceSourceUrl;
 
 
         [Tooltip("Master线上资源地址")] [SerializeField]
-        private string m_FormalResourceSourceUrl = "http://127.0.0.1:8081";
+        private string m_FormalResourceSourceUrl = "http://127.0.0.1";
 
         public string FormalResourceSourceUrl => m_FormalResourceSourceUrl;
     }
