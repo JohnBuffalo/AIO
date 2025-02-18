@@ -3,9 +3,9 @@ using GameFramework.Event;
 
 namespace AIOFramework.Runtime
 {
-    public class DownloadProgressEvent : GameEventArgs
+    public class DownloadProgressEventArgs : GameEventArgs
     {
-        public static readonly int EventID = typeof(DownloadProgressEvent).GetHashCode();
+        public static readonly int EventID = typeof(DownloadProgressEventArgs).GetHashCode();
         public override int Id => EventID;
 
         public int TotalDownloadCount { get; private set; }
@@ -21,9 +21,9 @@ namespace AIOFramework.Runtime
             CurrentDownloadSizeBytes = 0;
         }
         
-        public static DownloadProgressEvent Create(int totalDownloadCount, int currentDownloadCount, long totalDownloadSizeBytes, long currentDownloadSizeBytes)
+        public static DownloadProgressEventArgs Create(int totalDownloadCount, int currentDownloadCount, long totalDownloadSizeBytes, long currentDownloadSizeBytes)
         {
-            var args = ReferencePool.Acquire<DownloadProgressEvent>();
+            var args = ReferencePool.Acquire<DownloadProgressEventArgs>();
             args.TotalDownloadCount = totalDownloadCount;
             args.CurrentDownloadCount = currentDownloadCount;
             args.TotalDownloadSizeBytes = totalDownloadSizeBytes;

@@ -13,7 +13,7 @@ namespace AIOFramework.Runtime
             base.OnEnter(procedureOwner);
             AddListeners();
             this.procedureOwner = procedureOwner;
-            Entrance.Event.Fire(this, PatchStateChangeEvent.Create("CreatePackageDownloader"));
+            Entrance.Event.Fire(this, PatchStateChangeEventArgs.Create("CreatePackageDownloader"));
             CreateDownloader(procedureOwner).Forget();
         }
         
@@ -25,12 +25,12 @@ namespace AIOFramework.Runtime
         
         private void AddListeners()
         {
-            Entrance.Event.Subscribe(BeginDownloadUpdateFilesEvent.EventId, OnBeginDownloadUpdateFiles);
+            Entrance.Event.Subscribe(BeginDownloadUpdateFilesEventArgs.EventId, OnBeginDownloadUpdateFiles);
         }
         
         private void RemoveListeners()
         {
-            Entrance.Event.Unsubscribe(BeginDownloadUpdateFilesEvent.EventId, OnBeginDownloadUpdateFiles);
+            Entrance.Event.Unsubscribe(BeginDownloadUpdateFilesEventArgs.EventId, OnBeginDownloadUpdateFiles);
         }
         
         private void OnBeginDownloadUpdateFiles(object sender, GameEventArgs e)
@@ -58,7 +58,7 @@ namespace AIOFramework.Runtime
             {
                 int totalDownloadCount = downloader.TotalDownloadCount;
                 long totalDownloadBytes = downloader.TotalDownloadBytes;
-                Entrance.Event.Fire(this, FindUpdateFilesEvent.Create(totalDownloadCount, totalDownloadBytes));
+                Entrance.Event.Fire(this, FindUpdateFilesEventArgs.Create(totalDownloadCount, totalDownloadBytes));
                 // CheckDiskSpace(totalDownloadBytes); 
             }
         }

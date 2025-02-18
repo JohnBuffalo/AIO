@@ -10,7 +10,7 @@ namespace AIOFramework.Runtime
         protected internal override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
-            Entrance.Event.Fire(this, PatchStateChangeEvent.Create("Begin Download Files"));
+            Entrance.Event.Fire(this, PatchStateChangeEventArgs.Create("Begin Download Files"));
             BeginDownloadFiles(procedureOwner).Forget();
         }
 
@@ -35,7 +35,7 @@ namespace AIOFramework.Runtime
         private void OnDownloadError(DownloadErrorData data)
         {
             Log.Error("Download error: Package:{0}, File:{1}, Error:{2}", data.PackageName, data.FileName, data.ErrorInfo);
-            Entrance.Event.Fire(this, DownloadFilesFailedEvent.Create(data.PackageName,data.FileName, data.ErrorInfo));
+            Entrance.Event.Fire(this, DownloadFilesFailedEventArgs.Create(data.PackageName,data.FileName, data.ErrorInfo));
         }
         
         private void OnDownloadProgress(DownloadUpdateData data)
@@ -46,7 +46,7 @@ namespace AIOFramework.Runtime
             var totalDownloadBytes = data.TotalDownloadBytes;
             Log.Info("Download progress: {0}/{1}, {2}/{3}", currentDownloadCount, totalDownloadCount,
                 currentDownloadBytes, totalDownloadBytes);
-            var args = DownloadProgressEvent.Create(totalDownloadCount, currentDownloadCount, totalDownloadBytes,
+            var args = DownloadProgressEventArgs.Create(totalDownloadCount, currentDownloadCount, totalDownloadBytes,
                 currentDownloadBytes);
             Entrance.Event.Fire(this, args);
         }

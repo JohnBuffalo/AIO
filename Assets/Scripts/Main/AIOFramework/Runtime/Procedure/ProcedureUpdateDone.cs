@@ -10,7 +10,7 @@ namespace AIOFramework.Runtime
         {
             base.OnEnter(procedureOwner);
             Log.Info("Update Done");
-            Entrance.Event.Fire(this, PatchStateChangeEvent.Create("Update Done"));
+            Entrance.Event.Fire(this, PatchStateChangeEventArgs.Create("Update Done"));
         }
     }
 }

@@ -10,7 +10,7 @@ namespace AIOFramework.Runtime
         protected internal override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
-            Entrance.Event.Fire(this, PatchStateChangeEvent.Create("UpdateManifest"));
+            Entrance.Event.Fire(this, PatchStateChangeEventArgs.Create("UpdateManifest"));
             UpdateManifest(procedureOwner).Forget();
         }
 
@@ -27,7 +27,7 @@ namespace AIOFramework.Runtime
             if (operation.Status != EOperationStatus.Succeed)
             {
                 Log.Error($"UpdatePackageManifest for package: {packageName} failed, error message: {operation.Error}");
-                Entrance.Event.Fire(this, InitPackageFailedEvent.Create());
+                Entrance.Event.Fire(this, InitPackageFailedEventArgs.Create());
             }
             else
             {

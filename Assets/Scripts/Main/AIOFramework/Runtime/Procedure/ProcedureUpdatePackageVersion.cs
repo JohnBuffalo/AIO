@@ -10,7 +10,7 @@ namespace AIOFramework.Runtime
         protected internal override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
-            Entrance.Event.Fire(this,PatchStateChangeEvent.Create("UpdatePackageVersion"));
+            Entrance.Event.Fire(this,PatchStateChangeEventArgs.Create("UpdatePackageVersion"));
             UpdatePackageVersion(procedureOwner).Forget();
         }
 
@@ -27,13 +27,13 @@ namespace AIOFramework.Runtime
             if (operation.Status != EOperationStatus.Succeed)
             {
                 Log.Error($"UpdatePackageVersion for package: {packageName} failed, error message: {operation.Error}");
-                Entrance.Event.Fire(this,InitPackageFailedEvent.Create());
+                Entrance.Event.Fire(this,InitPackageFailedEventArgs.Create());
             }
             else
             {
                 Log.Info($"Request package version : {operation.PackageVersion}");
                 procedureOwner.SetData<VarString>("PackageVersion", operation.PackageVersion);
-                Entrance.Event.Fire(this, PackageVersionEvent.Create(operation.PackageVersion));
+                Entrance.Event.Fire(this, PackageVersionEventArgs.Create(operation.PackageVersion));
                 ChangeState<ProcedureUpdatePackageManifest>(procedureOwner);
             }
         }

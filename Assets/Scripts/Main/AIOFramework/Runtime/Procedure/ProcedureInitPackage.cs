@@ -15,7 +15,7 @@ namespace AIOFramework.Runtime
         {
             base.OnEnter(procedureOwner);
             Log.Info("Enter ProcedureInitPackage");
-            Entrance.Event.Fire(this, PatchStateChangeEvent.Create("InitPackage"));
+            Entrance.Event.Fire(this, PatchStateChangeEventArgs.Create("InitPackage"));
             InitPackage(procedureOwner).Forget();
         }
 
@@ -38,7 +38,7 @@ namespace AIOFramework.Runtime
             }
             else
             {
-                Entrance.Event.Fire(this, InitPackageFailedEvent.Create());
+                Entrance.Event.Fire(this, InitPackageFailedEventArgs.Create());
             }
         }
 
