@@ -58,6 +58,7 @@ namespace AIOFramework.Runtime
             {
                 int totalDownloadCount = downloader.TotalDownloadCount;
                 long totalDownloadBytes = downloader.TotalDownloadBytes;
+                Log.Info($"Need Download File Count {totalDownloadCount}, total Bytes {totalDownloadBytes}");
                 Entrance.Event.Fire(this, FindUpdateFilesEventArgs.Create(totalDownloadCount, totalDownloadBytes));
                 // CheckDiskSpace(totalDownloadBytes); 
             }

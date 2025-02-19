@@ -14,7 +14,8 @@ namespace AIOFramework.Runtime
         protected internal override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
-            // ChangeState<ProcedureUpdateDone>(procedureOwner);
+
+            ClearCache(procedureOwner).Forget();
         }
 
         private async UniTask ClearCache(ProcedureOwner procedureOwner)
