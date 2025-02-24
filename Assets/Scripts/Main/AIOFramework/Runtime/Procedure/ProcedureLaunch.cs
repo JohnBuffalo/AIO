@@ -8,7 +8,7 @@ namespace AIOFramework.Runtime
     /// </summary>
     public class ProcedureLaunch : ProcedureBase
     {
-        protected internal override void OnEnter(ProcedureOwner procedureOwner)
+        protected override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
             Log.Info("Enter ProcedureLaunch");

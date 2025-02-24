@@ -10,14 +10,14 @@ namespace AIOFramework.Runtime
     {
         private bool m_SplashFinished = false;
 
-        protected internal override void OnEnter(ProcedureOwner procedureOwner)
+        protected override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
             Log.Info("Enter ProcedureSplash");
             Splash();
         }
 
-        protected internal override void OnUpdate(ProcedureOwner procedureOwner, float elapseSeconds,
+        protected override void OnUpdate(ProcedureOwner procedureOwner, float elapseSeconds,
             float realElapseSeconds)
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);

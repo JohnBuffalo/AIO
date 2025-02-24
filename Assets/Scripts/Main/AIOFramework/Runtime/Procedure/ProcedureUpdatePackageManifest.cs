@@ -7,7 +7,7 @@ namespace AIOFramework.Runtime
 {
     public class ProcedureUpdatePackageManifest : ProcedureBase
     {
-        protected internal override void OnEnter(ProcedureOwner procedureOwner)
+        protected override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
             Entrance.Event.Fire(this, PatchStateChangeEventArgs.Create("UpdateManifest"));

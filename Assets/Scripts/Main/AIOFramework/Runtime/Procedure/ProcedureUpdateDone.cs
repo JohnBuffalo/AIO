@@ -6,7 +6,7 @@ namespace AIOFramework.Runtime
 {
     public class ProcedureUpdateDone : ProcedureBase
     {
-        protected internal override void OnEnter(ProcedureOwner procedureOwner)
+        protected void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
             Log.Info("Update Done");
