@@ -623,6 +623,7 @@ GameObject:
   m_Component:
   - component: {fileID: 212515441606039974}
   - component: {fileID: 9004595744439654155}
+  - component: {fileID: 4038621312722940852}
   m_Layer: 5
   m_Name: PatchPage
   m_TagString: Untagged
@@ -666,6 +667,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74ec966696314594b451994c8e119bcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!225 &4038621312722940852
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5253588428982129270}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6974854351773791535
 GameObject:
   m_ObjectHideFlags: 0
@@ -1198,6 +1211,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2972404588627198399}
+  - component: {fileID: 1953150197416382207}
+  - component: {fileID: 2423246524051685905}
   m_Layer: 5
   m_Name: messagebox
   m_TagString: Untagged
@@ -1228,3 +1243,27 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &1953150197416382207
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8526357193764312598}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &2423246524051685905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8526357193764312598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ab0cb7379c04f228ab4be4c9180d6a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

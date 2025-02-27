@@ -47,7 +47,7 @@ namespace AIOFramework.Runtime
         {
             await UniTask.WaitForSeconds(0.5f);
 
-            var packageName = this.procedureOwner.GetData<VarString>("PackageName");
+            var packageName = procedureOwner.GetData<VarString>("PackageName");
             var package = Entrance.Resource.GetAssetsPackage(packageName);
             int downloadingMaxNum = 10;
             int failedTryAgain = 3;
@@ -83,7 +83,15 @@ namespace AIOFramework.Runtime
                 return;
             }
 
-            GameObject patchPage = Object.Instantiate(prefab) as GameObject;
+            var canvasRoot = GameObject.Find("Canvas").transform;
+            
+            GameObject patchPage = Object.Instantiate(prefab,canvasRoot) as GameObject;
+
+            PatchPage patchView = patchPage.GetComponent<PatchPage>();
+            PatchViewModel patchViewModel = new PatchViewModel(new PatchModel());
+            patchView.BindContext(patchViewModel);
+            
+            patchViewModel.Model.Version = procedureOwner.GetData<VarString>("PackageVersion");
         }
 
         private void DiskSpace(string path)
