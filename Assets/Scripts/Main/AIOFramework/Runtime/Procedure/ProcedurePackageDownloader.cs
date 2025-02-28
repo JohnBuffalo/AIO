@@ -64,36 +64,12 @@ namespace AIOFramework.Runtime
                 int totalDownloadCount = downloader.TotalDownloadCount;
                 long totalDownloadBytes = downloader.TotalDownloadBytes;
                 Log.Info($"Need Download File Count {totalDownloadCount}, total Bytes {totalDownloadBytes}");
-
-                await OpenPatchPage();
-
+                
                 Entrance.Event.Fire(this, FindUpdateFilesEventArgs.Create(totalDownloadCount, totalDownloadBytes));
                 // CheckDiskSpace(totalDownloadBytes); 
             }
         }
-
-        private async UniTask OpenPatchPage()
-        {
-            ResourceRequest request = Resources.LoadAsync<GameObject>("Asset/PatchPage");
-            var prefab = await request.ToUniTask();
-
-            if (prefab == null)
-            {
-                Log.Error("Load PatchPage Failed");
-                return;
-            }
-
-            var canvasRoot = GameObject.Find("Canvas").transform;
-            
-            GameObject patchPage = Object.Instantiate(prefab,canvasRoot) as GameObject;
-
-            PatchPage patchView = patchPage.GetComponent<PatchPage>();
-            PatchViewModel patchViewModel = new PatchViewModel(new PatchModel());
-            patchView.BindContext(patchViewModel);
-            
-            patchViewModel.Model.Version = procedureOwner.GetData<VarString>("PackageVersion");
-        }
-
+        
         private void DiskSpace(string path)
         {
             try

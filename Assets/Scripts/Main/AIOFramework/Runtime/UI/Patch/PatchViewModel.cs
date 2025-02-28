@@ -1,16 +1,19 @@
 ﻿using System;
 using System.ComponentModel;
+using GameFramework;
 using Loxodon.Framework.ViewModels;
 using GameFramework.Event;
 using Loxodon.Framework.Commands;
 using Loxodon.Framework.Interactivity;
 using Loxodon.Framework.Observables;
 using Loxodon.Framework.Views;
+using PropertyChanged;
 using UnityEngine;
 
 namespace AIOFramework.Runtime
 {
-    public class PatchModel : INotifyPropertyChanged
+    [AddINotifyPropertyChangedInterface]
+    public class PatchModel
     {
         public string Version
         {
@@ -36,15 +39,13 @@ namespace AIOFramework.Runtime
         public float Progress
         {
             get;
-            set;
+            private set;
         }
         
         public void UpdateProgress()
         {
             Progress = (float)DownloadFileCount / TotalFileCount;
         }
-        
-        public event PropertyChangedEventHandler PropertyChanged;
     }
     
     public class PatchViewModel : ViewModelBase
@@ -63,6 +64,12 @@ namespace AIOFramework.Runtime
         //打开热更新失败对话框
         public SimpleCommand OpenHotUpdateFailedDialogCommand { get; set; }
         public InteractionRequest<DialogNotification> HotUpdateFailedDialogRequest = new InteractionRequest<DialogNotification>();
+        //提示初始化Package失败
+        public SimpleCommand InitPackageFailedCommand { get; set; }
+        public InteractionRequest<Notification> InitPackageFailedDialogRequest = new InteractionRequest<Notification>();
+        //热更新结束
+        public SimpleCommand HotUpdateFinishCommand { get; set; }
+        public InteractionRequest<Notification> HotUpdateFinishRequest = new InteractionRequest<Notification>();
         
         public PatchViewModel(PatchModel model)
         {
@@ -73,6 +80,7 @@ namespace AIOFramework.Runtime
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
+            Model = null;
             RemoveAllListeners();
         }
 
@@ -84,6 +92,7 @@ namespace AIOFramework.Runtime
             Entrance.Event.Subscribe(InitPackageFailedEventArgs.EventId, OnInitPackageFailed);
             Entrance.Event.Subscribe(DownloadFilesFailedEventArgs.EventId, OnDownloadFilesFailed);
             Entrance.Event.Subscribe(DownloadProgressEventArgs.EventID, OnDownloadProgress);
+            Entrance.Event.Subscribe(HotUpdateFinishEventArgs.EventID, OnHotUpdateFinish);
         }
 
         private void RemoveAllListeners()
@@ -95,6 +104,7 @@ namespace AIOFramework.Runtime
             Entrance.Event.Unsubscribe(InitPackageFailedEventArgs.EventId, OnInitPackageFailed);
             Entrance.Event.Unsubscribe(DownloadFilesFailedEventArgs.EventId, OnDownloadFilesFailed);
             Entrance.Event.Unsubscribe(DownloadProgressEventArgs.EventID, OnDownloadProgress);
+            Entrance.Event.Unsubscribe(HotUpdateFinishEventArgs.EventID, OnHotUpdateFinish);
         }
 
         void OnPatchStateChange(object sender, GameEventArgs gameEventArgs)
@@ -107,7 +117,6 @@ namespace AIOFramework.Runtime
         {
             PackageVersionEventArgs args = gameEventArgs as PackageVersionEventArgs;
             Model.Version = args.PackageVersion;
-            Log.Error("PackageVersion:" + Model.Version);
         }
 
         void OnDownloadProgress(object sender, GameEventArgs gameEventArgs)
@@ -143,19 +152,46 @@ namespace AIOFramework.Runtime
 
         void OnInitPackageFailed(object sender, GameEventArgs gameEventArgs)
         {
-            Action callback = () =>
+            InitPackageFailedCommand = new SimpleCommand(() =>
             {
-                Log.Info("Application Quit");
-                Application.Quit();
-            };
-            // ShowMessageBox("Failed to initialize the package, please check the network and try again.", callback);
+                InitPackageFailedCommand.Enabled = false;
+                Notification notification = new Notification("Init Package Failed", 
+                    "Init Package Failed, please check the network and try again.");
+                Action<Notification> callback = n =>
+                {
+                    InitPackageFailedCommand.Enabled = true;
+                    Application.Quit();
+                };
+                InitPackageFailedDialogRequest.Raise(notification, callback);
+            });
+            OpenHotUpdateConfirmDialogCommand.Execute(null);
         }
 
         void OnDownloadFilesFailed(object sender, GameEventArgs gameEventArgs)
         {
             DownloadFilesFailedEventArgs args = gameEventArgs as DownloadFilesFailedEventArgs;
-            Action callback = () => { Application.Quit(); };
-            // ShowMessageBox($"Download failed, please check the network and try again. \n {args.Error}", callback);
+            OpenHotUpdateFailedDialogCommand = new SimpleCommand(() =>
+            {
+                OpenHotUpdateFailedDialogCommand.Enabled = false;
+                DialogNotification notification = new DialogNotification("Download Failed",
+                    $"Download failed, please check the network and try again. \n {args.Error}", "OK");
+                Action<DialogNotification> callback = n =>
+                {
+                    OpenHotUpdateFailedDialogCommand.Enabled = true;
+                    Application.Quit();
+                };
+                HotUpdateFailedDialogRequest.Raise(notification, callback);
+            });
+            OpenHotUpdateFailedDialogCommand.Execute(null);
+        }
+
+        void OnHotUpdateFinish(object sender, GameEventArgs gameEventArgs)
+        {
+            HotUpdateFinishCommand = new SimpleCommand(() =>
+            {
+                HotUpdateFinishRequest.Raise(null,null);
+            });
+            HotUpdateFinishCommand.Execute(null);
         }
     }
 }

@@ -20,7 +20,6 @@ namespace AIOFramework.Runtime
         private Slider slider;
         private TextMeshProUGUI ver_txt;
         private TextMeshProUGUI info_txt;
-        
         private MessageBoxView messageBoxView;
         
         private void Awake()
@@ -44,9 +43,10 @@ namespace AIOFramework.Runtime
             bindingSet.Bind(this.ver_txt).For(v => v.text).To(vm => vm.Model.Version).OneWay();
             bindingSet.Bind(this.info_txt).For(v => v.text).To(vm => vm.Model.Info).OneWay();
             bindingSet.Bind().For(v=>v.OnFindHotUpdate).To(vm=>vm.HotUpdateConfirmDialogRequest);
-            
+            bindingSet.Bind().For(v => v.OnInitPackageFailed).To(vm => vm.InitPackageFailedDialogRequest);
+            bindingSet.Bind().For(v => v.OnHotUpdateFailed).To(vm => vm.HotUpdateFailedDialogRequest);
+            bindingSet.Bind().For(v => v.OnHotUpdateFinish).To(vm => vm.HotUpdateFinishRequest);
             bindingSet.Build();
-            
         }
 
         private void InitComponents()
@@ -72,7 +72,30 @@ namespace AIOFramework.Runtime
             ShowMessage(notification, callback);
         }
 
-        private void ShowMessage(DialogNotification notifaction, Action callback)
+        private void OnInitPackageFailed(object sender, InteractionEventArgs args)
+        {
+            Notification notification = args.Context as Notification;
+            var callback = args.Callback;
+            if (notification == null)
+                return; 
+            ShowMessage(notification, callback);
+        }
+
+        private void OnHotUpdateFailed(object sender, InteractionEventArgs args)
+        {
+            DialogNotification notification = args.Context as DialogNotification;
+            var callback = args.Callback;
+            if (notification == null) return;
+            ShowMessage(notification, callback);
+        }
+
+        private void OnHotUpdateFinish(object sender,InteractionEventArgs args)
+        {
+            Debug.Log("OnHotUpdateFinish Destroy PatchPage");
+            Destroy(gameObject);
+        }
+
+        private void ShowMessage(Notification notifaction, Action callback)
         {
             //打开页面,传递展示信息,传递回调
             var messageBoxViewModel = messageBoxView.GetDataContext() as MessageBoxViewModel;
@@ -89,5 +112,11 @@ namespace AIOFramework.Runtime
             });
         }
         
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            PatchViewModel vm = this.GetDataContext() as PatchViewModel;
+            vm?.Dispose();
+        }
     }
 }

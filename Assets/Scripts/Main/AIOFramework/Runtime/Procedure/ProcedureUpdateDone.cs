@@ -6,11 +6,11 @@ namespace AIOFramework.Runtime
 {
     public class ProcedureUpdateDone : ProcedureBase
     {
-        protected void OnEnter(ProcedureOwner procedureOwner)
+        protected override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
             Log.Info("Update Done");
-            Entrance.Event.Fire(this, PatchStateChangeEventArgs.Create("Update Done"));
+            Entrance.Event.Fire(this, HotUpdateFinishEventArgs.Create());
         }
     }
 }

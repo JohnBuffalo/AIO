@@ -2,6 +2,7 @@
 using GameFramework.Procedure;
 using YooAsset;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
 
 namespace AIOFramework.Runtime
@@ -29,6 +30,8 @@ namespace AIOFramework.Runtime
 
             Log.Info($"InitPackage , playMode : {playMode}, packageName : {packageName}");
 
+            await OpenPatchPage();
+            
             var initSuccess =
                 await Entrance.Resource.InitPackageAsync(packageName, GetHostServerURL(), GetDefaultServerURL(), true);
 
@@ -71,6 +74,24 @@ namespace AIOFramework.Runtime
             string platform = SettingUtility.PlatformName();
             string url = "http://127.0.0.1";
             return $"{url}/{platform}/";
+        }
+        
+        private async UniTask OpenPatchPage()
+        {
+            ResourceRequest request = Resources.LoadAsync<GameObject>("Asset/PatchPage");
+            var prefab = await request.ToUniTask();
+
+            if (prefab == null)
+            {
+                Log.Error("Load PatchPage Failed");
+                return;
+            }
+
+            var canvasRoot = GameObject.Find("Canvas").transform;
+            GameObject patchPage = Object.Instantiate(prefab,canvasRoot) as GameObject;
+            PatchPage patchView = patchPage.GetComponent<PatchPage>();
+            PatchViewModel patchViewModel = new PatchViewModel(new PatchModel());
+            patchView.BindContext(patchViewModel);
         }
     }
 }
