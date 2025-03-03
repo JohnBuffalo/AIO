@@ -46,6 +46,7 @@ namespace AIOFramework.Runtime
             bindingSet.Bind().For(v => v.OnInitPackageFailed).To(vm => vm.InitPackageFailedDialogRequest);
             bindingSet.Bind().For(v => v.OnHotUpdateFailed).To(vm => vm.HotUpdateFailedDialogRequest);
             bindingSet.Bind().For(v => v.OnHotUpdateFinish).To(vm => vm.HotUpdateFinishRequest);
+            bindingSet.Bind().For(v => v.OnSpaceNotEnough).To(vm => vm.SpaceNotEnoughRequest);
             bindingSet.Build();
         }
 
@@ -93,6 +94,14 @@ namespace AIOFramework.Runtime
         {
             Debug.Log("OnHotUpdateFinish Destroy PatchPage");
             Destroy(gameObject);
+        }
+
+        private void OnSpaceNotEnough(object sender, InteractionEventArgs args)
+        {
+            DialogNotification notification = args.Context as DialogNotification;
+            var callback = args.Callback;
+            if (notification == null) return;
+            ShowMessage(notification, callback);
         }
 
         private void ShowMessage(Notification notifaction, Action callback)

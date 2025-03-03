@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using GameFramework.Event;
 using GameFramework.Procedure;
 using UnityEngine;
+using YooAsset;
 using Object = UnityEngine.Object;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
 
@@ -63,28 +64,36 @@ namespace AIOFramework.Runtime
             {
                 int totalDownloadCount = downloader.TotalDownloadCount;
                 long totalDownloadBytes = downloader.TotalDownloadBytes;
-                Log.Info($"Need Download File Count {totalDownloadCount}, total Bytes {totalDownloadBytes}");
-                
-                Entrance.Event.Fire(this, FindUpdateFilesEventArgs.Create(totalDownloadCount, totalDownloadBytes));
-                // CheckDiskSpace(totalDownloadBytes); 
+                var rootPath = YooAssetSettingsData.GetYooDefaultCacheRoot();
+                long freeSpace = DiskSpace(rootPath);
+                Log.Info($"Need Download File Count {totalDownloadCount}, total Size {totalDownloadBytes / (1024f * 1024f * 1024f):F1} GB");
+                if (freeSpace > totalDownloadBytes)
+                {
+                    Entrance.Event.Fire(this, FindUpdateFilesEventArgs.Create(totalDownloadCount, totalDownloadBytes));
+                }
+                else
+                {
+                    Entrance.Event.Fire(this, SpaceNotEnoughEventArgs.Create(totalDownloadBytes, freeSpace));
+                }
             }
         }
         
-        private void DiskSpace(string path)
+        private long DiskSpace(string path)
         {
+            long freeSpace = 0L;
             try
             {
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
                 // Windows 平台
                 var driveInfo = new DriveInfo(Path.GetPathRoot(path));
-                long freeSpace = driveInfo.AvailableFreeSpace;
-                Debug.Log($"Windows可用空间: {freeSpace / (1024f * 1024f * 1024f):F2} GB");
+                freeSpace = driveInfo.AvailableFreeSpace;
+                Debug.Log($"Windows可用空间: {freeSpace / (1024f * 1024f * 1024f):F1} GB");
 
 #elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
                 // macOS 平台
                 var driveInfo = new DriveInfo(Path.GetPathRoot(path));
-                long freeSpace = driveInfo.AvailableFreeSpace;
-                Debug.Log($"macOS可用空间: {freeSpace / (1024f * 1024f * 1024f):F2} GB");
+                freeSpace = driveInfo.AvailableFreeSpace;
+                Debug.Log($"macOS可用空间: {freeSpace / (1024f * 1024f * 1024f):F1} GB");
 
 #elif UNITY_ANDROID
                 // Android 平台
@@ -95,8 +104,8 @@ namespace AIOFramework.Runtime
                 {
                     long blockSize = stat.Call<long>("getBlockSizeLong");
                     long availableBlocks = stat.Call<long>("getAvailableBlocksLong");
-                    long freeSpace = availableBlocks * blockSize;
-                    Debug.Log($"Android可用空间: {freeSpace / (1024f * 1024f * 1024f):F2} GB");
+                    freeSpace = availableBlocks * blockSize;
+                    Debug.Log($"Android可用空间: {freeSpace / (1024f * 1024f * 1024f):F1} GB");
                 }
 
 #elif UNITY_IOS
@@ -106,8 +115,8 @@ namespace AIOFramework.Runtime
  (Dictionary<string, string>)Directory.GetParent(docPath).GetDirectoryInfo().GetFileSystemAttributes();
                 if (fileSystemAttrs.ContainsKey("NSFileSystemFreeSize"))
                 {
-                    long freeSpace = long.Parse(fileSystemAttrs["NSFileSystemFreeSize"]);
-                    Debug.Log($"iOS可用空间: {freeSpace / (1024f * 1024f * 1024f):F2} GB");
+                    freeSpace = long.Parse(fileSystemAttrs["NSFileSystemFreeSize"]);
+                    Debug.Log($"iOS可用空间: {freeSpace / (1024f * 1024f * 1024f):F1} GB");
                 }
 #endif
             }
@@ -115,6 +124,7 @@ namespace AIOFramework.Runtime
             {
                 Debug.LogError($"检查磁盘空间时发生错误: {e.Message}");
             }
+            return freeSpace;
         }
     }
 }

@@ -70,6 +70,9 @@ namespace AIOFramework.Runtime
         //热更新结束
         public SimpleCommand HotUpdateFinishCommand { get; set; }
         public InteractionRequest<Notification> HotUpdateFinishRequest = new InteractionRequest<Notification>();
+        //磁盘空间不足
+        public SimpleCommand SpaceNotEnoughCommand { get; set; }
+        public InteractionRequest<DialogNotification> SpaceNotEnoughRequest = new InteractionRequest<DialogNotification>();
         
         public PatchViewModel(PatchModel model)
         {
@@ -93,6 +96,7 @@ namespace AIOFramework.Runtime
             Entrance.Event.Subscribe(DownloadFilesFailedEventArgs.EventId, OnDownloadFilesFailed);
             Entrance.Event.Subscribe(DownloadProgressEventArgs.EventID, OnDownloadProgress);
             Entrance.Event.Subscribe(HotUpdateFinishEventArgs.EventID, OnHotUpdateFinish);
+            Entrance.Event.Subscribe(SpaceNotEnoughEventArgs.EventId, OnSpaceNotEnough);
         }
 
         private void RemoveAllListeners()
@@ -105,6 +109,7 @@ namespace AIOFramework.Runtime
             Entrance.Event.Unsubscribe(DownloadFilesFailedEventArgs.EventId, OnDownloadFilesFailed);
             Entrance.Event.Unsubscribe(DownloadProgressEventArgs.EventID, OnDownloadProgress);
             Entrance.Event.Unsubscribe(HotUpdateFinishEventArgs.EventID, OnHotUpdateFinish);
+            Entrance.Event.Unsubscribe(SpaceNotEnoughEventArgs.EventId, OnSpaceNotEnough);
         }
 
         void OnPatchStateChange(object sender, GameEventArgs gameEventArgs)
@@ -133,7 +138,7 @@ namespace AIOFramework.Runtime
         void OnFindUpdateFiles(object sender, GameEventArgs gameEventArgs)
         {
             FindUpdateFilesEventArgs args = gameEventArgs as FindUpdateFilesEventArgs;
-            float sizeMB = args.TotalCount / 1048576f;
+            float sizeMB = args.TotalSizeBytes / 1048576f;
             sizeMB = Mathf.Clamp(sizeMB, 0.1f, float.MaxValue);
             string totalSizeMB = sizeMB.ToString("f1");
             OpenHotUpdateConfirmDialogCommand = new SimpleCommand(() =>
@@ -192,6 +197,29 @@ namespace AIOFramework.Runtime
                 HotUpdateFinishRequest.Raise(null,null);
             });
             HotUpdateFinishCommand.Execute(null);
+        }
+
+        void OnSpaceNotEnough(object sender, GameEventArgs gameEventArgs)
+        {
+            SpaceNotEnoughEventArgs args = gameEventArgs as SpaceNotEnoughEventArgs;
+            string needSpace = (args.NeedSpace / 1048576f).ToString("f1");
+            string freeSpace = (args.FreeSpace / 1048576f).ToString("f1");
+            
+            SpaceNotEnoughCommand = new SimpleCommand(() =>
+            {
+                SpaceNotEnoughCommand.Enabled = false;
+                DialogNotification notification = new DialogNotification("Space Not Enough",
+                    $"Space not enough : need: {needSpace} , have: {freeSpace}", "OK");
+                
+                Action<DialogNotification> callback = n =>
+                {
+                    SpaceNotEnoughCommand.Enabled = true;
+                    Application.Quit();
+                };
+                
+                SpaceNotEnoughRequest.Raise(notification, callback);
+            });
+            SpaceNotEnoughCommand.Execute(null);
         }
     }
 }
