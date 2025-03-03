@@ -66,7 +66,7 @@ namespace AIOFramework.Runtime
                 long totalDownloadBytes = downloader.TotalDownloadBytes;
                 var rootPath = YooAssetSettingsData.GetYooDefaultCacheRoot();
                 long freeSpace = DiskSpace(rootPath);
-                Log.Info($"Need Download File Count {totalDownloadCount}, total Size {totalDownloadBytes / (1024f * 1024f * 1024f):F1} GB");
+                Log.Info($"Need Download File Count {totalDownloadCount}, total Size {totalDownloadBytes / (1024f * 1024f):F2} MB");
                 if (freeSpace > totalDownloadBytes)
                 {
                     Entrance.Event.Fire(this, FindUpdateFilesEventArgs.Create(totalDownloadCount, totalDownloadBytes));

@@ -34,7 +34,7 @@ namespace AIOFramework.Setting
         public ServerTypeEnum ServerType => m_ServerType;
 
         [SerializeField] private string m_Version = "0.0.0";
-        public string Version => m_Version;
+        public string Version { get => m_Version; set => m_Version = value; }
 
         [Tooltip("是否在构建资源的时候清理上传到服务端目录的老资源")] [SerializeField]
         private bool m_CleanCommitPathRes = true;
@@ -57,5 +57,9 @@ namespace AIOFramework.Setting
         private string m_FormalResourceSourceUrl = "http://127.0.0.1";
 
         public string FormalResourceSourceUrl => m_FormalResourceSourceUrl;
+
+        [SerializeField]
+        private string m_windowServerDirectory = "D:/UnityReferences/AIOSimulateServer";
+        public string WindowServerDirectory => m_windowServerDirectory;
     }
 }

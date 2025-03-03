@@ -6,3 +6,4 @@
 [assembly: InternalsVisibleTo("YooAsset.Test.Editor")]
 [assembly: InternalsVisibleTo("Assembly-CSharp-Editor")]
 [assembly: InternalsVisibleTo("AIOFramework.Runtime")]
+[assembly: InternalsVisibleTo("AIOFramework.Editor")]

@@ -4,7 +4,9 @@
     "references": [
         "GameFramework.Editor",
         "GameFramework.Runtime",
-        "AIOFramework.Runtime"
+        "AIOFramework.Runtime",
+        "YooAsset.Editor",
+        "YooAsset"
     ],
     "includePlatforms": [
         "Editor"

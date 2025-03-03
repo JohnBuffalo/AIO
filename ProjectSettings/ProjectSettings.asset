@@ -806,8 +806,10 @@ PlayerSettings:
     Windows Store Apps: ENABLE_LOG
     iPhone: ENABLE_LOG
   additionalCompilerArguments: {}
-  platformArchitecture: {}
-  scriptingBackend: {}
+  platformArchitecture:
+    Standalone: 1
+  scriptingBackend:
+    Standalone: 1
   il2cppCompilerConfiguration: {}
   il2cppCodeGeneration: {}
   managedStrippingLevel:
