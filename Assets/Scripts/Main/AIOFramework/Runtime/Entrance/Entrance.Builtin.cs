@@ -8,6 +8,7 @@ namespace AIOFramework.Runtime
         public static ResourceComponent Resource { get; private set; }
         public static EventComponent Event { get; private set; }
         public static ProcedureComponent Procedure { get; private set; }
+        public static UIComponent UI { get; private set; }
 
         private void InitBuiltinComponents()
         {
@@ -15,6 +16,7 @@ namespace AIOFramework.Runtime
             Resource = GameEntry.GetComponent<ResourceComponent>();
             Event = GameEntry.GetComponent<EventComponent>();
             Procedure = GameEntry.GetComponent<ProcedureComponent>();
+            UI = GameEntry.GetComponent<UIComponent>();
         }
     }
 }

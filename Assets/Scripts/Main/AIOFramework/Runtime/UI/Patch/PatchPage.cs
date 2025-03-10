@@ -1,28 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using GameFramework.Event;
+using AIOFramework.Event;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Loxodon.Framework;
-using Loxodon.Framework.Views;
 using Loxodon.Framework.Binding;
 using Loxodon.Framework.Binding.Builder;
-using Loxodon.Framework.Binding.Contexts;
 using Loxodon.Framework.Commands;
 using Loxodon.Framework.Contexts;
 using Loxodon.Framework.Interactivity;
 
 namespace AIOFramework.Runtime
 {
-    public class PatchPage : UIView
+    public class PatchPage : UIViewBase
     {
         private Slider slider;
         private TextMeshProUGUI ver_txt;
         private TextMeshProUGUI info_txt;
         private MessageBoxView messageBoxView;
-        
-        private void Awake()
+
+        protected override void Awake()
         {   
             ApplicationContext context = Context.GetApplicationContext();
             BindingServiceBundle bindingService = new BindingServiceBundle(context.GetContainer());
@@ -52,14 +49,11 @@ namespace AIOFramework.Runtime
 
         private void InitComponents()
         {
-            slider = transform.Find("progress").GetComponent<Slider>();
-            ver_txt = transform.Find("version").GetComponent<TextMeshProUGUI>();
-            info_txt = transform.Find("info").GetComponent<TextMeshProUGUI>();
+            slider = GetVariable<Slider>("progress");
+            ver_txt = GetVariable<TextMeshProUGUI>("version");
+            info_txt = GetVariable<TextMeshProUGUI>("info");
             info_txt.text = "AIO Launch";
-            
-            var _messageBoxObj = transform.Find("messagebox").gameObject;
-            messageBoxView = _messageBoxObj.GetComponent<MessageBoxView>();
-
+            messageBoxView = GetVariable<MessageBoxView>("messagebox");
         }
 
         private void OnFindHotUpdate(object sender, InteractionEventArgs args)
@@ -72,7 +66,7 @@ namespace AIOFramework.Runtime
             
             ShowMessage(notification, callback);
         }
-
+        
         private void OnInitPackageFailed(object sender, InteractionEventArgs args)
         {
             Notification notification = args.Context as Notification;
@@ -119,13 +113,6 @@ namespace AIOFramework.Runtime
                 callback?.Invoke();
                 messageBoxViewModel.Display = false;
             });
-        }
-        
-        protected override void OnDestroy()
-        {
-            base.OnDestroy();
-            PatchViewModel vm = this.GetDataContext() as PatchViewModel;
-            vm?.Dispose();
         }
     }
 }

@@ -1,15 +1,12 @@
 ﻿using Loxodon.Framework.Binding;
 using Loxodon.Framework.Binding.Builder;
-using Loxodon.Framework.Binding.Contexts;
-using Loxodon.Framework.Contexts;
-using Loxodon.Framework.Views;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace AIOFramework.Runtime
 {
-    public class MessageBoxView : UIView
+    public class MessageBoxView : UIViewBase
     {
         private GameObject panel;
         private TextMeshProUGUI tip;
@@ -19,8 +16,8 @@ namespace AIOFramework.Runtime
         {
             base.Awake();
             panel = gameObject;
-            tip = transform.Find("tips").GetComponent<TextMeshProUGUI>();
-            button = transform.Find("Button").GetComponent<Button>();
+            tip = GetVariable<TextMeshProUGUI>("tips");
+            button = GetVariable<Button>("button");
         }
 
         public void BindContext(MessageBoxViewModel vm)

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.IO;
 using Cysharp.Threading.Tasks;
-using GameFramework.Event;
-using GameFramework.Procedure;
+using AIOFramework.Event;
+using AIOFramework.Procedure;
 using UnityEngine;
 using YooAsset;
 using Object = UnityEngine.Object;
-using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
+using ProcedureOwner = AIOFramework.Fsm.IFsm<AIOFramework.Procedure.IProcedureManager>;
 
 namespace AIOFramework.Runtime
 {
@@ -14,7 +14,7 @@ namespace AIOFramework.Runtime
     {
         private ProcedureOwner procedureOwner;
 
-        protected override void OnEnter(ProcedureOwner procedureOwner)
+        protected internal override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
             AddListeners();
@@ -23,7 +23,7 @@ namespace AIOFramework.Runtime
             CreateDownloader(procedureOwner).Forget();
         }
 
-        protected override void OnLeave(ProcedureOwner procedureOwner, bool isShutdown)
+        protected internal override void OnLeave(ProcedureOwner procedureOwner, bool isShutdown)
         {
             base.OnLeave(procedureOwner, isShutdown);
             RemoveListeners();
@@ -46,7 +46,7 @@ namespace AIOFramework.Runtime
 
         private async UniTask CreateDownloader(ProcedureOwner procedureOwner)
         {
-            await UniTask.WaitForSeconds(0.5f);
+            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
 
             var packageName = procedureOwner.GetData<VarString>("PackageName");
             var package = Entrance.Resource.GetAssetsPackage(packageName);

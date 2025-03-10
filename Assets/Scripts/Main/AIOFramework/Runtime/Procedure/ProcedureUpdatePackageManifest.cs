@@ -1,13 +1,13 @@
 ﻿using Cysharp.Threading.Tasks;
-using GameFramework.Procedure;
+using AIOFramework.Procedure;
 using YooAsset;
-using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
+using ProcedureOwner = AIOFramework.Fsm.IFsm<AIOFramework.Procedure.IProcedureManager>;
 
 namespace AIOFramework.Runtime
 {
     public class ProcedureUpdatePackageManifest : ProcedureBase
     {
-        protected override void OnEnter(ProcedureOwner procedureOwner)
+        protected internal override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
             Entrance.Event.Fire(this, PatchStateChangeEventArgs.Create("UpdateManifest"));
@@ -16,7 +16,8 @@ namespace AIOFramework.Runtime
 
         private async UniTask UpdateManifest(ProcedureOwner procedureOwner)
         {
-            await UniTask.WaitForSeconds(0.5f);
+            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+
             
             var packageName = procedureOwner.GetData<VarString>("PackageName");
             var packageVersion = procedureOwner.GetData<VarString>("PackageVersion");

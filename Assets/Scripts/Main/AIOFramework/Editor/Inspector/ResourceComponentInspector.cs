@@ -1,7 +1,7 @@
 ﻿using System;
 using AIOFramework.Runtime;
 using UnityEditor;
-using GameFramework.Editor;
+using AIOFramework.Editor;
 
 namespace AIOFramework.Editor
 {

@@ -1,9 +1,9 @@
 ﻿using AIOFramework.Setting;
-using GameFramework.Procedure;
+using AIOFramework.Procedure;
 using YooAsset;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
+using ProcedureOwner = AIOFramework.Fsm.IFsm<AIOFramework.Procedure.IProcedureManager>;
 
 namespace AIOFramework.Runtime
 {
@@ -12,7 +12,7 @@ namespace AIOFramework.Runtime
     /// </summary>
     public class ProcedureInitPackage : ProcedureBase
     {
-        protected override void OnEnter(ProcedureOwner procedureOwner)
+        protected internal override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
             Log.Info("Enter ProcedureInitPackage");
@@ -78,6 +78,7 @@ namespace AIOFramework.Runtime
         
         private async UniTask OpenPatchPage()
         {
+            Log.Info("OpenPatchPage");
             ResourceRequest request = Resources.LoadAsync<GameObject>("Asset/PatchPage");
             var prefab = await request.ToUniTask();
 
@@ -90,7 +91,8 @@ namespace AIOFramework.Runtime
             var canvasRoot = GameObject.Find("Canvas").transform;
             GameObject patchPage = Object.Instantiate(prefab,canvasRoot) as GameObject;
             PatchPage patchView = patchPage.GetComponent<PatchPage>();
-            PatchViewModel patchViewModel = new PatchViewModel(new PatchModel());
+            PatchViewModel patchViewModel = ReferencePool.Acquire<PatchViewModel>();
+            patchViewModel.Model = new PatchModel();
             patchView.BindContext(patchViewModel);
         }
     }

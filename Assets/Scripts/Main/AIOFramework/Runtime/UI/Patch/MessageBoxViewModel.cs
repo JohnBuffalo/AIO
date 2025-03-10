@@ -1,9 +1,8 @@
-﻿using Loxodon.Framework.ViewModels;
-using Loxodon.Framework.Commands;
+﻿using Loxodon.Framework.Commands;
 
 namespace AIOFramework.Runtime
 {
-    public class MessageBoxViewModel : ViewModelBase
+    public class MessageBoxViewModel : UIViewModelBase
     {
         private string title;
         private string tip;

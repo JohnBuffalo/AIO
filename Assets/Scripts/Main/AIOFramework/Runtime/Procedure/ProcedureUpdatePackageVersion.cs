@@ -1,13 +1,13 @@
 ﻿using Cysharp.Threading.Tasks;
-using GameFramework.Procedure;
+using AIOFramework.Procedure;
 using YooAsset;
-using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
+using ProcedureOwner = AIOFramework.Fsm.IFsm<AIOFramework.Procedure.IProcedureManager>;
 
 namespace AIOFramework.Runtime
 {
     public class ProcedureUpdatePackageVersion : ProcedureBase
     {
-        protected override void OnEnter(ProcedureOwner procedureOwner)
+        protected internal override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
             Entrance.Event.Fire(this,PatchStateChangeEventArgs.Create("UpdatePackageVersion"));
@@ -16,7 +16,8 @@ namespace AIOFramework.Runtime
 
         private async UniTask UpdatePackageVersion(ProcedureOwner procedureOwner)
         {
-            await UniTask.WaitForSeconds(0.5f);
+            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+            
             var packageName = Entrance.Resource.PackageName;
             var package = Entrance.Resource.GetAssetsPackage(packageName);
             var operation = package.RequestPackageVersionAsync();

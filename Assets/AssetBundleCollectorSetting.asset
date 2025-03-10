@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: AssetBundleCollectorSetting
   m_EditorClassIdentifier: 
   ShowPackageView: 1
-  ShowEditorAlias: 0
+  ShowEditorAlias: 1
   UniqueBundleName: 0
   Packages:
   - PackageName: DefaultPackage
     PackageDesc: 
-    EnableAddressable: 1
+    EnableAddressable: 0
     LocationToLower: 0
     IncludeAssetGUID: 1
     AutoCollectShaders: 1
@@ -29,10 +29,10 @@ MonoBehaviour:
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/ArtAssets/Scenes
+      - CollectPath: Assets/ArtAssets/Scene
         CollectorGUID: 510b0c939aa468245ae2fe8db54d3bc0
         CollectorType: 0
-        AddressRuleName: AddressByFolderAndFileName
+        AddressRuleName: AddressDisable
         PackRuleName: PackSeparately
         FilterRuleName: CollectScene
         AssetTags: 
@@ -42,10 +42,10 @@ MonoBehaviour:
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/ArtAssets/Effects/Actor
-        CollectorGUID: 22c14f49013437645a3994dfacd2f452
+      - CollectPath: Assets/ArtAssets/Effect
+        CollectorGUID: 07480fb0585392241af33b5cc46d9478
         CollectorType: 0
-        AddressRuleName: AddressByFolderAndFileName
+        AddressRuleName: AddressDisable
         PackRuleName: PackTopDirectory
         FilterRuleName: CollectPrefab
         AssetTags: 
@@ -55,10 +55,10 @@ MonoBehaviour:
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/ArtAssets/Textures
+      - CollectPath: Assets/ArtAssets/Texture
         CollectorGUID: 6f3c9533359c9db4db65b8987b845b41
         CollectorType: 0
-        AddressRuleName: AddressByFolderAndFileName
+        AddressRuleName: AddressDisable
         PackRuleName: PackSeparately
         FilterRuleName: CollectAll
         AssetTags: 
@@ -68,11 +68,24 @@ MonoBehaviour:
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/ArtAssets/Materials
+      - CollectPath: Assets/ArtAssets/Material
         CollectorGUID: 86c72476cf688af49927a92e899858eb
         CollectorType: 0
-        AddressRuleName: AddressByFolderAndFileName
+        AddressRuleName: AddressDisable
         PackRuleName: PackDirectory
         FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+    - GroupName: UI
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/ArtAssets/UI
+        CollectorGUID: 0eae89ccf6ef255428b15b4c39ea2ee8
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackTopDirectory
+        FilterRuleName: CollectPrefab
         AssetTags: 
         UserData: 

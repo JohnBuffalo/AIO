@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityGameFramework.Runtime;
-using GameFramework;
+
+using AIOFramework.Runtime;
 using YooAsset;
 
 namespace AIOFramework

@@ -1,17 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using GameFramework.Fsm;
-using GameFramework.Procedure;
+using AIOFramework.Fsm;
+using AIOFramework.Procedure;
 using UnityEngine;
 using YooAsset;
-using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
+using ProcedureOwner = AIOFramework.Fsm.IFsm<AIOFramework.Procedure.IProcedureManager>;
 
 namespace AIOFramework.Runtime
 {
     public class ProcedureDownloadPackageFinish : ProcedureBase
     {
-        protected override void OnEnter(ProcedureOwner procedureOwner)
+        protected internal override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
 

@@ -1,10 +1,9 @@
 ﻿
 using System;
 using System.Collections;
-using GameFramework.Procedure;
+using AIOFramework.Procedure;
 using UnityEngine;
-using GameFramework;
-using GameFramework.Fsm;
+using AIOFramework.Fsm;
 
 namespace AIOFramework.Runtime
 {    /// <summary>

@@ -1,12 +1,7 @@
 ﻿using System;
-using System.ComponentModel;
-using GameFramework;
-using Loxodon.Framework.ViewModels;
-using GameFramework.Event;
+using AIOFramework.Event;
 using Loxodon.Framework.Commands;
 using Loxodon.Framework.Interactivity;
-using Loxodon.Framework.Observables;
-using Loxodon.Framework.Views;
 using PropertyChanged;
 using UnityEngine;
 
@@ -48,7 +43,7 @@ namespace AIOFramework.Runtime
         }
     }
     
-    public class PatchViewModel : ViewModelBase
+    public class PatchViewModel : UIViewModelBase
     {
         private PatchModel model;
         
@@ -74,15 +69,14 @@ namespace AIOFramework.Runtime
         public SimpleCommand SpaceNotEnoughCommand { get; set; }
         public InteractionRequest<DialogNotification> SpaceNotEnoughRequest = new InteractionRequest<DialogNotification>();
         
-        public PatchViewModel(PatchModel model)
+        public PatchViewModel()
         {
-            Model = model;
             AddListeners();
         }
-        
-        protected override void Dispose(bool disposing)
+
+        public override void Clear()
         {
-            base.Dispose(disposing);
+            base.Clear();
             Model = null;
             RemoveAllListeners();
         }

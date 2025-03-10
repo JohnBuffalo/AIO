@@ -2,8 +2,6 @@
     "name": "AIOFramework.Editor",
     "rootNamespace": "",
     "references": [
-        "GameFramework.Editor",
-        "GameFramework.Runtime",
         "AIOFramework.Runtime",
         "YooAsset.Editor",
         "YooAsset"

@@ -1,5 +1,4 @@
-﻿using GameFramework;
-using YooAsset;
+﻿using YooAsset;
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;

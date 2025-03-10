@@ -1,6 +1,5 @@
 ﻿using System;
-using GameFramework.Event;
-using GameFramework;
+using AIOFramework.Event;
 using UnityEngine;
 
 namespace AIOFramework.Runtime

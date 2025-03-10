@@ -667,6 +667,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74ec966696314594b451994c8e119bcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Variables:
+    variables:
+    - name: progress
+      objectValue: {fileID: 6866959705765647511}
+      dataValue: 
+      variableType: 2
+    - name: version
+      objectValue: {fileID: 56665171012804435}
+      dataValue: 
+      variableType: 2
+    - name: info
+      objectValue: {fileID: 1841613518887208172}
+      dataValue: 
+      variableType: 2
+    - name: messagebox
+      objectValue: {fileID: 2423246524051685905}
+      dataValue: 
+      variableType: 2
 --- !u!225 &4038621312722940852
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1267,3 +1285,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ab0cb7379c04f228ab4be4c9180d6a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Variables:
+    variables:
+    - name: tips
+      objectValue: {fileID: 5727818600866562094}
+      dataValue: 
+      variableType: 2
+    - name: button
+      objectValue: {fileID: 4011410920807140795}
+      dataValue: 
+      variableType: 2

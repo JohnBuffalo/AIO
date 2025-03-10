@@ -1,7 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
-using GameFramework.Procedure;
+using AIOFramework.Procedure;
 using UnityEngine;
-using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
+using ProcedureOwner = AIOFramework.Fsm.IFsm<AIOFramework.Procedure.IProcedureManager>;
 
 namespace AIOFramework.Runtime
 {
@@ -10,7 +10,7 @@ namespace AIOFramework.Runtime
     /// </summary>
     public class ProcedureLaunch : ProcedureBase
     {
-        protected override void OnEnter(ProcedureOwner procedureOwner)
+        protected internal override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
             Log.Info("Enter ProcedureLaunch");

@@ -1,5 +1,5 @@
-﻿using GameFramework.Procedure;
-using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
+﻿using AIOFramework.Procedure;
+using ProcedureOwner = AIOFramework.Fsm.IFsm<AIOFramework.Procedure.IProcedureManager>;
 
 namespace AIOFramework.Runtime
 {
@@ -10,14 +10,14 @@ namespace AIOFramework.Runtime
     {
         private bool m_SplashFinished = false;
 
-        protected override void OnEnter(ProcedureOwner procedureOwner)
+        protected internal override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
             Log.Info("Enter ProcedureSplash");
             Splash();
         }
 
-        protected override void OnUpdate(ProcedureOwner procedureOwner, float elapseSeconds,
+        protected internal override void OnUpdate(ProcedureOwner procedureOwner, float elapseSeconds,
             float realElapseSeconds)
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
