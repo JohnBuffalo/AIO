@@ -237,9 +237,9 @@ namespace AIOFramework.Runtime
         /// </summary>
         /// <param name="serialId">界面序列编号。</param>
         /// <returns>要获取的界面。</returns>
-        public UIViewBase GetUI(int serialId)
+        public T GetUI<T>(int serialId) where T:IUIForm
         {
-            return (UIViewBase)m_UIManager.GetUI(serialId);
+            return m_UIManager.GetUI<T>(serialId);
         }
 
         /// <summary>
@@ -247,9 +247,9 @@ namespace AIOFramework.Runtime
         /// </summary>
         /// <param name="uiFormAssetName">界面资源名称。</param>
         /// <returns>要获取的界面。</returns>
-        public UIViewBase GetUI(string uiFormAssetName)
+        public T GetUI<T>(string uiFormAssetName) where T:IUIForm
         {
-            return (UIViewBase)m_UIManager.GetUI(uiFormAssetName);
+            return m_UIManager.GetUI<T>(uiFormAssetName);
         }
 
         /// <summary>
@@ -257,13 +257,13 @@ namespace AIOFramework.Runtime
         /// </summary>
         /// <param name="uiFormAssetName">界面资源名称。</param>
         /// <returns>要获取的界面。</returns>
-        public UIViewBase[] GetAllUI(string uiFormAssetName)
+        public T[] GetAllUI<T>(string uiFormAssetName) where T:IUIForm
         {
             IUIForm[] uiForms = m_UIManager.GetAllUI(uiFormAssetName);
-            UIViewBase[] uiFormImpls = new UIViewBase[uiForms.Length];
+            T[] uiFormImpls = new T[uiForms.Length];
             for (int i = 0; i < uiForms.Length; i++)
             {
-                uiFormImpls[i] = (UIViewBase)uiForms[i];
+                uiFormImpls[i] = (T)uiForms[i];
             }
 
             return uiFormImpls;
@@ -274,7 +274,7 @@ namespace AIOFramework.Runtime
         /// </summary>
         /// <param name="uiFormAssetName">界面资源名称。</param>
         /// <param name="results">要获取的界面。</param>
-        public void GetAllUI(string uiFormAssetName, List<UIViewBase> results)
+        public void GetAllUI<T>(string uiFormAssetName, List<T> results) where T:IUIForm
         {
             if (results == null)
             {
@@ -286,7 +286,7 @@ namespace AIOFramework.Runtime
             m_UIManager.GetAllUI(uiFormAssetName, m_InternalUIFormResults);
             foreach (IUIForm uiForm in m_InternalUIFormResults)
             {
-                results.Add((UIViewBase)uiForm);
+                results.Add((T)uiForm);
             }
         }
 
@@ -294,13 +294,13 @@ namespace AIOFramework.Runtime
         /// 获取所有已加载的界面。
         /// </summary>
         /// <returns>所有已加载的界面。</returns>
-        public UIViewBase[] GetAllLoadedUI()
+        public T[] GetAllLoadedUI<T>() where T:IUIForm
         {
             IUIForm[] uiForms = m_UIManager.GetAllLoadedUI();
-            UIViewBase[] uiFormImpls = new UIViewBase[uiForms.Length];
+            T[] uiFormImpls = new T[uiForms.Length];
             for (int i = 0; i < uiForms.Length; i++)
             {
-                uiFormImpls[i] = (UIViewBase)uiForms[i];
+                uiFormImpls[i] = (T)uiForms[i];
             }
 
             return uiFormImpls;
@@ -310,7 +310,7 @@ namespace AIOFramework.Runtime
         /// 获取所有已加载的界面。
         /// </summary>
         /// <param name="results">所有已加载的界面。</param>
-        public void GetAllLoadedUIForms(List<UIViewBase> results)
+        public void GetAllLoadedUIForms<T>(List<T> results)where T:IUIForm
         {
             if (results == null)
             {
@@ -320,9 +320,9 @@ namespace AIOFramework.Runtime
 
             results.Clear();
             m_UIManager.GetAllLoadedUI(m_InternalUIFormResults);
-            foreach (UIViewBase uiForm in m_InternalUIFormResults)
+            foreach (T uiForm in m_InternalUIFormResults)
             {
-                results.Add((UIViewBase)uiForm);
+                results.Add((T)uiForm);
             }
         }
 
@@ -359,7 +359,7 @@ namespace AIOFramework.Runtime
         /// </summary>
         /// <param name="uiForm">界面。</param>
         /// <returns>界面是否合法。</returns>
-        public bool IsValidUI(UIViewBase uiForm)
+        public bool IsValidUI(IUIForm uiForm)
         {
             return m_UIManager.IsValidUI(uiForm);
         }
@@ -369,12 +369,12 @@ namespace AIOFramework.Runtime
             m_UIManager.CloseUI(serialId);
         }
 
-        public void CloseUI(UIViewBase uiForm)
+        public void CloseUI(IUIForm uiForm)
         {
             m_UIManager.CloseUI(uiForm);
         }
 
-        public void CloseUI(UIViewBase uiForm, object userData)
+        public void CloseUI(IUIForm uiForm, object userData)
         {
             m_UIManager.CloseUI(uiForm, userData);
         }
@@ -389,7 +389,7 @@ namespace AIOFramework.Runtime
             m_UIManager.CloseAllLoadingUI();
         }
 
-        public void RefocusUI(UIViewBase uiform)
+        public void RefocusUI(IUIForm uiform)
         {
             m_UIManager.RefocusUI(uiform);
         }
@@ -399,7 +399,7 @@ namespace AIOFramework.Runtime
         /// </summary>
         /// <param name="uiForm">要设置是否被加锁的界面。</param>
         /// <param name="locked">界面是否被加锁。</param>
-        public void SetUIInstanceLocked(UIViewBase uiForm, bool locked)
+        public void SetUIInstanceLocked(IUIForm uiForm, bool locked)
         {
             if (uiForm == null)
             {
@@ -407,7 +407,7 @@ namespace AIOFramework.Runtime
                 return;
             }
 
-            m_UIManager.SetUIInstanceLocked(uiForm.gameObject, locked);
+            m_UIManager.SetUIInstanceLocked(((MonoBehaviour)uiForm.Handle).gameObject, locked);
         }
     }
 }

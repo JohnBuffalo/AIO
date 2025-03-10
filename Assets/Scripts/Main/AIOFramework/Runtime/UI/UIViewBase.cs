@@ -178,6 +178,7 @@ namespace AIOFramework.Runtime
 
         public virtual void OnUpdate(float elapseSeconds, float realElapseSeconds)
         {
+            // Log.Info($"{SerialId} OnUpdate");
         }
 
         public virtual void OnDepthChanged(int uiGroupDepth, int depthInUIGroup)
@@ -185,7 +186,6 @@ namespace AIOFramework.Runtime
             DepthInUIGroup = depthInUIGroup;
             Log.Info($" {gameObject.name} OnDepthChanged uiGroupDepth:{uiGroupDepth} , depthInUIGroup:{depthInUIGroup}");
         }
-
 
         protected override void OnDestroy()
         {

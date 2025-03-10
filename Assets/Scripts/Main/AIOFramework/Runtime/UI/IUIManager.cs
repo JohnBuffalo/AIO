@@ -72,6 +72,9 @@ namespace AIOFramework.Runtime
 
         IUIForm GetUI(string uiFormAssetName);
 
+        T GetUI<T>(string uiFormAssetName) where T : IUIForm;
+        T GetUI<T>(int serialId) where T : IUIForm;
+
         /// <summary>
         /// 获取界面。
         /// </summary>

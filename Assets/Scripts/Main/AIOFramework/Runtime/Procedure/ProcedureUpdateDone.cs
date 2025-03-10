@@ -21,14 +21,14 @@ namespace AIOFramework.Runtime
         private async UniTask Test()
         {
             var uid = await Entrance.UI.OpenUI<TestPage2CtorInfo, TestPageViewModel>();
-            var uiPage = Entrance.UI.GetUI(uid);
+            var uiPage = Entrance.UI.GetUI<TestPage>(uid);
             uiPage.GetViewModel<TestPageViewModel>().Tips = "1";
             // ((GameObject)(uiPage.Handle)).name = uid.ToString();
             // Log.Error($"open ui {uid}, {uiPage.GetComponent<Canvas>().sortingOrder}");
             await UniTask.Delay(2000);
             
             uid = await Entrance.UI.OpenUI<TestPageCtorInfo, TestPageViewModel>();
-            uiPage = Entrance.UI.GetUI(uid);
+            uiPage = Entrance.UI.GetUI<TestPage>(uid);
             uiPage.GetViewModel<TestPageViewModel>().Tips = "2";
             // ((GameObject)(uiPage.Handle)).name = uid.ToString();
             // Log.Error($"open ui {uid}, {uiPage.GetComponent<Canvas>().sortingOrder}");
@@ -38,14 +38,14 @@ namespace AIOFramework.Runtime
             var ctorInfo = ReferencePool.Acquire<TestPage2CtorInfo>();
             var viewModel = ReferencePool.Acquire<TestPageViewModel>();
             var uid2 = await Entrance.UI.OpenUI(ctorInfo, viewModel, null);
-            uiPage = Entrance.UI.GetUI(uid2);
+            uiPage = Entrance.UI.GetUI<TestPage>(uid2);
             uiPage.GetViewModel<TestPageViewModel>().Tips = "3";
             // ((GameObject)(uiPage.Handle)).name = uid2.ToString();
             // Log.Error($"open ui {uid2}, {uiPage.GetComponent<Canvas>().sortingOrder}");
             await UniTask.Delay(2000);
             
             uid = await Entrance.UI.OpenUI<TestPageCtorInfo, TestPageViewModel>();
-            uiPage = Entrance.UI.GetUI(uid);
+            uiPage = Entrance.UI.GetUI<TestPage>(uid);
             uiPage.GetViewModel<TestPageViewModel>().Tips = "4";
             // ((GameObject)(uiPage.Handle)).name = uid.ToString();
             // Log.Error($"open ui {uid}, {uiPage.GetComponent<Canvas>().sortingOrder}");

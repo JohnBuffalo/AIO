@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using AIOFramework.ObjectPool;
 using Cysharp.Threading.Tasks;
+using Loxodon.Framework.Views;
 using UnityEngine;
 
 namespace AIOFramework.Runtime
@@ -237,6 +238,18 @@ namespace AIOFramework.Runtime
             return false;
         }
 
+        public T GetUI<T>(int serialId) where T :  IUIForm
+        {
+            var ui = GetUI(serialId);
+            return (T)ui;
+        }
+        
+        public T GetUI<T>(string assetName) where T :  IUIForm
+        {
+            var ui = GetUI(assetName);
+            return (T)ui;
+        }
+        
         public IUIForm GetUI(int serialId)
         {
             foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in m_UIGroups)
