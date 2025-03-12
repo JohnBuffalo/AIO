@@ -88,8 +88,7 @@ namespace AIOFramework.Runtime
                 return;
             }
 
-            var canvasRoot = GameObject.Find("Canvas").transform;
-            GameObject patchPage = Object.Instantiate(prefab,canvasRoot) as GameObject;
+            GameObject patchPage = Object.Instantiate(prefab,UIRoot.Instance.Canvas.transform) as GameObject;
             PatchPage patchView = patchPage.GetComponent<PatchPage>();
             PatchViewModel patchViewModel = ReferencePool.Acquire<PatchViewModel>();
             patchViewModel.Model = new PatchModel();

@@ -22,7 +22,7 @@ namespace AIOFramework.Runtime
         /// <summary>
         /// 获取打开成功的界面。
         /// </summary>
-        public UIViewBase UIView
+        public IUIForm UIView
         {
             get;
             private set;
@@ -43,7 +43,7 @@ namespace AIOFramework.Runtime
         /// <param name="uiView">加载成功的界面。</param>
         /// <param name="userData">用户自定义数据。</param>
         /// <returns>创建的打开界面成功事件。</returns>
-        public static OpenUISuccessEventArgs Create(UIViewBase uiView , object userData)
+        public static OpenUISuccessEventArgs Create(IUIForm uiView , object userData)
         {
             OpenUISuccessEventArgs openUISuccessEventArgs = ReferencePool.Acquire<OpenUISuccessEventArgs>();
             openUISuccessEventArgs.UIView = uiView;

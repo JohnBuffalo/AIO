@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace AIOFramework.Runtime
 {
-    public partial class UIManager : GameFrameworkModule, IUIManager
+    public class UIManager : GameFrameworkModule, IUIManager
     {
         private readonly Dictionary<UIGroupEnum, UIGroup> m_UIGroups;
         private readonly Dictionary<int, string> m_UIBeingLoaded;
@@ -183,11 +183,6 @@ namespace AIOFramework.Runtime
             {
                 results.Add(uiGroup.Value);
             }
-        }
-
-        public bool AddUIGroup(UIGroupEnum uiGroupName, IUIGroupHelper uiGroupHelper)
-        {
-            return AddUIGroup(uiGroupName, 0, uiGroupHelper);
         }
 
         public bool AddUIGroup(UIGroupEnum uiGroupName, int uiGroupDepth, IUIGroupHelper uiGroupHelper)

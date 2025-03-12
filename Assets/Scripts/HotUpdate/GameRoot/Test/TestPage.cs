@@ -17,7 +17,6 @@ namespace AIOFramework.Runtime
             bindingSet.Bind(GetVariable<TextMeshProUGUI>("text")).For(v => v.text).To(vm => vm.SerialId ).OneWay();
             bindingSet.Bind(GetVariable<TextMeshProUGUI>("tip")).For(v => v.text).ToExpression(vm => $"tip : { vm.Tips}").OneWay();
             bindingSet.Build();
-
         }
     }
 

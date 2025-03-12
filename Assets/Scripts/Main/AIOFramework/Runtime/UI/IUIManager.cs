@@ -60,8 +60,6 @@ namespace AIOFramework.Runtime
 
         void GetAllUIGroups(List<IUIGroup> results);
 
-        bool AddUIGroup(UIGroupEnum uiGroupName, IUIGroupHelper uiGroupHelper);
-
         bool AddUIGroup(UIGroupEnum uiGroupName, int uiGroupDepth, IUIGroupHelper uiGroupHelper);
 
         bool HasUI(int serialId);

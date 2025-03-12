@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace AIOFramework.Runtime
@@ -107,7 +108,6 @@ namespace AIOFramework.Runtime
         protected override void Awake()
         {
             base.Awake();
-
             // InitTextHelper();
             // InitVersionHelper();
             InitLogHelper();

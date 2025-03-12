@@ -81,7 +81,7 @@ namespace AIOFramework.Runtime
         /// <param name="moduleType">要获取的游戏框架模块类型。</param>
         /// <returns>要获取的游戏框架模块。</returns>
         /// <remarks>如果要获取的游戏框架模块不存在，则自动创建该游戏框架模块。</remarks>
-        private static GameFrameworkModule GetModule(Type moduleType)
+        public static GameFrameworkModule GetModule(Type moduleType)
         {
             foreach (GameFrameworkModule module in s_GameFrameworkModules)
             {
@@ -99,7 +99,7 @@ namespace AIOFramework.Runtime
         /// </summary>
         /// <param name="moduleType">要创建的游戏框架模块类型。</param>
         /// <returns>要创建的游戏框架模块。</returns>
-        private static GameFrameworkModule CreateModule(Type moduleType)
+        public static GameFrameworkModule CreateModule(Type moduleType)
         {
             GameFrameworkModule module = (GameFrameworkModule)Activator.CreateInstance(moduleType);
             if (module == null)

@@ -4,7 +4,8 @@
     "references": [
         "AIOFramework.Runtime",
         "YooAsset.Editor",
-        "YooAsset"
+        "YooAsset",
+        "HybridCLR.Editor"
     ],
     "includePlatforms": [
         "Editor"

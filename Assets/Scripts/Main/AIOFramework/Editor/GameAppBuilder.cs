@@ -2,8 +2,8 @@
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using AIOFramework.Runtime;
 using AIOFramework.Setting;
+using HybridCLR.Editor.Commands;
 using UnityEditor;
 using UnityEngine;
 using YooAsset;
@@ -33,7 +33,7 @@ namespace AIOFramework.Editor.CI
         /// <summary>
         /// 小版本热更
         /// </summary>
-        [MenuItem("GameBuilder/MajorVersion 小版本出包", priority = 1)]
+        [MenuItem("GameBuilder/MinorVersion 小版本出包", priority = 1)]
         public static void MinorVersionBuild()
         {
             var packageName = AssetBundleCollectorSettingData.Setting.Packages[0].PackageName;
@@ -98,6 +98,7 @@ namespace AIOFramework.Editor.CI
             settings.Version = nextVersion;
             //资源发布
             CopyBundlesToCdn();
+            AssetDatabase.SaveAssetIfDirty(SettingUtility.GlobalSettings);
             AssetDatabase.Refresh();
         }
 
@@ -116,13 +117,16 @@ namespace AIOFramework.Editor.CI
             settings.Version = nextVersion;
             //资源发布
             CopyBundlesToCdn();
+            AssetDatabase.SaveAssetIfDirty(SettingUtility.GlobalSettings);
             AssetDatabase.Refresh();
         }
 
         private static bool BuildPackages(string nextVersion, EBuildinFileCopyOption copyOption)
         {
-            //1.编译C#代码 todo
-            //2.拷贝HotUpdate和AOT到指定目录 todo
+            //1.编译C#代码
+            PrebuildCommand.GenerateAll();
+            //2.拷贝HotUpdate和AOT到指定目录
+            CopyDllToAssets();
             //3.构建资源包
             AssetBundleCollectorSettingData.FixFile();
             AssetDatabase.Refresh();
@@ -240,7 +244,7 @@ namespace AIOFramework.Editor.CI
 
         private static string GetCdnURL(string platform)
         {
-            return PathUtility.RegularPath($"{SettingUtility.GlobalSettings.GameSetting.WindowServerDirectory}/{platform}");
+            return PathUtility.RegularPath($"{SettingUtility.GlobalSettings.GameSetting.LocalServerDirectory}/{platform}");
             // var serverType = SettingUtility.GlobalSettings.GameSetting.ServerType;
             // switch (serverType)
             // {

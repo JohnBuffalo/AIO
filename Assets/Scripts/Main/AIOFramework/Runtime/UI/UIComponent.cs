@@ -23,7 +23,10 @@ namespace AIOFramework.Runtime
         [SerializeField] private int m_InstanceCapacity = 16;
         [SerializeField] private float m_InstanceExpireTime = 60f;
 
-        public IUIManager UIManager => m_UIManager;
+        public IUIManager UIManager {
+            set {m_UIManager = value;}
+            get{return m_UIManager;}
+        }
 
         /// <summary>
         /// 获取界面组数量。
@@ -62,30 +65,44 @@ namespace AIOFramework.Runtime
             get { return m_UIManager.InstanceExpireTime; }
             set { m_UIManager.InstanceExpireTime = m_InstanceExpireTime = value; }
         }
+        
 
-        protected override void Awake()
+        private void OnOpenUIFormSuccess(object sender, OpenUISuccessEventArgs args)
         {
-            base.Awake();
+            Entrance.Event.Fire(this, args);
+        }
 
-            m_UIManager = GameFrameworkEntry.GetModule<IUIManager>();
+        private void OnOpenUIFormFailure(object sender, OpenUIFailureEventArgs args)
+        {
+            Entrance.Event.Fire(this, args);
+        }
+
+        private void OnCloseUIFormComplete(object sender, CloseUICompleteEventArgs args)
+        {
+            Entrance.Event.Fire(this, args);
+        }
+        
+        public void Init(Type uiManagerType, Transform insRoot)
+        {
+            m_UIManager = GameFrameworkEntry.GetModule(uiManagerType) as IUIManager;
             if (m_UIManager == null)
             {
                 Log.Fatal("UI manager is null.");
                 return;
             }
-        }
-
-        private void Start()
-        {
+            
             m_UIManager.SetAssetManager(Entrance.Resource);
             m_UIManager.SetObjectPoolManager(GameFrameworkEntry.GetModule<IObjectPoolManager>());
             m_UIManager.InstanceAutoReleaseInterval = m_InstanceAutoReleaseInterval;
             m_UIManager.InstanceCapacity = m_InstanceCapacity;
             m_UIManager.InstanceExpireTime = m_InstanceExpireTime;
-
+            m_UIManager.OpenUIFormSuccess += OnOpenUIFormSuccess;
+            m_UIManager.OpenUIFormFailure += OnOpenUIFormFailure;
+            m_UIManager.CloseUIFormComplete += OnCloseUIFormComplete;
+            
             if (m_InstanceRoot == null)
             {
-                m_InstanceRoot = new GameObject("UI Form Instances").transform;
+                m_InstanceRoot = insRoot;
                 m_InstanceRoot.SetParent(gameObject.transform);
                 m_InstanceRoot.localScale = Vector3.one;
             }
@@ -144,17 +161,7 @@ namespace AIOFramework.Runtime
         {
             m_UIManager.GetAllUIGroups(results);
         }
-
-        /// <summary>
-        /// 增加界面组。
-        /// </summary>
-        /// <param name="uiGroupName">界面组名称。</param>
-        /// <returns>是否增加界面组成功。</returns>
-        public bool AddUIGroup(UIGroupEnum uiGroupName)
-        {
-            return AddUIGroup(uiGroupName, 0);
-        }
-
+        
         /// <summary>
         /// 增加界面组。
         /// </summary>

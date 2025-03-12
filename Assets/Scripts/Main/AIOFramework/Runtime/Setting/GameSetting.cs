@@ -58,8 +58,12 @@ namespace AIOFramework.Setting
 
         public string FormalResourceSourceUrl => m_FormalResourceSourceUrl;
 
-        [SerializeField]
-        private string m_windowServerDirectory = "D:/UnityReferences/AIOSimulateServer";
-        public string WindowServerDirectory => m_windowServerDirectory;
+        [Tooltip("本地资源服务器地址")][SerializeField]
+        private string m_LocalServerDirectory = "D:/UnityReferences/AIOSimulateServer";
+        public string LocalServerDirectory => m_LocalServerDirectory;
+
+        [Tooltip("热更程序集Dll存放路径")][SerializeField]
+        private string m_HotUpdateDllDirectory = "ArtAssets/HotUpdate";
+        public string HotUpdateDllDirectory => m_HotUpdateDllDirectory;
     }
 }
