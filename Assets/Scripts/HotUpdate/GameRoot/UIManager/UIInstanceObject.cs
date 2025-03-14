@@ -1,6 +1,6 @@
 ﻿using AIOFramework.ObjectPool;
 using UnityEngine;
-using YooAsset;
+using AIOFramework.Resource;
 
 namespace AIOFramework.Runtime
 {

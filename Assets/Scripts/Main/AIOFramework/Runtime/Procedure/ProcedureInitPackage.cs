@@ -1,8 +1,12 @@
-﻿using AIOFramework.Setting;
+﻿using System.Net;
+using System.Security.Cryptography.X509Certificates;
+using AIOFramework.Setting;
 using AIOFramework.Procedure;
-using YooAsset;
+using AIOFramework.UI;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Networking;
+using YooAsset;
 using ProcedureOwner = AIOFramework.Fsm.IFsm<AIOFramework.Procedure.IProcedureManager>;
 
 namespace AIOFramework.Runtime
@@ -10,13 +14,15 @@ namespace AIOFramework.Runtime
     /// <summary>
     /// 初始化ResourcePackage
     /// </summary>
-    public class ProcedureInitPackage : ProcedureBase
+    public partial class ProcedureInitPackage : ProcedureBase
     {
         protected internal override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
             Log.Info("Enter ProcedureInitPackage");
             Entrance.Event.Fire(this, PatchStateChangeEventArgs.Create("InitPackage"));
+            
+            SetWebRequestDelegate();
             InitPackage(procedureOwner).Forget();
         }
 
@@ -52,27 +58,32 @@ namespace AIOFramework.Runtime
             string platform = SettingUtility.PlatformName();
             switch (serverType)
             {
+                case ServerTypeEnum.Local:
+                    url = SettingUtility.GlobalSettings.GameSetting.LocalResourceUrl;
+                    break;
                 case ServerTypeEnum.Intranet:
-                    url = SettingUtility.GlobalSettings.GameSetting.InnerResourceSourceUrl;
+                    url = SettingUtility.GlobalSettings.GameSetting.InnerResourceUrl;
                     break;
                 case ServerTypeEnum.Extranet:
-                    url = SettingUtility.GlobalSettings.GameSetting.ExtraResourceSourceUrl;
+                    url = SettingUtility.GlobalSettings.GameSetting.ExtraResourceUrl;
                     break;
                 case ServerTypeEnum.Formal:
-                    url = SettingUtility.GlobalSettings.GameSetting.FormalResourceSourceUrl;
+                    url = SettingUtility.GlobalSettings.GameSetting.FormalResourceUrl;
                     break;
                 default:
                     url = string.Empty;
                     break;
             }
-
+            
+            Log.Info($"GetHostServerURL, platform : {platform}, url : {url}");
             return $"{url}/{platform}/";
         }
 
         private string GetDefaultServerURL()
         {
             string platform = SettingUtility.PlatformName();
-            string url = "http://127.0.0.1";
+            string url = "http://127.0.0.1:8080";
+            Log.Info($"GetDefaultServerURL, platform : {platform}, url : {url}");
             return $"{url}/{platform}/";
         }
         
@@ -94,5 +105,10 @@ namespace AIOFramework.Runtime
             patchViewModel.Model = new PatchModel();
             patchView.BindContext(patchViewModel);
         }
+        
+        
     }
+    
+
+    
 }

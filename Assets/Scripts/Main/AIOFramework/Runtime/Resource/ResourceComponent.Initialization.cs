@@ -1,7 +1,8 @@
 ﻿using YooAsset;
 using Cysharp.Threading.Tasks;
+using AIOFramework.Runtime;
 
-namespace AIOFramework.Runtime
+namespace AIOFramework.Resource
 {
     public partial class ResourceComponent
     {

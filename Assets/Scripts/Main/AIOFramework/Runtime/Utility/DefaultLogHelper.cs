@@ -9,7 +9,7 @@
 using AIOFramework.Runtime;
 using UnityEngine;
 
-namespace UnityGameFramework.Runtime
+namespace AIOFramework.Runtime
 {
     /// <summary>
     /// 默认游戏框架日志辅助器。

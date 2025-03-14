@@ -3,6 +3,7 @@ using Loxodon.Framework.Binding.Builder;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using AIOFramework.UI;
 
 namespace AIOFramework.Runtime
 {

@@ -1,7 +1,7 @@
 ﻿
-using Loxodon.Framework.Views.Variables;
+using AIOFramework.Runtime;
 
-namespace AIOFramework.Runtime
+namespace AIOFramework.UI
 {
     /// <summary>
     /// 界面接口。

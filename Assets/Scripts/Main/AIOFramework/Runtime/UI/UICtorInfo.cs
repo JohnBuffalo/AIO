@@ -1,5 +1,7 @@
 ﻿
-namespace AIOFramework.Runtime
+using AIOFramework.Runtime;
+
+namespace AIOFramework.UI
 {
     /// <summary>
     /// UIView构造参数

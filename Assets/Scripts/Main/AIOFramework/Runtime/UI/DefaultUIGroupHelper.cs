@@ -1,8 +1,9 @@
 ﻿using System;
+using AIOFramework.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace AIOFramework.Runtime
+namespace AIOFramework.UI
 {
     [RequireComponent(typeof(Canvas),typeof(GraphicRaycaster))]
     /// <summary>

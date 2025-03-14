@@ -4,9 +4,9 @@ using UnityEngine;
 public enum ServerTypeEnum
 {
     /// <summary>
-    /// 无
+    /// 本地宿主机
     /// </summary>
-    None = 0,
+    Local = 0,
 
     /// <summary>
     /// 内网
@@ -41,22 +41,24 @@ namespace AIOFramework.Setting
 
         public bool CleanCommitPathRes => m_CleanCommitPathRes;
 
-
+        
+        [Tooltip("宿主机资源地址")] [SerializeField]
+        private string m_LocalResourceUrl = "http://127.0.0.1";
+        public string LocalResourceUrl => m_LocalResourceUrl;
         [Tooltip("Dev内网资源地址")] [SerializeField]
-        private string m_InnerResourceSourceUrl = "http://127.0.0.1";
-
-        public string InnerResourceSourceUrl => m_InnerResourceSourceUrl;
+        private string m_InnerResourceUrl = "http://127.0.0.1";
+        public string InnerResourceUrl => m_InnerResourceUrl;
 
         [Tooltip("Dev外网资源地址")] [SerializeField]
-        private string m_ExtraResourceSourceUrl = "http://127.0.0.1";
+        private string m_ExtraResourceUrl = "http://127.0.0.1";
 
-        public string ExtraResourceSourceUrl => m_ExtraResourceSourceUrl;
+        public string ExtraResourceUrl => m_ExtraResourceUrl;
 
 
         [Tooltip("Master线上资源地址")] [SerializeField]
-        private string m_FormalResourceSourceUrl = "http://127.0.0.1";
+        private string m_FormalResourceUrl = "http://127.0.0.1";
 
-        public string FormalResourceSourceUrl => m_FormalResourceSourceUrl;
+        public string FormalResourceUrl => m_FormalResourceUrl;
 
         [Tooltip("本地资源服务器地址")][SerializeField]
         private string m_LocalServerDirectory = "D:/UnityReferences/AIOSimulateServer";

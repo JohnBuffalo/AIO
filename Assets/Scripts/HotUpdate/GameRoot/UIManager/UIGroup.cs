@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Loxodon.Framework.ViewModels;
+using AIOFramework.UI;
 
 namespace AIOFramework.Runtime
 {

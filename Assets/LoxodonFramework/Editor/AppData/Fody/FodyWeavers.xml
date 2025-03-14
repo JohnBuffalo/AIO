@@ -2,7 +2,8 @@
 <Weavers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<AssemblyNames>
 		<Item>Assembly-CSharp</Item>
-		<Item>AIOFramework.Runtime</Item>>
+		<Item>AIOFramework.Runtime</Item>
+		<Item>HotUpdate</Item>
 	</AssemblyNames>
 	<PropertyChanged defaultWeaving ="true" />
 </Weavers>

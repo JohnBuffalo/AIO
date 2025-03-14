@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace AIOFramework.Runtime
+namespace AIOFramework.UI
 {
     public class UIRoot: MonoBehaviour
     {

@@ -3,8 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using Loxodon.Framework.Views;
 using Loxodon.Framework.Views.Variables;
+using AIOFramework.Runtime;
 
-namespace AIOFramework.Runtime
+namespace AIOFramework.UI
 {
     [RequireComponent(typeof(Canvas), typeof(GraphicRaycaster))]
     public class UIViewBase : UIView, IUIForm

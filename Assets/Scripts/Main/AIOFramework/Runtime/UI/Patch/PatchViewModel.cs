@@ -4,6 +4,7 @@ using Loxodon.Framework.Commands;
 using Loxodon.Framework.Interactivity;
 using PropertyChanged;
 using UnityEngine;
+using AIOFramework.UI;
 
 namespace AIOFramework.Runtime
 {

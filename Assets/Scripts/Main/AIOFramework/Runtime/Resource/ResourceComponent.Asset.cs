@@ -1,10 +1,11 @@
 ﻿using YooAsset;
 using UnityEngine;
 using System.Collections.Generic;
+using AIOFramework.Runtime;
 using UnityEngine.SceneManagement;
 using Cysharp.Threading.Tasks;
 
-namespace AIOFramework.Runtime
+namespace AIOFramework.Resource
 {
     public partial class ResourceComponent : GameFrameworkComponent, IAssetManager
     {

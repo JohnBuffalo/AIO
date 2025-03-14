@@ -22,7 +22,6 @@ namespace HotUpdate
             "mscorlib.dll",
             "System.dll",
             "System.Core.dll",
-            
             "UnityEngine.CoreModule.dll",
             "AIOFramework.Runtime.dll",
             "Loxodon.Framework.dll",
@@ -31,27 +30,23 @@ namespace HotUpdate
 
         private List<string> HotUpdateAssemblyFiles { get; } = new List<string>() { "HotUpdate.dll" };
 
-
         private async UniTask LoadDlls()
         {
             await CacheAssembliesBytes();
             Log.Info("[LoadDlls] CacheAssemblies Finish");
-            await LoadMetadataForAOTAssemblies();
+            var list = new List<UniTask>();
+            LoadMetadataForAOTAssemblies();
             Log.Info("[LoadDlls] LoadMetadataForAOTAssemblies Finish");
-            await LoadHotUpdateAssembly();
-            Log.Info("[LoadDlls] LoadHotUpdateAssembly Finish");
             s_assetDatas.Clear();
         }
 
         private async UniTask CacheAssembliesBytes()
         {
-            var totalFileNames = HotUpdateAssemblyFiles.Concat(AOTMetaAssemblyFiles);
-            var tasks = new List<UniTask>();
+            var totalFileNames = AOTMetaAssemblyFiles;
             foreach (var fileName in totalFileNames)
             {
-                tasks.Add(LoadAssemblyBytes(fileName));
+                await LoadAssemblyBytes(fileName);
             }
-            await UniTask.WhenAll(tasks);
         }
         
         private byte[] ReadBytesFromCache(string dllName)
@@ -65,13 +60,13 @@ namespace HotUpdate
                 SettingUtility.GlobalSettings.GameSetting.HotUpdateDllDirectory);
             var location = Utility.Path.GetRegularPath(Path.Combine(dllDirectory, fileName));
 
-            var bytes = await Entrance.Resource.LoadRawFileAsync(location);
-            s_assetDatas.Add(fileName, bytes);
+            var dllText = await Entrance.Resource.LoadAssetAsync<TextAsset>(location);
+            s_assetDatas.Add(fileName, dllText.bytes);
             Log.Info($"Load {fileName}.bytes success");
             Log.Info("------------------------------------------------------------------");
         }
 
-        private async UniTask LoadMetadataForAOTAssemblies()
+        private void LoadMetadataForAOTAssemblies()
         {
             HomologousImageMode mode = HomologousImageMode.SuperSet;
             for (int i = 0; i < AOTMetaAssemblyFiles.Count; i++)
@@ -80,19 +75,6 @@ namespace HotUpdate
                 LoadImageErrorCode err = RuntimeApi.LoadMetadataForAOTAssembly(bytes, mode);
                 Debug.Log($"LoadMetadataForAOTAssembly:{AOTMetaAssemblyFiles[i]}. mode:{mode} ret:{err}");
             }
-        }
-
-        private async UniTask LoadHotUpdateAssembly()
-        {
-            Assembly assembly;
-#if !UNITY_EDITOR
-            byte[] assemblyData = ReadBytesFromCache("HotUpdate.dll");
-            assembly = Assembly.Load(assemblyData);
-            Log.Info($"Load assembly: {assembly.GetName()} success ");
-#else
-            assembly = System.AppDomain.CurrentDomain.GetAssemblies().First(a => a.GetName().Name == "HotUpdate");
-            Log.Info($"Find assembly: {assembly.GetName()} success ");
-#endif
         }
     }
 }

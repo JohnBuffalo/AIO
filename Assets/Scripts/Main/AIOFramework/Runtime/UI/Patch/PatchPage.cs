@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using AIOFramework.Event;
+using AIOFramework.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

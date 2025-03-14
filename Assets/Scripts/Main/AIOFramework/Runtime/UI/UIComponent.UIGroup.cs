@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AIOFramework.Runtime
+namespace AIOFramework.UI
 {
     public enum UIGroupEnum : byte
     {

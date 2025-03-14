@@ -1,6 +1,7 @@
-﻿using AIOFramework.Event;
+﻿using AIOFramework.Runtime;
+using AIOFramework.UI;
 
-namespace AIOFramework.Runtime
+namespace AIOFramework.Event
 {
     public class CloseUICompleteEventArgs : GameEventArgs
     {

@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using Loxodon.Framework.Binding;
 using Loxodon.Framework.Binding.Builder;
 using TMPro;
-using UnityEngine;
+using AIOFramework.UI;
 
 namespace AIOFramework.Runtime
 {
@@ -31,6 +29,9 @@ namespace AIOFramework.Runtime
             set { Set(ref m_SerialId, value); }
         }
         
+        /// <summary>
+        /// 提示信息
+        /// </summary>
         public string Tips
         {
             get { return m_Tips; }

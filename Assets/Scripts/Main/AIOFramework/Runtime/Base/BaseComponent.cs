@@ -18,9 +18,9 @@ namespace AIOFramework.Runtime
         [SerializeField] private float m_GameSpeed = 1f;
         [SerializeField] private bool m_RunInBackground = true;
         [SerializeField] private bool m_NeverSleep = true;
-        [SerializeField] private string m_LogHelperTypeName = "UnityGameFramework.Runtime.DefaultLogHelper";
+        [SerializeField] private string m_LogHelperTypeName = "AIOFramework.Runtime.DefaultLogHelper";
         /// <summary>
-        /// 获取或设置游戏帧率。
+        /// 获取或设置游戏帧率.
         /// </summary>
         public int FrameRate
         {

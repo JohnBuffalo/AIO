@@ -18,7 +18,6 @@ namespace AIOFramework.Editor
         private static readonly string[] RuntimeAssemblyNames =
         {
 #if UNITY_2017_3_OR_NEWER
-            "UnityGameFramework.Runtime",
             "AIOFramework.Runtime",
             "Main",
 #endif
@@ -28,7 +27,6 @@ namespace AIOFramework.Editor
         private static readonly string[] RuntimeOrEditorAssemblyNames =
         {
 #if UNITY_2017_3_OR_NEWER
-            "UnityGameFramework.Runtime",
             "AIOFramework.Runtime",
             "Main",
 #endif

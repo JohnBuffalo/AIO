@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: GlobalSettings
   m_EditorClassIdentifier: 
   m_GameSetting:
-    m_ServerType: 1
-    m_Version: 0.0.0
+    m_ServerType: 0
+    m_Version: 0.7.0
     m_CleanCommitPathRes: 0
-    m_InnerResourceSourceUrl: http://127.0.0.1
-    m_ExtraResourceSourceUrl: http://127.0.0.1
-    m_FormalResourceSourceUrl: http://127.0.0.1
+    m_LocalResourceUrl: https://10.0.234.51:8080
+    m_InnerResourceUrl: https://10.0.234.51:8080
+    m_ExtraResourceUrl: https://10.0.234.51:8080
+    m_FormalResourceUrl: https://10.0.234.51:8080
+    m_LocalServerDirectory: D:/UnityReferences/AIOHttpsServer
+    m_HotUpdateDllDirectory: ArtAssets/HotUpdate

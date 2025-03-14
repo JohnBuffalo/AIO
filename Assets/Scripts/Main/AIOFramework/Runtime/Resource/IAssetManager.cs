@@ -5,7 +5,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
-namespace AIOFramework.Runtime
+namespace AIOFramework.Resource
 {
     /// <summary>
     /// 资源管理器接口，定义了资源管理的基本操作。

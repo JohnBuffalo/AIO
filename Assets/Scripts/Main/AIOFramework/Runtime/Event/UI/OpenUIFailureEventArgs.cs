@@ -1,6 +1,7 @@
-﻿using AIOFramework.Event;
+﻿using AIOFramework.Runtime;
 
-namespace AIOFramework.Runtime
+
+namespace AIOFramework.Event
 {
     public class OpenUIFailureEventArgs : GameEventArgs
     {

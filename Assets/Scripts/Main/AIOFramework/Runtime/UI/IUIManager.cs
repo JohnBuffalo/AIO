@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using AIOFramework.ObjectPool;
 using Cysharp.Threading.Tasks;
+using AIOFramework.Runtime;
+using AIOFramework.Event;
+using AIOFramework.Resource;
 
-namespace AIOFramework.Runtime
+namespace AIOFramework.UI
 {
     public interface IUIManager
     {

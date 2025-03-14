@@ -1,8 +1,8 @@
 ﻿using System;
-using AIOFramework.Event;
+using AIOFramework.Runtime;
 using UnityEngine;
 
-namespace AIOFramework.Runtime
+namespace AIOFramework.Event
 {
     /// <summary>
     /// 事件组件。

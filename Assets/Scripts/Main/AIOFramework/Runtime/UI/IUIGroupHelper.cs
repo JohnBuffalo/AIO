@@ -1,5 +1,5 @@
 ﻿
-namespace AIOFramework.Runtime
+namespace AIOFramework.UI
 {
     /// <summary>
     /// 界面组辅助器接口。

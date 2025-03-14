@@ -1,41 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <linker>
   <assembly fullname="AIOFramework.Runtime">
+    <type fullname="AIOFramework.Event.CloseUICompleteEventArgs" preserve="all" />
+    <type fullname="AIOFramework.Event.EventComponent" preserve="all" />
+    <type fullname="AIOFramework.Event.OpenUIFailureEventArgs" preserve="all" />
+    <type fullname="AIOFramework.Event.OpenUISuccessEventArgs" preserve="all" />
     <type fullname="AIOFramework.ObjectPool.IObjectPoolManager" preserve="all" />
     <type fullname="AIOFramework.ObjectPool.IObjectPool`1" preserve="all" />
     <type fullname="AIOFramework.ObjectPool.ObjectBase" preserve="all" />
+    <type fullname="AIOFramework.Resource.IAssetManager" preserve="all" />
+    <type fullname="AIOFramework.Resource.ResourceComponent" preserve="all" />
     <type fullname="AIOFramework.Runtime.BaseComponent" preserve="all" />
-    <type fullname="AIOFramework.Runtime.CloseUICompleteEventArgs" preserve="all" />
     <type fullname="AIOFramework.Runtime.Entrance" preserve="all" />
-    <type fullname="AIOFramework.Runtime.EventComponent" preserve="all" />
     <type fullname="AIOFramework.Runtime.GameEntry" preserve="all" />
     <type fullname="AIOFramework.Runtime.GameFrameworkException" preserve="all" />
     <type fullname="AIOFramework.Runtime.GameFrameworkLinkedList`1" preserve="all" />
     <type fullname="AIOFramework.Runtime.GameFrameworkLinkedList`1/Enumerator" preserve="all" />
     <type fullname="AIOFramework.Runtime.GameFrameworkModule" preserve="all" />
-    <type fullname="AIOFramework.Runtime.IAssetManager" preserve="all" />
     <type fullname="AIOFramework.Runtime.IReference" preserve="all" />
-    <type fullname="AIOFramework.Runtime.IUIForm" preserve="all" />
-    <type fullname="AIOFramework.Runtime.IUIGroup" preserve="all" />
-    <type fullname="AIOFramework.Runtime.IUIGroupHelper" preserve="all" />
-    <type fullname="AIOFramework.Runtime.IUIManager" preserve="all" />
     <type fullname="AIOFramework.Runtime.Log" preserve="all" />
-    <type fullname="AIOFramework.Runtime.OpenUIFailureEventArgs" preserve="all" />
-    <type fullname="AIOFramework.Runtime.OpenUISuccessEventArgs" preserve="all" />
     <type fullname="AIOFramework.Runtime.ReferencePool" preserve="all" />
-    <type fullname="AIOFramework.Runtime.ResourceComponent" preserve="all" />
-    <type fullname="AIOFramework.Runtime.UIComponent" preserve="all" />
-    <type fullname="AIOFramework.Runtime.UICtorInfo" preserve="all" />
-    <type fullname="AIOFramework.Runtime.UIGroupEnum" preserve="all" />
-    <type fullname="AIOFramework.Runtime.UIRoot" preserve="all" />
-    <type fullname="AIOFramework.Runtime.UIViewBase" preserve="all" />
-    <type fullname="AIOFramework.Runtime.UIViewModelBase" preserve="all" />
     <type fullname="AIOFramework.Runtime.Utility" preserve="all" />
     <type fullname="AIOFramework.Runtime.Utility/Path" preserve="all" />
     <type fullname="AIOFramework.Runtime.Utility/Text" preserve="all" />
     <type fullname="AIOFramework.Setting.GameSetting" preserve="all" />
     <type fullname="AIOFramework.Setting.GlobalSettings" preserve="all" />
     <type fullname="AIOFramework.Setting.SettingUtility" preserve="all" />
+    <type fullname="AIOFramework.UI.IUIForm" preserve="all" />
+    <type fullname="AIOFramework.UI.IUIGroup" preserve="all" />
+    <type fullname="AIOFramework.UI.IUIGroupHelper" preserve="all" />
+    <type fullname="AIOFramework.UI.IUIManager" preserve="all" />
+    <type fullname="AIOFramework.UI.UIComponent" preserve="all" />
+    <type fullname="AIOFramework.UI.UICtorInfo" preserve="all" />
+    <type fullname="AIOFramework.UI.UIGroupEnum" preserve="all" />
+    <type fullname="AIOFramework.UI.UIRoot" preserve="all" />
+    <type fullname="AIOFramework.UI.UIViewBase" preserve="all" />
+    <type fullname="AIOFramework.UI.UIViewModelBase" preserve="all" />
   </assembly>
   <assembly fullname="HybridCLR.Runtime">
     <type fullname="HybridCLR.HomologousImageMode" preserve="all" />
@@ -58,7 +58,6 @@
   </assembly>
   <assembly fullname="System.Core">
     <type fullname="System.Collections.Generic.HashSet`1" preserve="all" />
-    <type fullname="System.Linq.Enumerable" preserve="all" />
     <type fullname="System.Linq.Expressions.ConstantExpression" preserve="all" />
     <type fullname="System.Linq.Expressions.Expression" preserve="all" />
     <type fullname="System.Linq.Expressions.Expression`1" preserve="all" />
@@ -86,6 +85,7 @@
     <type fullname="UnityEngine.GameObject" preserve="all" />
     <type fullname="UnityEngine.MonoBehaviour" preserve="all" />
     <type fullname="UnityEngine.Object" preserve="all" />
+    <type fullname="UnityEngine.TextAsset" preserve="all" />
     <type fullname="UnityEngine.Transform" preserve="all" />
     <type fullname="UnityEngine.Vector3" preserve="all" />
   </assembly>
@@ -98,10 +98,9 @@
     <type fullname="System.Collections.Generic.Dictionary`2" preserve="all" />
     <type fullname="System.Collections.Generic.Dictionary`2/Enumerator" preserve="all" />
     <type fullname="System.Collections.Generic.IEnumerable`1" preserve="all" />
-    <type fullname="System.Collections.Generic.IEnumerator`1" preserve="all" />
     <type fullname="System.Collections.Generic.KeyValuePair`2" preserve="all" />
     <type fullname="System.Collections.Generic.List`1" preserve="all" />
-    <type fullname="System.Collections.IEnumerator" preserve="all" />
+    <type fullname="System.Collections.Generic.List`1/Enumerator" preserve="all" />
     <type fullname="System.Delegate" preserve="all" />
     <type fullname="System.Diagnostics.DebuggableAttribute" preserve="all" />
     <type fullname="System.Diagnostics.DebuggableAttribute/DebuggingModes" preserve="all" />
@@ -113,8 +112,6 @@
     <type fullname="System.IO.Path" preserve="all" />
     <type fullname="System.Int32" preserve="all" />
     <type fullname="System.Object" preserve="all" />
-    <type fullname="System.Reflection.Assembly" preserve="all" />
-    <type fullname="System.Reflection.AssemblyName" preserve="all" />
     <type fullname="System.Reflection.MethodBase" preserve="all" />
     <type fullname="System.Reflection.MethodInfo" preserve="all" />
     <type fullname="System.Runtime.CompilerServices.AsyncStateMachineAttribute" preserve="all" />

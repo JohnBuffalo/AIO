@@ -1,6 +1,7 @@
-﻿using AIOFramework.Event;
+﻿using AIOFramework.Runtime;
+using AIOFramework.UI;
 
-namespace AIOFramework.Runtime
+namespace AIOFramework.Event
 {
     /// <summary>
     /// 打开界面成功事件。

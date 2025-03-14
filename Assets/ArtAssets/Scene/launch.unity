@@ -663,10 +663,20 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1095870809628399405, guid: 962d3b48ea221c44bbd14132712c9f8d,
+        type: 3}
+      propertyPath: m_ShowFullWindow
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2209649675884268766, guid: 962d3b48ea221c44bbd14132712c9f8d,
         type: 3}
       propertyPath: m_PlayMode
-      value: 0
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2209649675884268766, guid: 962d3b48ea221c44bbd14132712c9f8d,
+        type: 3}
+      propertyPath: m_TimeSlice
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 4003668257105596814, guid: 962d3b48ea221c44bbd14132712c9f8d,
         type: 3}

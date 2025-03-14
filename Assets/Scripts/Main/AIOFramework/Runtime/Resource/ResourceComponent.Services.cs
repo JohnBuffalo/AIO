@@ -1,6 +1,6 @@
 ﻿using YooAsset;
 
-namespace AIOFramework.Runtime
+namespace AIOFramework.Resource
 {
     public partial class ResourceComponent
     {

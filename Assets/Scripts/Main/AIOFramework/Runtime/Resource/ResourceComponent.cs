@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using AIOFramework.Runtime;
 using UnityEngine;
 using YooAsset;
 
-namespace AIOFramework.Runtime
+namespace AIOFramework.Resource
 {
     [DisallowMultipleComponent]
     [AddComponentMenu("AIOFramework/Resource")]

@@ -1,6 +1,8 @@
 ﻿
 using Loxodon.Framework.ViewModels;
-namespace AIOFramework.Runtime
+using AIOFramework.Runtime;
+
+namespace AIOFramework.UI
 {
     public abstract class UIViewModelBase : ViewModelBase, IReference
     {

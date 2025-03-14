@@ -6,6 +6,7 @@ using AIOFramework.Setting;
 using HybridCLR.Editor.Commands;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 using YooAsset;
 using YooAsset.Editor;
 
@@ -13,6 +14,13 @@ namespace AIOFramework.Editor.CI
 {
     public partial class GameAppBuilder
     {
+
+        [MenuItem("GameBuilder/Graphic test", priority = 2)]
+        public static void SetGraphics()
+        {
+            var buildTarget = EditorUserBuildSettings.activeBuildTarget;
+            PlayerSettings.SetGraphicsAPIs(buildTarget, new GraphicsDeviceType[] { GraphicsDeviceType.OpenGLES2, GraphicsDeviceType.OpenGLES3, GraphicsDeviceType.Vulkan });
+        }
         /// <summary>
         /// 大版本出包
         /// </summary
@@ -168,9 +176,9 @@ namespace AIOFramework.Editor.CI
                 case BuildTarget.Android:
                     EditorUserBuildSettings.buildAppBundle = false; // 生成APK
                     PlayerSettings.Android.useCustomKeystore = true;
-                    PlayerSettings.Android.keyaliasName = "your_alias";
-                    PlayerSettings.Android.keystorePass = "keystore_password";
-                    PlayerSettings.Android.keyaliasPass = "alias_password";
+                    PlayerSettings.Android.keyaliasName = "release";
+                    PlayerSettings.Android.keystorePass = "123456";
+                    PlayerSettings.Android.keyaliasPass = "123456";
                     PlayerSettings.Android.minSdkVersion = AndroidSdkVersions.AndroidApiLevel24;
                     break;
 
