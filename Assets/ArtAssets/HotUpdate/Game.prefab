@@ -91,6 +91,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_InstanceRoot: {fileID: 0}
   m_UIGroupHelperTypeName: AIOFramework.UI.DefaultUIGroupHelper
-  m_InstanceAutoReleaseInterval: 60
+  m_InstanceAutoReleaseInterval: 5
   m_InstanceCapacity: 16
-  m_InstanceExpireTime: 60
+  m_InstanceExpireTime: 5

@@ -24,6 +24,14 @@ namespace AIOFramework.UI
                 return m_Canvas;
             }
         }
+
+        public void Init()
+        {
+            var rectTrans = GetComponent<RectTransform>();
+            rectTrans.anchorMin = Vector2.zero;
+            rectTrans.anchorMax = Vector2.one;
+            rectTrans.sizeDelta = new Vector2(1080,1920);
+        }
         /// <summary>
         /// 设置界面组深度。
         /// </summary>

@@ -46,14 +46,14 @@ namespace HotUpdate
             uiPage.GetViewModel<TestPageViewModel>().Tips = "1";
             // ((GameObject)(uiPage.Handle)).name = uid.ToString();
             // Log.Error($"open ui {uid}, {uiPage.GetComponent<Canvas>().sortingOrder}");
-            await UniTask.Delay(2000);
+            await UniTask.Delay(500);
             
             uid = await Game.UI.OpenUI<TestPageCtorInfo, TestPageViewModel>();
             uiPage = Game.UI.GetUI<TestPage>(uid);
             uiPage.GetViewModel<TestPageViewModel>().Tips = "2";
             // ((GameObject)(uiPage.Handle)).name = uid.ToString();
             // Log.Error($"open ui {uid}, {uiPage.GetComponent<Canvas>().sortingOrder}");
-            await UniTask.Delay(2000);
+            await UniTask.Delay(500);
             Game.UI.CloseUI(uid);
             
             var ctorInfo = ReferencePool.Acquire<TestPage2CtorInfo>();
@@ -63,14 +63,13 @@ namespace HotUpdate
             uiPage.GetViewModel<TestPageViewModel>().Tips = "3";
             // ((GameObject)(uiPage.Handle)).name = uid2.ToString();
             // Log.Error($"open ui {uid2}, {uiPage.GetComponent<Canvas>().sortingOrder}");
-            await UniTask.Delay(2000);
+            await UniTask.Delay(500);
             
             uid = await Game.UI.OpenUI<TestPageCtorInfo, TestPageViewModel>();
             uiPage = Game.UI.GetUI<TestPage>(uid);
             uiPage.GetViewModel<TestPageViewModel>().Tips = "4";
             // ((GameObject)(uiPage.Handle)).name = uid.ToString();
             // Log.Error($"open ui {uid}, {uiPage.GetComponent<Canvas>().sortingOrder}");
-            await UniTask.Delay(2000);
 
 
         }

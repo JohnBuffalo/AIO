@@ -187,6 +187,7 @@ namespace AIOFramework.UI
 
             uiGroupHelper.name = Utility.Text.Format("UI Group - {0}", uiGroupName);
             uiGroupHelper.gameObject.layer = LayerMask.NameToLayer("UI");
+            uiGroupHelper.Init();
             Transform transform = uiGroupHelper.transform;
             transform.SetParent(m_InstanceRoot);
             transform.localScale = Vector3.one;

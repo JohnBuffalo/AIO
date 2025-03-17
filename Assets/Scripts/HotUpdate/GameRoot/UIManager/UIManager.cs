@@ -431,6 +431,7 @@ namespace AIOFramework.Runtime
 
             int serialId = ++m_Serial;
             string uiName = GetUIName(ctorInfo.Location);
+            UIInstanceObject uiInstanceObject = m_InstancePool.Spawn(uiName);
 
             if (!ctorInfo.Multiple) //只允许有一个同类UI
             {
@@ -442,12 +443,11 @@ namespace AIOFramework.Runtime
                     uiGroup.RemoveUI(exsitUI);
                     ReferencePool.Release(exsitUI.ViewModel);
                     exsitUI.ViewModel = null;
-                    InternalOpenUI(exsitUI.SerialId, uiName, ctorInfo, (GameObject)exsitUI.Handle, viewModel, userData);
+                    InternalOpenUI(exsitUI.SerialId, uiName, ctorInfo, (GameObject)uiInstanceObject.Target, viewModel, userData);
                     return exsitUI.SerialId;
                 }
             }
 
-            UIInstanceObject uiInstanceObject = m_InstancePool.Spawn(uiName);
             if (uiInstanceObject == null)
             {
                 m_UIBeingLoaded.Add(serialId, ctorInfo.Location);
@@ -498,8 +498,9 @@ namespace AIOFramework.Runtime
                 }
 
                 uiInstance.transform.SetParent(uiRoot);
-                uiInstance.transform.localPosition = Vector3.zero;
-                uiInstance.transform.localScale = Vector3.one;
+                uiInstance.GetComponent<RectTransform>().localPosition = Vector3.zero;
+                uiInstance.GetComponent<RectTransform>().localScale = Vector3.one;
+                uiInstance.GetComponent<RectTransform>().sizeDelta = Vector2.zero;
                 uiView.OnInit(serialId, uiName, uiGroup, viewModel, ctorInfo);
                 uiGroup.AddUI(uiView);
                 uiView.OnOpen(userData);
