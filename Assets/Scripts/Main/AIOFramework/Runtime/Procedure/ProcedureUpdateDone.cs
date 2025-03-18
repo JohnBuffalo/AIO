@@ -34,12 +34,12 @@ namespace AIOFramework.Runtime
 #if !UNITY_EDITOR
             var dllDirectory = Path.Combine("Assets",
                 SettingUtility.GlobalSettings.GameSetting.HotUpdateDllDirectory);
-            var location = Utility.Path.GetRegularPath(Path.Combine(dllDirectory, "HotUpdate.dll.bytes"));
+            var location = Utility.Path.GetRegularPath(Path.Combine(dllDirectory, "HotUpdate.Runtime.dll.bytes"));
             var dellText = await Entrance.Resource.LoadAssetAsync<TextAsset>(location);
             assembly = Assembly.Load(dellText.bytes);
             Log.Info($"Load assembly: {assembly.GetName()} success ");
 #else
-            assembly = System.AppDomain.CurrentDomain.GetAssemblies().First(a => a.GetName().Name == "HotUpdate");
+            assembly = System.AppDomain.CurrentDomain.GetAssemblies().First(a => a.GetName().Name == "HotUpdate.Runtime");
             Log.Info($"Find assembly: {assembly.GetName()} success ");
 #endif
         }

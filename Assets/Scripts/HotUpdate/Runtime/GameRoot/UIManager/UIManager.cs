@@ -501,6 +501,7 @@ namespace AIOFramework.Runtime
                 uiInstance.GetComponent<RectTransform>().localPosition = Vector3.zero;
                 uiInstance.GetComponent<RectTransform>().localScale = Vector3.one;
                 uiInstance.GetComponent<RectTransform>().sizeDelta = Vector2.zero;
+                viewModel.SetAssetManager(m_AssetManager);
                 uiView.OnInit(serialId, uiName, uiGroup, viewModel, ctorInfo);
                 uiGroup.AddUI(uiView);
                 uiView.OnOpen(userData);

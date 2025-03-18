@@ -16,7 +16,7 @@ namespace AIOFramework.Setting
     /// 游戏配置组件。
     /// </summary>
     [DisallowMultipleComponent]
-    [AddComponentMenu("Game Framework/Setting")]
+    [AddComponentMenu("AIOFramework/Setting")]
     public sealed class SettingComponent : GameFrameworkComponent
     {
         private ISettingManager m_SettingManager = null;

@@ -14,7 +14,7 @@ namespace AIOFramework.Runtime
     /// 调试器组件。
     /// </summary>
     [DisallowMultipleComponent]
-    [AddComponentMenu("Game Framework/Debugger")]
+    [AddComponentMenu("AIOFramework/Debugger")]
     public sealed partial class DebuggerComponent : GameFrameworkComponent
     {
         /// <summary>

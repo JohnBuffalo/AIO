@@ -7,4 +7,4 @@
 [assembly: InternalsVisibleTo("Assembly-CSharp-Editor")]
 [assembly: InternalsVisibleTo("AIOFramework.Runtime")]
 [assembly: InternalsVisibleTo("AIOFramework.Editor")]
-[assembly: InternalsVisibleTo("HotUpdate")]
+[assembly: InternalsVisibleTo("HotUpdate.Runtime")]

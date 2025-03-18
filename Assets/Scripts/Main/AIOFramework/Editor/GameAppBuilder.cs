@@ -14,13 +14,6 @@ namespace AIOFramework.Editor.CI
 {
     public partial class GameAppBuilder
     {
-
-        [MenuItem("GameBuilder/Graphic test", priority = 2)]
-        public static void SetGraphics()
-        {
-            var buildTarget = EditorUserBuildSettings.activeBuildTarget;
-            PlayerSettings.SetGraphicsAPIs(buildTarget, new GraphicsDeviceType[] { GraphicsDeviceType.OpenGLES2, GraphicsDeviceType.OpenGLES3, GraphicsDeviceType.Vulkan });
-        }
         /// <summary>
         /// 大版本出包
         /// </summary
@@ -100,10 +93,10 @@ namespace AIOFramework.Editor.CI
                 Debug.LogError("Build Package failed");
                 return;
             }
+            settings.Version = nextVersion;
             //生成app包体
             var buildAppSuccess = BuildApp();
             if (!buildAppSuccess) return;
-            settings.Version = nextVersion;
             //资源发布
             CopyBundlesToCdn();
             AssetDatabase.SaveAssetIfDirty(SettingUtility.GlobalSettings);

@@ -8,7 +8,7 @@ namespace AIOFramework.Event
     /// 事件组件。
     /// </summary>
     [DisallowMultipleComponent]
-    [AddComponentMenu("Game Framework/Event")]
+    [AddComponentMenu("AIOFramework/Event")]
     public sealed class EventComponent : GameFrameworkComponent
     {
         private IEventManager m_EventManager = null;

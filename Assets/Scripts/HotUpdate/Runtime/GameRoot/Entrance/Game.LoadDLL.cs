@@ -7,10 +7,11 @@ using AIOFramework.Setting;
 using Cysharp.Threading.Tasks;
 using HybridCLR;
 using UnityEngine;
+using YooAsset;
 
 namespace HotUpdate
 {
-    public partial class Game
+    public partial class Game : MonoBehaviour
     {
         private Dictionary<string, byte[]> s_assetDatas = new Dictionary<string, byte[]>();
 
@@ -27,8 +28,6 @@ namespace HotUpdate
             "Loxodon.Framework.dll",
             "UniTask.dll",
         };
-
-        private List<string> HotUpdateAssemblyFiles { get; } = new List<string>() { "HotUpdate.dll" };
 
         private async UniTask LoadDlls()
         {

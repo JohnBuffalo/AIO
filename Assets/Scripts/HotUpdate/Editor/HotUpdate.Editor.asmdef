@@ -1,0 +1,20 @@
+{
+    "name": "HotUpdate.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:72f023ed1714b7f46aeabe4e0eda3a55",
+        "GUID:af7c4ce2f1ab8b644b1d3dc8e9c26002",
+        "GUID:88e04ed27f719cf41a7a6684f6dd0a4c"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

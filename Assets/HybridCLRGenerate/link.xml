@@ -5,14 +5,22 @@
     <type fullname="AIOFramework.Event.EventComponent" preserve="all" />
     <type fullname="AIOFramework.Event.OpenUIFailureEventArgs" preserve="all" />
     <type fullname="AIOFramework.Event.OpenUISuccessEventArgs" preserve="all" />
+    <type fullname="AIOFramework.Fsm.FsmBase" preserve="all" />
+    <type fullname="AIOFramework.Fsm.FsmState`1" preserve="all" />
+    <type fullname="AIOFramework.Fsm.IFsmManager" preserve="all" />
+    <type fullname="AIOFramework.Fsm.IFsm`1" preserve="all" />
     <type fullname="AIOFramework.ObjectPool.IObjectPoolManager" preserve="all" />
     <type fullname="AIOFramework.ObjectPool.IObjectPool`1" preserve="all" />
     <type fullname="AIOFramework.ObjectPool.ObjectBase" preserve="all" />
+    <type fullname="AIOFramework.ObjectPool.ObjectPoolBase" preserve="all" />
+    <type fullname="AIOFramework.Procedure.IProcedureManager" preserve="all" />
     <type fullname="AIOFramework.Resource.IAssetManager" preserve="all" />
     <type fullname="AIOFramework.Resource.ResourceComponent" preserve="all" />
     <type fullname="AIOFramework.Runtime.BaseComponent" preserve="all" />
     <type fullname="AIOFramework.Runtime.Entrance" preserve="all" />
     <type fullname="AIOFramework.Runtime.GameEntry" preserve="all" />
+    <type fullname="AIOFramework.Runtime.GameFrameworkComponent" preserve="all" />
+    <type fullname="AIOFramework.Runtime.GameFrameworkEntry" preserve="all" />
     <type fullname="AIOFramework.Runtime.GameFrameworkException" preserve="all" />
     <type fullname="AIOFramework.Runtime.GameFrameworkLinkedList`1" preserve="all" />
     <type fullname="AIOFramework.Runtime.GameFrameworkLinkedList`1/Enumerator" preserve="all" />
@@ -80,14 +88,23 @@
     <type fullname="TMPro.TextMeshProUGUI" preserve="all" />
   </assembly>
   <assembly fullname="UnityEngine.CoreModule">
+    <type fullname="UnityEngine.AddComponentMenu" preserve="all" />
+    <type fullname="UnityEngine.Behaviour" preserve="all" />
     <type fullname="UnityEngine.Component" preserve="all" />
     <type fullname="UnityEngine.Debug" preserve="all" />
+    <type fullname="UnityEngine.DisallowMultipleComponent" preserve="all" />
     <type fullname="UnityEngine.GameObject" preserve="all" />
     <type fullname="UnityEngine.MonoBehaviour" preserve="all" />
     <type fullname="UnityEngine.Object" preserve="all" />
+    <type fullname="UnityEngine.RectTransform" preserve="all" />
+    <type fullname="UnityEngine.Sprite" preserve="all" />
     <type fullname="UnityEngine.TextAsset" preserve="all" />
     <type fullname="UnityEngine.Transform" preserve="all" />
+    <type fullname="UnityEngine.Vector2" preserve="all" />
     <type fullname="UnityEngine.Vector3" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.UI">
+    <type fullname="UnityEngine.UI.Image" preserve="all" />
   </assembly>
   <assembly fullname="UnityEngine.UIModule">
     <type fullname="UnityEngine.Canvas" preserve="all" />
@@ -112,6 +129,8 @@
     <type fullname="System.IO.Path" preserve="all" />
     <type fullname="System.Int32" preserve="all" />
     <type fullname="System.Object" preserve="all" />
+    <type fullname="System.ParamArrayAttribute" preserve="all" />
+    <type fullname="System.Predicate`1" preserve="all" />
     <type fullname="System.Reflection.MethodBase" preserve="all" />
     <type fullname="System.Reflection.MethodInfo" preserve="all" />
     <type fullname="System.Runtime.CompilerServices.AsyncStateMachineAttribute" preserve="all" />

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using AIOFramework.Event;
+using AIOFramework.Fsm;
 using AIOFramework.Resource;
 
 namespace AIOFramework.Runtime
@@ -17,7 +18,6 @@ namespace AIOFramework.Runtime
             Resource = GameEntry.GetComponent<ResourceComponent>();
             Event = GameEntry.GetComponent<EventComponent>();
             Procedure = GameEntry.GetComponent<ProcedureComponent>();
-            
         }
     }
 }

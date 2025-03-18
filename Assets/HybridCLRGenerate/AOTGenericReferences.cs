@@ -22,18 +22,22 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// AIOFramework.ObjectPool.IObjectPool<object>
 	// AIOFramework.Runtime.GameFrameworkLinkedList.Enumerator<object>
 	// AIOFramework.Runtime.GameFrameworkLinkedList<object>
+	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<AIOFramework.Runtime.TestPageViewModel.<LoadImage>d__16>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<AIOFramework.Runtime.UIManager.<OpenUI>d__59<object,object>,int>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<AIOFramework.Runtime.UIManager.<OpenUI>d__60,int>
-	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<HotUpdate.Game.<CacheAssembliesBytes>d__28>
-	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<HotUpdate.Game.<LoadAssemblyBytes>d__30>
-	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<HotUpdate.Game.<LoadDlls>d__27>
-	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<HotUpdate.Game.<Test>d__19>
+	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<HotUpdate.Game.<CacheAssembliesBytes>d__36>
+	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<HotUpdate.Game.<LoadAssemblyBytes>d__38>
+	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<HotUpdate.Game.<LoadDlls>d__35>
+	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<HotUpdate.Game.<Test>d__27>
+	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask.<>c<HotUpdate.Game.<TestUI>d__28>
+	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<AIOFramework.Runtime.TestPageViewModel.<LoadImage>d__16>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<AIOFramework.Runtime.UIManager.<OpenUI>d__59<object,object>,int>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<AIOFramework.Runtime.UIManager.<OpenUI>d__60,int>
-	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<HotUpdate.Game.<CacheAssembliesBytes>d__28>
-	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<HotUpdate.Game.<LoadAssemblyBytes>d__30>
-	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<HotUpdate.Game.<LoadDlls>d__27>
-	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<HotUpdate.Game.<Test>d__19>
+	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<HotUpdate.Game.<CacheAssembliesBytes>d__36>
+	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<HotUpdate.Game.<LoadAssemblyBytes>d__38>
+	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<HotUpdate.Game.<LoadDlls>d__35>
+	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<HotUpdate.Game.<Test>d__27>
+	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTask<HotUpdate.Game.<TestUI>d__28>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder<int>
 	// Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder<object>
 	// Cysharp.Threading.Tasks.CompilerServices.IStateMachineRunnerPromise<int>
@@ -584,40 +588,92 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 
 	public void RefMethods()
 	{
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateMultiSpawnObjectPool<object>()
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateMultiSpawnObjectPool<object>(float)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateMultiSpawnObjectPool<object>(float,int)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateMultiSpawnObjectPool<object>(int)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateMultiSpawnObjectPool<object>(int,float)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateMultiSpawnObjectPool<object>(int,float,int)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateMultiSpawnObjectPool<object>(int,int)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateMultiSpawnObjectPool<object>(string)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateMultiSpawnObjectPool<object>(string,float)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateMultiSpawnObjectPool<object>(string,float,int)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateMultiSpawnObjectPool<object>(string,float,int,float,int)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateMultiSpawnObjectPool<object>(string,int)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateMultiSpawnObjectPool<object>(string,int,float)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateMultiSpawnObjectPool<object>(string,int,float,int)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateMultiSpawnObjectPool<object>(string,int,int)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateSingleSpawnObjectPool<object>()
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateSingleSpawnObjectPool<object>(float)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateSingleSpawnObjectPool<object>(float,int)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateSingleSpawnObjectPool<object>(int)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateSingleSpawnObjectPool<object>(int,float)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateSingleSpawnObjectPool<object>(int,float,int)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateSingleSpawnObjectPool<object>(int,int)
 		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateSingleSpawnObjectPool<object>(string)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateSingleSpawnObjectPool<object>(string,float)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateSingleSpawnObjectPool<object>(string,float,int)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateSingleSpawnObjectPool<object>(string,float,int,float,int)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateSingleSpawnObjectPool<object>(string,int)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateSingleSpawnObjectPool<object>(string,int,float)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateSingleSpawnObjectPool<object>(string,int,float,int)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.CreateSingleSpawnObjectPool<object>(string,int,int)
+		// bool AIOFramework.ObjectPool.IObjectPoolManager.DestroyObjectPool<object>()
+		// bool AIOFramework.ObjectPool.IObjectPoolManager.DestroyObjectPool<object>(AIOFramework.ObjectPool.IObjectPool<object>)
+		// bool AIOFramework.ObjectPool.IObjectPoolManager.DestroyObjectPool<object>(string)
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.GetObjectPool<object>()
+		// AIOFramework.ObjectPool.IObjectPool<object> AIOFramework.ObjectPool.IObjectPoolManager.GetObjectPool<object>(string)
+		// bool AIOFramework.ObjectPool.IObjectPoolManager.HasObjectPool<object>()
+		// bool AIOFramework.ObjectPool.IObjectPoolManager.HasObjectPool<object>(string)
 		// Cysharp.Threading.Tasks.UniTask<object> AIOFramework.Resource.IAssetManager.LoadAssetAsync<object>(string,uint)
 		// Cysharp.Threading.Tasks.UniTask<object> AIOFramework.Resource.ResourceComponent.LoadAssetAsync<object>(string,uint)
 		// object AIOFramework.Runtime.GameEntry.GetComponent<object>()
 		// string AIOFramework.Runtime.Utility.Text.Format<int>(string,int)
 		// string AIOFramework.Runtime.Utility.Text.Format<object,int,object>(string,object,int,object)
+		// string AIOFramework.Runtime.Utility.Text.Format<object,object>(string,object,object)
+		// string AIOFramework.Runtime.Utility.Text.Format<object>(string,object)
 		// string AIOFramework.Runtime.Utility.Text.ITextHelper.Format<int>(string,int)
 		// string AIOFramework.Runtime.Utility.Text.ITextHelper.Format<object,int,object>(string,object,int,object)
+		// string AIOFramework.Runtime.Utility.Text.ITextHelper.Format<object,object>(string,object,object)
+		// string AIOFramework.Runtime.Utility.Text.ITextHelper.Format<object>(string,object)
 		// object AIOFramework.UI.IUIManager.GetUI<object>(int)
 		// object AIOFramework.UI.UIComponent.GetUI<object>(int)
 		// Cysharp.Threading.Tasks.UniTask<int> AIOFramework.UI.UIComponent.OpenUI<object,object>(object)
 		// object AIOFramework.UI.UIViewBase.GetVariable<object>(string)
 		// object AIOFramework.UI.UIViewBase.GetViewModel<object>()
-		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter,HotUpdate.Game.<CacheAssembliesBytes>d__28>(Cysharp.Threading.Tasks.UniTask.Awaiter&,HotUpdate.Game.<CacheAssembliesBytes>d__28&)
-		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter,HotUpdate.Game.<LoadDlls>d__27>(Cysharp.Threading.Tasks.UniTask.Awaiter&,HotUpdate.Game.<LoadDlls>d__27&)
-		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter,HotUpdate.Game.<Test>d__19>(Cysharp.Threading.Tasks.UniTask.Awaiter&,HotUpdate.Game.<Test>d__19&)
-		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter<int>,HotUpdate.Game.<Test>d__19>(Cysharp.Threading.Tasks.UniTask.Awaiter<int>&,HotUpdate.Game.<Test>d__19&)
-		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter<object>,HotUpdate.Game.<LoadAssemblyBytes>d__30>(Cysharp.Threading.Tasks.UniTask.Awaiter<object>&,HotUpdate.Game.<LoadAssemblyBytes>d__30&)
+		// Cysharp.Threading.Tasks.UniTask<object> AIOFramework.UI.UIViewModelBase.LoadAsset<object>(string)
+		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter,HotUpdate.Game.<CacheAssembliesBytes>d__36>(Cysharp.Threading.Tasks.UniTask.Awaiter&,HotUpdate.Game.<CacheAssembliesBytes>d__36&)
+		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter,HotUpdate.Game.<LoadDlls>d__35>(Cysharp.Threading.Tasks.UniTask.Awaiter&,HotUpdate.Game.<LoadDlls>d__35&)
+		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter,HotUpdate.Game.<Test>d__27>(Cysharp.Threading.Tasks.UniTask.Awaiter&,HotUpdate.Game.<Test>d__27&)
+		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter,HotUpdate.Game.<TestUI>d__28>(Cysharp.Threading.Tasks.UniTask.Awaiter&,HotUpdate.Game.<TestUI>d__28&)
+		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter<int>,HotUpdate.Game.<TestUI>d__28>(Cysharp.Threading.Tasks.UniTask.Awaiter<int>&,HotUpdate.Game.<TestUI>d__28&)
+		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter<object>,AIOFramework.Runtime.TestPageViewModel.<LoadImage>d__16>(Cysharp.Threading.Tasks.UniTask.Awaiter<object>&,AIOFramework.Runtime.TestPageViewModel.<LoadImage>d__16&)
+		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter<object>,HotUpdate.Game.<LoadAssemblyBytes>d__38>(Cysharp.Threading.Tasks.UniTask.Awaiter<object>&,HotUpdate.Game.<LoadAssemblyBytes>d__38&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder<int>.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter<int>,AIOFramework.Runtime.UIManager.<OpenUI>d__59<object,object>>(Cysharp.Threading.Tasks.UniTask.Awaiter<int>&,AIOFramework.Runtime.UIManager.<OpenUI>d__59<object,object>&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder<int>.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter<object>,AIOFramework.Runtime.UIManager.<OpenUI>d__60>(Cysharp.Threading.Tasks.UniTask.Awaiter<object>&,AIOFramework.Runtime.UIManager.<OpenUI>d__60&)
-		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<HotUpdate.Game.<CacheAssembliesBytes>d__28>(HotUpdate.Game.<CacheAssembliesBytes>d__28&)
-		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<HotUpdate.Game.<LoadAssemblyBytes>d__30>(HotUpdate.Game.<LoadAssemblyBytes>d__30&)
-		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<HotUpdate.Game.<LoadDlls>d__27>(HotUpdate.Game.<LoadDlls>d__27&)
-		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<HotUpdate.Game.<Test>d__19>(HotUpdate.Game.<Test>d__19&)
+		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<AIOFramework.Runtime.TestPageViewModel.<LoadImage>d__16>(AIOFramework.Runtime.TestPageViewModel.<LoadImage>d__16&)
+		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<HotUpdate.Game.<CacheAssembliesBytes>d__36>(HotUpdate.Game.<CacheAssembliesBytes>d__36&)
+		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<HotUpdate.Game.<LoadAssemblyBytes>d__38>(HotUpdate.Game.<LoadAssemblyBytes>d__38&)
+		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<HotUpdate.Game.<LoadDlls>d__35>(HotUpdate.Game.<LoadDlls>d__35&)
+		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<HotUpdate.Game.<Test>d__27>(HotUpdate.Game.<Test>d__27&)
+		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<HotUpdate.Game.<TestFsm>d__29>(HotUpdate.Game.<TestFsm>d__29&)
+		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<HotUpdate.Game.<TestObjectPool>d__30>(HotUpdate.Game.<TestObjectPool>d__30&)
+		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder.Start<HotUpdate.Game.<TestUI>d__28>(HotUpdate.Game.<TestUI>d__28&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder<int>.Start<AIOFramework.Runtime.UIManager.<OpenUI>d__59<object,object>>(AIOFramework.Runtime.UIManager.<OpenUI>d__59<object,object>&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder<int>.Start<AIOFramework.Runtime.UIManager.<OpenUI>d__60>(AIOFramework.Runtime.UIManager.<OpenUI>d__60&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder<int>.Start<AIOFramework.UI.UIComponent.<OpenUI>d__32<object,object>>(AIOFramework.UI.UIComponent.<OpenUI>d__32<object,object>&)
 		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder<object>.Start<AIOFramework.Resource.ResourceComponent.<LoadAssetAsync>d__21<object>>(AIOFramework.Resource.ResourceComponent.<LoadAssetAsync>d__21<object>&)
+		// System.Void Cysharp.Threading.Tasks.CompilerServices.AsyncUniTaskMethodBuilder<object>.Start<AIOFramework.UI.UIViewModelBase.<LoadAsset>d__3<object>>(AIOFramework.UI.UIViewModelBase.<LoadAsset>d__3<object>&)
 		// Loxodon.Framework.Binding.Builder.BindingSet<object,object> Loxodon.Framework.Binding.BehaviourBindingExtension.CreateBindingSet<object,object>(object)
+		// Loxodon.Framework.Binding.Builder.BindingBuilder<object,object> Loxodon.Framework.Binding.Builder.BindingBuilder<object,object>.For<byte>(System.Linq.Expressions.Expression<System.Func<object,byte>>)
 		// Loxodon.Framework.Binding.Builder.BindingBuilder<object,object> Loxodon.Framework.Binding.Builder.BindingBuilder<object,object>.For<object>(System.Linq.Expressions.Expression<System.Func<object,object>>)
+		// Loxodon.Framework.Binding.Builder.BindingBuilder<object,object> Loxodon.Framework.Binding.Builder.BindingBuilder<object,object>.To<byte>(System.Linq.Expressions.Expression<System.Func<object,byte>>)
 		// Loxodon.Framework.Binding.Builder.BindingBuilder<object,object> Loxodon.Framework.Binding.Builder.BindingBuilder<object,object>.To<int>(System.Linq.Expressions.Expression<System.Func<object,int>>)
+		// Loxodon.Framework.Binding.Builder.BindingBuilder<object,object> Loxodon.Framework.Binding.Builder.BindingBuilder<object,object>.To<object>(System.Linq.Expressions.Expression<System.Func<object,object>>)
 		// Loxodon.Framework.Binding.Builder.BindingBuilder<object,object> Loxodon.Framework.Binding.Builder.BindingBuilder<object,object>.ToExpression<object>(System.Linq.Expressions.Expression<System.Func<object,object>>)
 		// System.Void Loxodon.Framework.Binding.Builder.BindingBuilderBase.SetExpression<object,object>(System.Linq.Expressions.Expression<System.Func<object,object>>)
 		// Loxodon.Framework.Binding.Builder.BindingBuilder<object,object> Loxodon.Framework.Binding.Builder.BindingSet<object,object>.Bind<object>(object)
+		// bool Loxodon.Framework.Observables.ObservableObject.Set<byte>(byte&,byte,string)
 		// bool Loxodon.Framework.Observables.ObservableObject.Set<int>(int&,int,string)
 		// bool Loxodon.Framework.Observables.ObservableObject.Set<object>(object&,object,string)
 		// object Loxodon.Framework.Views.Variables.Variable.GetValue<object>()
@@ -628,8 +684,8 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Linq.Expressions.Expression<object> System.Linq.Expressions.Expression.Lambda<object>(System.Linq.Expressions.Expression,System.Linq.Expressions.ParameterExpression[])
 		// System.Linq.Expressions.Expression<object> System.Linq.Expressions.Expression.Lambda<object>(System.Linq.Expressions.Expression,bool,System.Collections.Generic.IEnumerable<System.Linq.Expressions.ParameterExpression>)
 		// System.Linq.Expressions.Expression<object> System.Linq.Expressions.Expression.Lambda<object>(System.Linq.Expressions.Expression,string,bool,System.Collections.Generic.IEnumerable<System.Linq.Expressions.ParameterExpression>)
-		// System.Void System.Runtime.CompilerServices.AsyncVoidMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter,HotUpdate.Game.<Start>d__16>(Cysharp.Threading.Tasks.UniTask.Awaiter&,HotUpdate.Game.<Start>d__16&)
-		// System.Void System.Runtime.CompilerServices.AsyncVoidMethodBuilder.Start<HotUpdate.Game.<Start>d__16>(HotUpdate.Game.<Start>d__16&)
+		// System.Void System.Runtime.CompilerServices.AsyncVoidMethodBuilder.AwaitUnsafeOnCompleted<Cysharp.Threading.Tasks.UniTask.Awaiter,HotUpdate.Game.<Start>d__24>(Cysharp.Threading.Tasks.UniTask.Awaiter&,HotUpdate.Game.<Start>d__24&)
+		// System.Void System.Runtime.CompilerServices.AsyncVoidMethodBuilder.Start<HotUpdate.Game.<Start>d__24>(HotUpdate.Game.<Start>d__24&)
 		// object UnityEngine.GameObject.GetComponent<object>()
 		// object UnityEngine.Object.Instantiate<object>(object)
 	}
