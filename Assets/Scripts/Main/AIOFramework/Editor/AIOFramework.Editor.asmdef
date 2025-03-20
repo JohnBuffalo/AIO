@@ -5,7 +5,8 @@
         "AIOFramework.Runtime",
         "YooAsset.Editor",
         "YooAsset",
-        "HybridCLR.Editor"
+        "HybridCLR.Editor",
+        "HotUpdate.Runtime"
     ],
     "includePlatforms": [
         "Editor"
