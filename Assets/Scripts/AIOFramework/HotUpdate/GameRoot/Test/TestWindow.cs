@@ -18,7 +18,6 @@ namespace AIOFramework.Runtime
             var vm = GetViewModel<TestWindowViewModel>();
             vm.CloseWindowCommand = new SimpleCommand(() =>
             {
-                Log.Info("Click Button");
                 vm.CloseWindowCommand.Enabled = false;
                 OnButtonClick(this, null);
                 vm.CloseWindowCommand.Enabled = true;
@@ -44,7 +43,6 @@ namespace AIOFramework.Runtime
 
         private void OnButtonClick(object sender, InteractionEventArgs args)
         {
-            Log.Info($"OnButtonClick {SerialId} sender {sender}");
             Game.UI.CloseUI(this);
         }
     }
