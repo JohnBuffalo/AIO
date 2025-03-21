@@ -1,9 +1,11 @@
-﻿using Loxodon.Framework.Binding;
+﻿using System.Collections.Generic;
+using Loxodon.Framework.Binding;
 using UnityEngine;
 using UnityEngine.UI;
 using Loxodon.Framework.Views;
 using Loxodon.Framework.Views.Variables;
 using AIOFramework.Runtime;
+using UnityEngine.Serialization;
 
 namespace AIOFramework.UI
 {
@@ -13,108 +15,110 @@ namespace AIOFramework.UI
         /// <summary>
         /// 页面上的组件集合
         /// </summary>
-        [SerializeField] private VariableArray m_Variables;
-
+        [SerializeField]
+        private VariableArray variables;
+        
         /// <summary>
         /// 页面UID
         /// </summary>
-        private int m_SerialId;
+        private int serialId;
 
         /// <summary>
         /// 页面资源名,默认是预制体名
         /// </summary>
-        private string m_AssetName;
+        private string assetName;
 
         /// <summary>
         /// 页面所属Group
         /// </summary>
-        private IUIGroup m_UIGroup;
+        private IUIGroup uiGroup;
 
         /// <summary>
         /// 页面在组中层级
         /// </summary>
-        private int m_DepthInUIGroup;
+        private int depthInUIGroup;
 
         /// <summary>
         /// 是否暂停下方页面
         /// </summary>
-        private bool m_PauseCoveredUI;
+        private bool pauseCoveredUI;
 
         /// <summary>
         /// 页面Canvas
         /// </summary>
-        private Canvas m_Canvas;
+        private Canvas canvas;
 
         /// <summary>
         /// 页面数据
         /// </summary>
-        private UICtorInfo m_CtorInfo;
+        private UICtorInfo ctorInfo;
 
-        public UICtorInfo CtorInfo => m_CtorInfo;
+        public UICtorInfo CtorInfo => ctorInfo;
+
         public UIViewModelBase ViewModel
         {
             get { return this.GetDataContext() as UIViewModelBase; }
             set { this.SetDataContext(value); }
         }
-        
-        public VariableArray Variables => m_Variables;
 
+        public VariableArray Variables => variables;
         public string Location { get; set; }
         public UIGroupEnum Group { get; set; }
-        public int SerialId => m_SerialId;
-        public string UIAssetName => m_AssetName;
+        public int SerialId => serialId;
+        public string UIAssetName => assetName;
         public object Handle => gameObject;
 
         public IUIGroup UIGroup
         {
-            set { m_UIGroup = value; }
-            get { return m_UIGroup; }
+            set { uiGroup = value; }
+            get { return uiGroup; }
         }
 
         public bool Paused { get; set; }
         public bool Covered { get; set; }
+
         public int DepthInUIGroup
         {
             private set
             {
-                m_DepthInUIGroup = value;
-                Canvas.sortingOrder = m_DepthInUIGroup;
+                depthInUIGroup = value;
+                Canvas.sortingOrder = depthInUIGroup;
             }
-            get => m_DepthInUIGroup;
+            get => depthInUIGroup;
         }
 
-        public bool PauseCoveredUI => m_PauseCoveredUI;
+        public bool PauseCoveredUI => pauseCoveredUI;
 
         public Canvas Canvas
         {
             get
             {
-                if (m_Canvas == null)
+                if (canvas == null)
                 {
-                    m_Canvas = GetComponent<Canvas>();
-                    m_Canvas.overrideSorting = true;
+                    canvas = GetComponent<Canvas>();
+                    canvas.overrideSorting = true;
                 }
 
-                return m_Canvas;
+                return canvas;
             }
         }
 
-        public virtual void OnInit(int serialId, string uiAssetName, IUIGroup uiGroup, UIViewModelBase viewModel, UICtorInfo ctorInfo)
+        public virtual void OnInit(int serialId, string uiAssetName, IUIGroup uiGroup, UIViewModelBase viewModel,
+            UICtorInfo ctorInfo)
         {
-            m_SerialId = serialId;
-            m_AssetName = uiAssetName;
-            m_UIGroup = uiGroup;
+            this.serialId = serialId;
+            assetName = uiAssetName;
+            this.uiGroup = uiGroup;
             ViewModel = viewModel;
-            m_CtorInfo = ctorInfo;
-            m_PauseCoveredUI = ctorInfo.PauseCoveredUI;
+            this.ctorInfo = ctorInfo;
+            pauseCoveredUI = ctorInfo.PauseCoveredUI;
         }
 
         public virtual void OnRecycle()
         {
             Log.Info($"{gameObject.name} OnRecycle");
-            
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -187,7 +191,8 @@ namespace AIOFramework.UI
         public virtual void OnDepthChanged(int uiGroupDepth, int depthInUIGroup)
         {
             DepthInUIGroup = depthInUIGroup;
-            Log.Info($" {gameObject.name} OnDepthChanged uiGroupDepth:{uiGroupDepth} , depthInUIGroup:{depthInUIGroup}");
+            Log.Info(
+                $" {gameObject.name} OnDepthChanged uiGroupDepth:{uiGroupDepth} , depthInUIGroup:{depthInUIGroup}");
         }
 
         protected override void OnDestroy()
@@ -213,7 +218,8 @@ namespace AIOFramework.UI
             if (active && !IsActive())
             {
                 gameObject.SetActive(true);
-            }else if (!active && IsActive())
+            }
+            else if (!active && IsActive())
             {
                 gameObject.SetActive(false);
             }

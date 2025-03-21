@@ -24,7 +24,9 @@ namespace AIOFramework.Runtime
         {
             await LoadHotUpdateAssembly();
             
-            await Entrance.Resource.InstantiateAsync<GameObject>("Assets/ArtAssets/HotUpdate/Game.prefab");
+            var result = await Entrance.Resource.InstantiateAsync<GameObject>("Assets/ArtAssets/HotUpdate/Game.prefab");
+    
+            Entrance.Resource.UnloadAsset(result.Item2);
         }
 
         private async UniTask LoadHotUpdateAssembly()

@@ -745,12 +745,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91102edd7a834694a5f0ee1e1413c71e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Variables:
+  variables:
     variables:
-    - name: image
-      objectValue: {fileID: 1735894803110786403}
-      dataValue: 
-      variableType: 2
     - name: text
       objectValue: {fileID: 3510326538416284324}
       dataValue: 

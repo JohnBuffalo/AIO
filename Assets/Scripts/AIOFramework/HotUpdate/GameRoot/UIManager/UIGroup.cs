@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using AIOFramework.UI;
+using AIOFramework.Runtime;
 
-namespace AIOFramework.Runtime
+namespace AIOFramework.UI
 {
     public class UIGroup : IUIGroup
     {

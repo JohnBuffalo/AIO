@@ -19,7 +19,7 @@ namespace AIOFramework.Runtime
             bindingSet.Bind(GetVariable<TextMeshProUGUI>("text")).For(v => v.text).To(vm => vm.SerialId).OneWay();
             bindingSet.Bind(GetVariable<TextMeshProUGUI>("tip")).For(v => v.text).ToExpression(vm => $"tip : {vm.Tips}")
                 .OneWay();
-            bindingSet.Bind(GetVariable<Image>("image")).For(v => v.sprite).To(vm => vm.Sprite).OneWay();
+            bindingSet.Bind(GetVariable<UISpriteLoadProxy>("icon_spriteloader")).For(v => v.SpritePath).To(vm => vm.SpritePath).OneWay();
             bindingSet.Bind(GetVariable<Image>("image")).For(v => v.enabled).To(vm => vm.ShowSprite)
                 .OneWay();
             bindingSet.Build();
@@ -33,9 +33,8 @@ namespace AIOFramework.Runtime
     {
         private int serialId;
         private string tips;
-        private Sprite sprite;
         private bool showSprite;
-
+        private string spritePath;
         public int SerialId
         {
             get { return serialId; }
@@ -51,10 +50,10 @@ namespace AIOFramework.Runtime
             set { Set(ref tips, value); }
         }
 
-        public Sprite Sprite
+        public string SpritePath
         {
-            get { return sprite; }
-            set { Set(ref sprite, value); }
+            get { return spritePath; }
+            set { Set(ref spritePath, value); }
         }
 
         public bool ShowSprite
@@ -65,16 +64,16 @@ namespace AIOFramework.Runtime
 
         public async UniTask LoadImage()
         {
-            Sprite = await LoadAsset<Sprite>("Assets/ArtAssets/Texture/aioicon.png");
-            ShowSprite = Sprite != null;
+            SpritePath = "Assets/ArtAssets/Texture/aioicon.png";
+            ShowSprite = true;
         }
 
         public override void Clear()
         {
             base.Clear();
+            spritePath = null;
             serialId = 0;
             tips = null;
-            sprite = null;
             showSprite = false;
         }
     }

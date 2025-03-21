@@ -669,7 +669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74ec966696314594b451994c8e119bcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Variables:
+  variables:
     variables:
     - name: progress
       objectValue: {fileID: 6866959705765647511}
@@ -1329,7 +1329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ab0cb7379c04f228ab4be4c9180d6a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Variables:
+  variables:
     variables:
     - name: tips
       objectValue: {fileID: 5727818600866562094}
