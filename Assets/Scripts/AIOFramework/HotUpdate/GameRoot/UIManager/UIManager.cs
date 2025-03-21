@@ -1,0 +1,654 @@
+﻿using System;
+using System.Collections.Generic;
+using AIOFramework.ObjectPool;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
+using AIOFramework.UI;
+using AIOFramework.Resource;
+using AIOFramework.Event;
+using YooAsset;
+
+namespace AIOFramework.Runtime
+{
+    public class UIManager : GameFrameworkModule, IUIManager
+    {
+        private readonly Dictionary<UIGroupEnum, UIGroup> uiGroups;
+        private readonly Dictionary<int, string> uiBeingLoaded;
+        private readonly HashSet<int> uiToReleaseOnLoad;
+        private readonly Queue<IUIForm> recycleQueue;
+        private IObjectPoolManager objectPoolManager;
+        private IAssetManager assetManager;
+        private int serial;
+        private IObjectPool<UIInstanceObject> instancePool;
+        private EventHandler<OpenUISuccessEventArgs> openUISuccessEventHandler;
+        private EventHandler<OpenUIFailureEventArgs> openUIFailureEventHandler;
+        private EventHandler<CloseUICompleteEventArgs> closeUICompleteEventHandler;
+
+        public UIManager()
+        {
+            uiGroups = new Dictionary<UIGroupEnum, UIGroup>();
+            uiBeingLoaded = new Dictionary<int, string>();
+            recycleQueue = new Queue<IUIForm>();
+            uiToReleaseOnLoad = new HashSet<int>();
+            objectPoolManager = null;
+            assetManager = null;
+            serial = 0;
+            instancePool = null;
+            openUISuccessEventHandler = null;
+            openUIFailureEventHandler = null;
+            closeUICompleteEventHandler = null;
+        }
+
+        public int UIGroupCount
+        {
+            get { return uiGroups.Count; }
+        }
+
+        public float InstanceAutoReleaseInterval
+        {
+            get { return instancePool.AutoReleaseInterval; }
+            set { instancePool.AutoReleaseInterval = value; }
+        }
+
+        public int InstanceCapacity
+        {
+            get { return instancePool.Capacity; }
+            set { instancePool.Capacity = value; }
+        }
+
+        public float InstanceExpireTime
+        {
+            get { return instancePool.ExpireTime; }
+            set { instancePool.ExpireTime = value; }
+        }
+
+        public int InstancePriority
+        {
+            get { return instancePool.Priority; }
+            set { instancePool.Priority = value; }
+        }
+
+        public event EventHandler<OpenUISuccessEventArgs> OpenUIFormSuccess
+        {
+            add { openUISuccessEventHandler += value; }
+            remove { openUISuccessEventHandler -= value; }
+        }
+
+        public event EventHandler<OpenUIFailureEventArgs> OpenUIFormFailure
+        {
+            add { openUIFailureEventHandler += value; }
+            remove { openUIFailureEventHandler -= value; }
+        }
+
+        public event EventHandler<CloseUICompleteEventArgs> CloseUIFormComplete
+        {
+            add { closeUICompleteEventHandler += value; }
+            remove { closeUICompleteEventHandler -= value; }
+        }
+
+
+        /// <summary>
+        /// 界面管理器轮询。
+        /// </summary>
+        /// <param name="elapseSeconds">逻辑流逝时间，以秒为单位。</param>
+        /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
+        internal override void Update(float elapseSeconds, float realElapseSeconds)
+        {
+            while (recycleQueue.Count > 0)
+            {
+                IUIForm uiForm = recycleQueue.Dequeue();
+                uiForm.OnRecycle();
+                
+                ((UIViewBase)uiForm).SetActive(false);
+                UIGroup poolGroup = (UIGroup)GetUIGroup(UIGroupEnum.Pool);
+                poolGroup.AddUI((UIViewBase)uiForm);
+                ((UIViewBase)uiForm).UIGroup = poolGroup;
+                ((GameObject)uiForm.Handle).transform.SetParent(((MonoBehaviour)poolGroup.Helper).transform);
+                poolGroup.Refresh();
+                
+                instancePool.Unspawn(uiForm.Handle);
+            }
+
+            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in uiGroups)
+            {
+                uiGroup.Value.Update(elapseSeconds, realElapseSeconds);
+            }
+        }
+
+        internal override void Shutdown()
+        {
+            CloseAllLoadedUI();
+            uiGroups.Clear();
+            uiBeingLoaded.Clear();
+            uiToReleaseOnLoad.Clear();
+            recycleQueue.Clear();
+        }
+
+        public void SetObjectPoolManager(IObjectPoolManager objectPoolManager)
+        {
+            if (objectPoolManager == null)
+            {
+                throw new GameFrameworkException("Object pool manager is invalid.");
+            }
+
+            this.objectPoolManager = objectPoolManager;
+            instancePool = this.objectPoolManager.CreateSingleSpawnObjectPool<UIInstanceObject>("UI Instance Pool");
+        }
+
+        public void SetAssetManager(IAssetManager assetManager)
+        {
+            if (assetManager == null)
+            {
+                throw new GameFrameworkException("Resource manager is invalid.");
+            }
+
+            this.assetManager = assetManager;
+        }
+
+        public bool HasUIGroup(UIGroupEnum uiGroupName)
+        {
+            return uiGroups.ContainsKey(uiGroupName);
+        }
+
+        public IUIGroup GetUIGroup(UIGroupEnum uiGroupName)
+        {
+            UIGroup uiGroup = null;
+            if (uiGroups.TryGetValue(uiGroupName, out uiGroup))
+            {
+                return uiGroup;
+            }
+
+            return null;
+        }
+
+        public IUIGroup[] GetAllUIGroups()
+        {
+            int index = 0;
+            IUIGroup[] results = new IUIGroup[uiGroups.Count];
+            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in uiGroups)
+            {
+                results[index++] = uiGroup.Value;
+            }
+
+            return results;
+        }
+
+        public void GetAllUIGroups(List<IUIGroup> results)
+        {
+            if (results == null)
+            {
+                throw new GameFrameworkException("Results is invalid.");
+            }
+
+            results.Clear();
+            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in uiGroups)
+            {
+                results.Add(uiGroup.Value);
+            }
+        }
+
+        public bool AddUIGroup(UIGroupEnum uiGroupName, int uiGroupDepth, IUIGroupHelper uiGroupHelper)
+        {
+            if (uiGroupHelper == null)
+            {
+                throw new GameFrameworkException("UI group helper is invalid.");
+            }
+
+            if (HasUIGroup(uiGroupName))
+            {
+                return false;
+            }
+
+            uiGroups.Add(uiGroupName, new UIGroup(uiGroupName, uiGroupDepth, uiGroupHelper));
+
+            return true;
+        }
+
+        public bool HasUI(int serialId)
+        {
+            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in uiGroups)
+            {
+                if (uiGroup.Value.HasUI(serialId))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public bool HasUI(string uiFormAssetName)
+        {
+            if (string.IsNullOrEmpty(uiFormAssetName))
+            {
+                throw new GameFrameworkException("UI form asset name is invalid.");
+            }
+
+            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in uiGroups)
+            {
+                if (uiGroup.Value.HasUI(uiFormAssetName))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public T GetUI<T>(int serialId) where T :  IUIForm
+        {
+            var ui = GetUI(serialId);
+            return (T)ui;
+        }
+        
+        public T GetUI<T>(string assetName) where T :  IUIForm
+        {
+            var ui = GetUI(assetName);
+            return (T)ui;
+        }
+        
+        public IUIForm GetUI(int serialId)
+        {
+            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in uiGroups)
+            {
+                IUIForm uiForm = uiGroup.Value.GetUI(serialId);
+                if (uiForm != null)
+                {
+                    return uiForm;
+                }
+            }
+
+            return null;
+        }
+
+        public IUIForm GetUI(string uiFormAssetName)
+        {
+            if (string.IsNullOrEmpty(uiFormAssetName))
+            {
+                throw new GameFrameworkException("UI form asset name is invalid.");
+            }
+
+            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in uiGroups)
+            {
+                IUIForm uiForm = uiGroup.Value.GetUI(uiFormAssetName);
+                if (uiForm != null)
+                {
+                    return uiForm;
+                }
+            }
+
+            return null;
+        }
+
+        public IUIForm[] GetAllUI(string uiAssetName)
+        {
+            if (string.IsNullOrEmpty(uiAssetName))
+            {
+                throw new GameFrameworkException("UI form asset name is invalid.");
+            }
+
+            List<IUIForm> results = new List<IUIForm>();
+            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in uiGroups)
+            {
+                results.AddRange(uiGroup.Value.GetUIArray(uiAssetName));
+            }
+
+            return results.ToArray();
+        }
+
+        public void GetAllUI(string uiFormAssetName, List<IUIForm> results)
+        {
+            if (string.IsNullOrEmpty(uiFormAssetName))
+            {
+                throw new GameFrameworkException("UI form asset name is invalid.");
+            }
+
+            if (results == null)
+            {
+                throw new GameFrameworkException("Results is invalid.");
+            }
+
+            results.Clear();
+            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in uiGroups)
+            {
+                uiGroup.Value.InternalGetUIList(uiFormAssetName, results);
+            }
+        }
+
+        public IUIForm[] GetAllLoadedUI()
+        {
+            List<IUIForm> results = new List<IUIForm>();
+            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in uiGroups)
+            {
+                results.AddRange(uiGroup.Value.GetAllUI());
+            }
+
+            return results.ToArray();
+        }
+
+        public void GetAllLoadedUI(List<IUIForm> results)
+        {
+            if (results == null)
+            {
+                throw new GameFrameworkException("Results is invalid.");
+            }
+
+            results.Clear();
+            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in uiGroups)
+            {
+                uiGroup.Value.InternalGetAllUIList(results);
+            }
+        }
+
+        public int[] GetAllLoadingUISerialIds()
+        {
+            int index = 0;
+            int[] results = new int[uiBeingLoaded.Count];
+            foreach (KeyValuePair<int, string> uiFormBeingLoaded in uiBeingLoaded)
+            {
+                results[index++] = uiFormBeingLoaded.Key;
+            }
+
+            return results;
+        }
+
+        public void GetAllLoadingUISerialIds(List<int> results)
+        {
+            if (results == null)
+            {
+                throw new GameFrameworkException("Results is invalid.");
+            }
+
+            results.Clear();
+            foreach (KeyValuePair<int, string> uiFormBeingLoaded in uiBeingLoaded)
+            {
+                results.Add(uiFormBeingLoaded.Key);
+            }
+        }
+
+        public bool IsLoadingUI(int serialId)
+        {
+            return uiBeingLoaded.ContainsKey(serialId);
+        }
+
+        public bool IsLoadingUI(string uiFormAssetName)
+        {
+            if (string.IsNullOrEmpty(uiFormAssetName))
+            {
+                throw new GameFrameworkException("UI form asset name is invalid.");
+            }
+
+            return uiBeingLoaded.ContainsValue(uiFormAssetName);
+        }
+
+        public bool IsValidUI(IUIForm uiForm)
+        {
+            if (uiForm == null)
+            {
+                return false;
+            }
+
+            return HasUI(uiForm.SerialId);
+        }
+
+        public async UniTask<int> OpenUI<TViewModel>(UICtorInfo ctorInfo) where TViewModel : UIViewModelBase, new()
+        {
+            var viewModel = ReferencePool.Acquire<TViewModel>();
+            var pageUid = await OpenUI(ctorInfo, viewModel);
+            return pageUid;
+        }
+        
+
+        public async UniTask<int> OpenUI(UICtorInfo ctorInfo, UIViewModelBase viewModel)
+        {
+            if (viewModel == null)
+            {
+                throw new GameFrameworkException("ViewModel is invalid.");
+            }
+
+            if (ctorInfo == null)
+            {
+                throw new GameFrameworkException("CtorInfo is invalid.");
+            }
+
+            if (assetManager == null)
+            {
+                throw new GameFrameworkException("You must set asset manager first.");
+            }
+
+            if (string.IsNullOrEmpty(ctorInfo.Location))
+            {
+                throw new GameFrameworkException("UI form asset location is invalid.");
+            }
+
+            int serialId = ++serial;
+            string uiName = GetUIName(ctorInfo.Location);
+            UIGroup uiGroup = (UIGroup)GetUIGroup(ctorInfo.Group);
+            Log.Info($"[UIManager] OpenUI {uiName}");
+            if (!ctorInfo.Multiple) //只允许有一个同类UI
+            {
+                var existUI = (UIViewBase)uiGroup.GetUI(uiName);
+                if (existUI != null)
+                {
+                    Log.Info($"[UIManager] existUI {uiName} at {existUI.SerialId}");
+                    serial--;
+                    RefocusUI(existUI, ctorInfo);
+                    ReferencePool.Release(viewModel);
+                    return existUI.SerialId;
+                }
+            }
+            
+            UIInstanceObject uiInstanceObject = instancePool.Spawn(uiName);
+            if (uiInstanceObject == null)
+            {
+                uiBeingLoaded.Add(serialId, ctorInfo.Location);
+                var loadResult = await assetManager.LoadAssetAsync<GameObject>(ctorInfo.Location);
+                uiInstanceObject = LoadAssetSuccessCallback(loadResult.Item2, loadResult.Item1, serialId);
+            }
+
+            if (uiInstanceObject != null)
+            {
+                InternalOpenUI(serialId, uiName, ctorInfo, (GameObject)uiInstanceObject.Target, viewModel);
+            }
+
+            return serialId;
+        }
+
+        private UIInstanceObject LoadAssetSuccessCallback(AssetHandle loadHandle, GameObject uiAsset, int serialId)
+        {
+            if (uiToReleaseOnLoad.Contains(serialId))
+            {
+                uiToReleaseOnLoad.Remove(serialId);
+                assetManager.UnloadAsset(loadHandle);
+                return null;
+            }
+
+            var location = loadHandle.Provider.MainAssetInfo.AssetPath;
+            uiBeingLoaded.Remove(serialId);
+            GameObject uiInstance = GameObject.Instantiate(uiAsset);
+            UIInstanceObject uiInstanceObject =
+                UIInstanceObject.Create(GetUIName(location), location, uiInstance, loadHandle);
+            instancePool.Register(uiInstanceObject, true);
+
+            return uiInstanceObject;
+        }
+        
+
+        private void InternalOpenUI(int serialId, string uiName, UICtorInfo ctorInfo, GameObject uiInstance,
+            UIViewModelBase viewModel)
+        {
+            UIGroup uiGroup = (UIGroup)GetUIGroup(ctorInfo.Group);
+            Transform uiRoot = ((MonoBehaviour)uiGroup.Helper).transform;
+            try
+            {
+                UIViewBase uiView = uiInstance.GetComponent<UIViewBase>();
+
+                if (uiView == null)
+                {
+                    throw new GameFrameworkException("Can not create UI form in UI form helper.");
+                }
+
+                uiInstance.transform.SetParent(uiRoot);
+                uiInstance.GetComponent<RectTransform>().localPosition = Vector3.zero;
+                uiInstance.GetComponent<RectTransform>().localScale = Vector3.one;
+                uiInstance.GetComponent<RectTransform>().sizeDelta = Vector2.zero;
+                viewModel.SetAssetManager(assetManager);
+                uiView.OnInit(serialId, uiName, uiGroup, viewModel, ctorInfo);
+                uiGroup.AddUI(uiView);
+                uiView.OnOpen(null);
+                uiGroup.Refresh();
+
+                if (openUISuccessEventHandler != null)
+                {
+                    OpenUISuccessEventArgs args = OpenUISuccessEventArgs.Create(uiView, null);
+                    openUISuccessEventHandler(this, args);
+                    ReferencePool.Release(args);
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Error(e.Message);
+                if (openUIFailureEventHandler != null)
+                {
+                    OpenUIFailureEventArgs args =
+                        OpenUIFailureEventArgs.Create(serialId, uiName, uiGroup.Name, e.ToString(), null);
+                    openUIFailureEventHandler(this, args);
+                    ReferencePool.Release(args);
+                }
+            }
+        }
+
+        private string GetUIName(string location)
+        {
+            return Utility.Path.GetFileNameWithoutExtension(location);
+        }
+
+        public void CloseUI(int serialId)
+        {
+            CloseUI(serialId, null);
+        }
+
+        public void CloseUI(int serialId, object userData)
+        {
+            if (IsLoadingUI(serialId))
+            {
+                uiToReleaseOnLoad.Add(serialId);
+                uiBeingLoaded.Remove(serialId);
+                return;
+            }
+
+            IUIForm uiView = GetUI(serialId);
+            if (uiView == null)
+            {
+                throw new GameFrameworkException(Utility.Text.Format("Can not find UI form '{0}'.", serialId));
+            }
+
+            CloseUI(uiView, userData);
+        }
+
+        public void CloseUI(IUIForm uiForm)
+        {
+            CloseUI(uiForm, null);
+        }
+
+        public void CloseUI(IUIForm uiForm, object userData)
+        {
+            if (uiForm == null)
+            {
+                throw new GameFrameworkException("UI is invalid.");
+            }
+
+            UIGroup uiGroup = (UIGroup)uiForm.UIGroup;
+            if (uiGroup == null)
+            {
+                throw new GameFrameworkException("UI group is invalid.");
+            }
+
+            uiGroup.RemoveUI((UIViewBase)uiForm);
+            uiForm.OnClose(userData);
+            uiGroup.Refresh();
+            
+            if (closeUICompleteEventHandler != null)
+            {
+                CloseUICompleteEventArgs args =
+                    CloseUICompleteEventArgs.Create(uiForm.SerialId, uiForm.UIAssetName, uiGroup, userData);
+                closeUICompleteEventHandler(this, args);
+                ReferencePool.Release(args);
+            }
+
+            recycleQueue.Enqueue(uiForm);
+        }
+
+        public void CloseAllLoadedUI()
+        {
+            CloseAllLoadedUI(null);
+        }
+
+        public void CloseAllLoadedUI(object userData)
+        {
+            IUIForm[] uiForms = GetAllLoadedUI();
+            foreach (IUIForm uiForm in uiForms)
+            {
+                if (!HasUI(uiForm.SerialId))
+                {
+                    continue;
+                }
+
+                CloseUI(uiForm, userData);
+            }
+        }
+
+        public void CloseAllLoadingUI()
+        {
+            foreach (KeyValuePair<int, string> uiFormBeingLoaded in uiBeingLoaded)
+            {
+                uiToReleaseOnLoad.Add(uiFormBeingLoaded.Key);
+            }
+
+            uiBeingLoaded.Clear();
+        }
+
+        public void RefocusUI(IUIForm uiForm)
+        {
+            RefocusUI(uiForm, null);
+        }
+
+        public void RefocusUI(IUIForm uiForm, object userData)
+        {
+            if (uiForm == null)
+            {
+                throw new GameFrameworkException("UI form is invalid.");
+            }
+
+            UIGroup uiGroup = (UIGroup)uiForm.UIGroup;
+            if (uiGroup == null)
+            {
+                throw new GameFrameworkException("UI group is invalid.");
+            }
+
+            uiGroup.RefocusUI((UIViewBase)uiForm);
+            uiGroup.Refresh();
+            uiForm.OnRefocus(userData);
+        }
+
+        public void SetUIInstanceLocked(object uiInstance, bool locked)
+        {
+            if (uiInstance == null)
+            {
+                throw new GameFrameworkException("UI instance is invalid.");
+            }
+
+            instancePool.SetLocked(uiInstance, locked);
+        }
+
+        public void SetUIInstancePriority(object uiInstance, int priority)
+        {
+            if (uiInstance == null)
+            {
+                throw new GameFrameworkException("UI instance is invalid.");
+            }
+
+            instancePool.SetPriority(uiInstance, priority);
+        }
+    }
+}

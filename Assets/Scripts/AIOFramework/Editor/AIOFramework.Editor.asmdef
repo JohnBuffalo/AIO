@@ -1,0 +1,22 @@
+{
+    "name": "AIOFramework.Editor",
+    "rootNamespace": "",
+    "references": [
+        "AIOFramework.Runtime",
+        "YooAsset.Editor",
+        "YooAsset",
+        "HybridCLR.Editor",
+        "HotUpdate"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

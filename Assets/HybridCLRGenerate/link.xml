@@ -12,7 +12,7 @@
     <type fullname="AIOFramework.ObjectPool.IObjectPoolManager" preserve="all" />
     <type fullname="AIOFramework.ObjectPool.IObjectPool`1" preserve="all" />
     <type fullname="AIOFramework.ObjectPool.ObjectBase" preserve="all" />
-    <type fullname="AIOFramework.ObjectPool.ObjectPoolBase" preserve="all" />
+    <type fullname="AIOFramework.ObjectPool.ObjectPoolComponent" preserve="all" />
     <type fullname="AIOFramework.Procedure.IProcedureManager" preserve="all" />
     <type fullname="AIOFramework.Resource.IAssetManager" preserve="all" />
     <type fullname="AIOFramework.Resource.ResourceComponent" preserve="all" />
@@ -55,6 +55,8 @@
     <type fullname="Loxodon.Framework.Binding.Builder.BindingBuilder`2" preserve="all" />
     <type fullname="Loxodon.Framework.Binding.Builder.BindingSetBase" preserve="all" />
     <type fullname="Loxodon.Framework.Binding.Builder.BindingSet`2" preserve="all" />
+    <type fullname="Loxodon.Framework.Commands.SimpleCommand" preserve="all" />
+    <type fullname="Loxodon.Framework.Interactivity.InteractionEventArgs" preserve="all" />
     <type fullname="Loxodon.Framework.Observables.ObservableObject" preserve="all" />
   </assembly>
   <assembly fullname="System">
@@ -104,12 +106,21 @@
     <type fullname="UnityEngine.Vector3" preserve="all" />
   </assembly>
   <assembly fullname="UnityEngine.UI">
+    <type fullname="UnityEngine.UI.Button" preserve="all" />
+    <type fullname="UnityEngine.UI.Button/ButtonClickedEvent" preserve="all" />
     <type fullname="UnityEngine.UI.Image" preserve="all" />
   </assembly>
   <assembly fullname="UnityEngine.UIModule">
     <type fullname="UnityEngine.Canvas" preserve="all" />
   </assembly>
+  <assembly fullname="YooAsset">
+    <type fullname="YooAsset.AssetHandle" preserve="all" />
+    <type fullname="YooAsset.AssetInfo" preserve="all" />
+    <type fullname="YooAsset.HandleBase" preserve="all" />
+    <type fullname="YooAsset.ProviderOperation" preserve="all" />
+  </assembly>
   <assembly fullname="mscorlib">
+    <type fullname="System.Action" preserve="all" />
     <type fullname="System.Array" preserve="all" />
     <type fullname="System.Byte" preserve="all" />
     <type fullname="System.Collections.Generic.Dictionary`2" preserve="all" />
@@ -130,7 +141,6 @@
     <type fullname="System.Int32" preserve="all" />
     <type fullname="System.Object" preserve="all" />
     <type fullname="System.ParamArrayAttribute" preserve="all" />
-    <type fullname="System.Predicate`1" preserve="all" />
     <type fullname="System.Reflection.MethodBase" preserve="all" />
     <type fullname="System.Reflection.MethodInfo" preserve="all" />
     <type fullname="System.Runtime.CompilerServices.AsyncStateMachineAttribute" preserve="all" />
@@ -146,6 +156,7 @@
     <type fullname="System.String" preserve="all" />
     <type fullname="System.Threading.CancellationToken" preserve="all" />
     <type fullname="System.Type" preserve="all" />
+    <type fullname="System.ValueTuple`2" preserve="all" />
     <type fullname="System.ValueType" preserve="all" />
   </assembly>
 </linker>
