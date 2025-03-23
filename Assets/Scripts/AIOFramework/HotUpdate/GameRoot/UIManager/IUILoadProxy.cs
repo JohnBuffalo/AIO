@@ -8,8 +8,9 @@ namespace AIOFramework.UI
     /// </summary>
     interface IUILoadProxy
     {
+        string CurLocation{get;set;}
         List<HandleBase> Handles { get; set;}
-        void Load(string location);
+        void OnLocationChange();
         void OnDispose();
     }
 }

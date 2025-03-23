@@ -13,35 +13,36 @@ namespace AIOFramework.UI
     public class UISpriteLoadProxy : UILoadProxyBase
     {
         private Image target;
-        private string spritePath;
+
         [SerializeField]
         private Sprite defaultSprite;
         [SerializeField]
         private Material defaultMaterial;
-        
-        public string SpritePath
+
+
+        public override string CurLocation
         {
-            get { return spritePath; }
+            get { return curLocation; }
             set
             {
-                if (spritePath == value)
+                if (curLocation == value)
                     return;
-                spritePath = value;
-                if (string.IsNullOrEmpty(spritePath))
+                curLocation = value;
+                if (string.IsNullOrEmpty(curLocation))
                 {
                     target.sprite = defaultSprite;
                     target.material = defaultMaterial;
                     return;
                 }
-                Load(spritePath);
+                OnLocationChange();
             }
         }
 
-        public override async void Load(string location)
+        public override async void OnLocationChange()
         {
             try
             {
-                var result = await Entrance.Resource.LoadAssetAsync<Sprite>(location);
+                var result = await Entrance.Resource.LoadAssetAsync<Sprite>(curLocation);
                 Handles.Add(result.Item2);
                 target.sprite = result.Item1;
             }

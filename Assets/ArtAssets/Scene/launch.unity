@@ -670,7 +670,7 @@ PrefabInstance:
     - target: {fileID: 2209649675884268766, guid: 962d3b48ea221c44bbd14132712c9f8d,
         type: 3}
       propertyPath: m_PlayMode
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2209649675884268766, guid: 962d3b48ea221c44bbd14132712c9f8d,
         type: 3}
