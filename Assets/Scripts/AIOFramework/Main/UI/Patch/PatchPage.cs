@@ -21,9 +21,6 @@ namespace AIOFramework.Runtime
 
         protected override void Awake()
         {   
-            ApplicationContext context = Context.GetApplicationContext();
-            BindingServiceBundle bindingService = new BindingServiceBundle(context.GetContainer());
-            bindingService.Start();
             InitComponents();
         }
 

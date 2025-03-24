@@ -4,6 +4,8 @@ using AIOFramework.Setting;
 using AIOFramework.Procedure;
 using AIOFramework.UI;
 using Cysharp.Threading.Tasks;
+using Loxodon.Framework.Binding;
+using Loxodon.Framework.Contexts;
 using UnityEngine;
 using UnityEngine.Networking;
 using YooAsset;
@@ -23,6 +25,7 @@ namespace AIOFramework.Runtime
             Entrance.Event.Fire(this, PatchStateChangeEventArgs.Create("InitPackage"));
             
             SetWebRequestDelegate();
+            InitBindingService();
             InitPackage(procedureOwner).Forget();
         }
 
@@ -85,6 +88,16 @@ namespace AIOFramework.Runtime
             string url = "http://127.0.0.1:8080";
             Log.Info($"GetDefaultServerURL, platform : {platform}, url : {url}");
             return $"{url}/{platform}/";
+        }
+
+        /// <summary>
+        /// 在任意界面打开前,初始化MVVM的BindingService
+        /// </summary>
+        private void InitBindingService()
+        {
+            ApplicationContext context = Context.GetApplicationContext();
+            BindingServiceBundle bindingService = new BindingServiceBundle(context.GetContainer());
+            bindingService.Start();
         }
         
         private async UniTask OpenPatchPage()
