@@ -9,9 +9,19 @@ namespace AIOFramework.UI
 {
     public abstract class UILoadProxyBase : MonoBehaviour, IUILoadProxy
     {
+        protected string curLocation;
         public List<HandleBase> Handles { get; set; } = new List<HandleBase>();
-
-        public abstract void Load(string location);
+        public virtual string CurLocation
+        {
+            get { return curLocation; }
+            set
+            {
+                if (curLocation == value) return;
+                curLocation = value;
+                OnLocationChange();
+            }
+        }
+        public abstract void OnLocationChange();
 
         public virtual void OnDispose()
         {

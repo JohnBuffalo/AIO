@@ -19,7 +19,7 @@ namespace AIOFramework.Runtime
             bindingSet.Bind(GetVariable<TextMeshProUGUI>("text")).For(v => v.text).To(vm => vm.SerialId).OneWay();
             bindingSet.Bind(GetVariable<TextMeshProUGUI>("tip")).For(v => v.text).ToExpression(vm => $"tip : {vm.Tips}")
                 .OneWay();
-            bindingSet.Bind(GetVariable<UISpriteLoadProxy>("icon_spriteloader")).For(v => v.SpritePath).To(vm => vm.SpritePath).OneWay();
+            bindingSet.Bind(GetVariable<UISpriteLoadProxy>("icon_spriteloader")).For(v => v.CurLocation).To(vm => vm.SpritePath).OneWay();
             bindingSet.Bind(GetVariable<Image>("image")).For(v => v.enabled).To(vm => vm.ShowSprite)
                 .OneWay();
             bindingSet.Build();

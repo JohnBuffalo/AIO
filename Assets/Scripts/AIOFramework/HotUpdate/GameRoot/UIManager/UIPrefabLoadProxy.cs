@@ -5,23 +5,22 @@ namespace AIOFramework.UI
 {
     public class UIPrefabLoadProxy : UILoadProxyBase
     {
-        private string prefabPath;
 
-        public override async void Load(string location)
+        public override async void OnLocationChange()
         {
-            var result = await Game.Resource.InstantiateAsync<GameObject>(location, transform);
+            var result = await Game.Resource.InstantiateAsync<GameObject>(curLocation, transform);
             Handles.Add(result.Item2);
         }
 
-        public string PrefabPath
+        public override string CurLocation
         {
-            get { return prefabPath; }
+            get { return curLocation; }
             set
             {
-                if (prefabPath == value) return;
-                prefabPath = value;
-                if (string.IsNullOrEmpty(prefabPath)) return;
-                Load(prefabPath);
+                if (curLocation == value) return;
+                curLocation = value;
+                if (string.IsNullOrEmpty(curLocation)) return;
+                OnLocationChange();
             }
         }
     }
