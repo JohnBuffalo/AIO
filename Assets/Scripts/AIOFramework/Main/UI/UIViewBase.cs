@@ -15,45 +15,45 @@ namespace AIOFramework.UI
         /// <summary>
         /// 页面上的组件集合
         /// </summary>
-        [SerializeField]
-        private VariableArray variables;
+        [FormerlySerializedAs("variables")] [SerializeField]
+        private VariableArray _variables;
         
         /// <summary>
         /// 页面UID
         /// </summary>
-        private int serialId;
+        private int _serialId;
 
         /// <summary>
         /// 页面资源名,默认是预制体名
         /// </summary>
-        private string assetName;
+        private string _assetName;
 
         /// <summary>
         /// 页面所属Group
         /// </summary>
-        private IUIGroup uiGroup;
+        private IUIGroup _uiGroup;
 
         /// <summary>
         /// 页面在组中层级
         /// </summary>
-        private int depthInUIGroup;
+        private int _depthInUIGroup;
 
         /// <summary>
         /// 是否暂停下方页面
         /// </summary>
-        private bool pauseCoveredUI;
+        private bool _pauseCoveredUI;
 
         /// <summary>
         /// 页面Canvas
         /// </summary>
-        private Canvas canvas;
+        private Canvas _canvas;
 
         /// <summary>
         /// 页面数据
         /// </summary>
-        private UICtorInfo ctorInfo;
+        private UICtorInfo _ctorInfo;
 
-        public UICtorInfo CtorInfo => ctorInfo;
+        public UICtorInfo CtorInfo => _ctorInfo;
 
         public UIViewModelBase ViewModel
         {
@@ -61,17 +61,17 @@ namespace AIOFramework.UI
             set { this.SetDataContext(value); }
         }
 
-        public VariableArray Variables => variables;
+        public VariableArray Variables => _variables;
         public string Location { get; set; }
         public UIGroupEnum Group { get; set; }
-        public int SerialId => serialId;
-        public string UIAssetName => assetName;
+        public int SerialId => _serialId;
+        public string UIAssetName => _assetName;
         public object Handle => gameObject;
 
         public IUIGroup UIGroup
         {
-            set { uiGroup = value; }
-            get { return uiGroup; }
+            set { _uiGroup = value; }
+            get { return _uiGroup; }
         }
 
         public bool Paused { get; set; }
@@ -81,37 +81,37 @@ namespace AIOFramework.UI
         {
             private set
             {
-                depthInUIGroup = value;
-                Canvas.sortingOrder = depthInUIGroup;
+                _depthInUIGroup = value;
+                Canvas.sortingOrder = _depthInUIGroup;
             }
-            get => depthInUIGroup;
+            get => _depthInUIGroup;
         }
 
-        public bool PauseCoveredUI => pauseCoveredUI;
+        public bool PauseCoveredUI => _pauseCoveredUI;
 
         public Canvas Canvas
         {
             get
             {
-                if (canvas == null)
+                if (_canvas == null)
                 {
-                    canvas = GetComponent<Canvas>();
-                    canvas.overrideSorting = true;
+                    _canvas = GetComponent<Canvas>();
+                    _canvas.overrideSorting = true;
                 }
 
-                return canvas;
+                return _canvas;
             }
         }
 
         public virtual void OnInit(int serialId, string uiAssetName, IUIGroup uiGroup, UIViewModelBase viewModel,
             UICtorInfo ctorInfo)
         {
-            this.serialId = serialId;
-            assetName = uiAssetName;
-            this.uiGroup = uiGroup;
+            this._serialId = serialId;
+            _assetName = uiAssetName;
+            this._uiGroup = uiGroup;
             ViewModel = viewModel;
-            this.ctorInfo = ctorInfo;
-            pauseCoveredUI = ctorInfo.PauseCoveredUI;
+            this._ctorInfo = ctorInfo;
+            _pauseCoveredUI = ctorInfo.PauseCoveredUI;
         }
 
         public virtual void OnRecycle()

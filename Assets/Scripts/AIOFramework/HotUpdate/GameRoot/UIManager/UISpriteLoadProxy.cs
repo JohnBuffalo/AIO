@@ -13,6 +13,7 @@ namespace AIOFramework.UI
     public class UISpriteLoadProxy : UILoadProxyBase
     {
         private Image target;
+        private string _curLocation;
 
         [SerializeField]
         private Sprite defaultSprite;
@@ -22,13 +23,13 @@ namespace AIOFramework.UI
 
         public override string CurLocation
         {
-            get { return curLocation; }
+            get { return _curLocation; }
             set
             {
-                if (curLocation == value)
+                if (_curLocation == value)
                     return;
-                curLocation = value;
-                if (string.IsNullOrEmpty(curLocation))
+                _curLocation = value;
+                if (string.IsNullOrEmpty(_curLocation))
                 {
                     target.sprite = defaultSprite;
                     target.material = defaultMaterial;
@@ -42,7 +43,7 @@ namespace AIOFramework.UI
         {
             try
             {
-                var result = await Entrance.Resource.LoadAssetAsync<Sprite>(curLocation);
+                var result = await Entrance.Resource.LoadAssetAsync<Sprite>(_curLocation);
                 Handles.Add(result.Item2);
                 target.sprite = result.Item1;
             }

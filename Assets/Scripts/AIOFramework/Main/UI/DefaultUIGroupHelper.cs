@@ -11,17 +11,17 @@ namespace AIOFramework.UI
     /// </summary>
     public class DefaultUIGroupHelper : MonoBehaviour, IUIGroupHelper
     {
-        Canvas m_Canvas;
+        private Canvas _canvas;
         public Canvas Canvas
         {
             get
             {
-                if (m_Canvas == null)
+                if (_canvas == null)
                 {
-                    m_Canvas = gameObject.GetOrAddComponent<Canvas>();
+                    _canvas = gameObject.GetOrAddComponent<Canvas>();
                     Canvas.overrideSorting = true;
                 }
-                return m_Canvas;
+                return _canvas;
             }
         }
 

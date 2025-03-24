@@ -29,43 +29,42 @@ namespace AIOFramework.Setting
     [Serializable]
     public class GameSetting
     {
-        [SerializeField] private ServerTypeEnum m_ServerType = ServerTypeEnum.Intranet;
+        [SerializeField] 
+        private ServerTypeEnum _serverType = ServerTypeEnum.Intranet;
 
-        public ServerTypeEnum ServerType => m_ServerType;
+        public ServerTypeEnum ServerType => _serverType;
 
-        [SerializeField] private string m_Version = "0.0.0";
-        public string Version { get => m_Version; set => m_Version = value; }
+        [SerializeField] private string _version = "0.0.0";
+        public string Version { get => _version; set => _version = value; }
 
         [Tooltip("是否在构建资源的时候清理上传到服务端目录的老资源")] [SerializeField]
-        private bool m_CleanCommitPathRes = true;
-
-        public bool CleanCommitPathRes => m_CleanCommitPathRes;
+        private bool _cleanCommitPathRes = true;
+        public bool CleanCommitPathRes => _cleanCommitPathRes;
 
         
         [Tooltip("宿主机资源地址")] [SerializeField]
-        private string m_LocalResourceUrl = "http://127.0.0.1";
-        public string LocalResourceUrl => m_LocalResourceUrl;
+        private string _localResourceUrl = "http://127.0.0.1";
+        public string LocalResourceUrl => _localResourceUrl;
         [Tooltip("Dev内网资源地址")] [SerializeField]
-        private string m_InnerResourceUrl = "http://127.0.0.1";
-        public string InnerResourceUrl => m_InnerResourceUrl;
+        private string _innerResourceUrl = "http://127.0.0.1";
+        public string InnerResourceUrl => _innerResourceUrl;
 
         [Tooltip("Dev外网资源地址")] [SerializeField]
-        private string m_ExtraResourceUrl = "http://127.0.0.1";
+        private string _extraResourceUrl = "http://127.0.0.1";
 
-        public string ExtraResourceUrl => m_ExtraResourceUrl;
-
+        public string ExtraResourceUrl => _extraResourceUrl;
 
         [Tooltip("Master线上资源地址")] [SerializeField]
-        private string m_FormalResourceUrl = "http://127.0.0.1";
+        private string _formalResourceUrl = "http://127.0.0.1";
 
-        public string FormalResourceUrl => m_FormalResourceUrl;
+        public string FormalResourceUrl => _formalResourceUrl;
 
         [Tooltip("本地资源服务器地址")][SerializeField]
-        private string m_LocalServerDirectory = "D:/UnityReferences/AIOSimulateServer";
-        public string LocalServerDirectory => m_LocalServerDirectory;
+        private string _localServerDirectory = "D:/UnityReferences/AIOHttpsServer";
+        public string LocalServerDirectory => _localServerDirectory;
 
         [Tooltip("热更程序集Dll存放路径")][SerializeField]
-        private string m_HotUpdateDllDirectory = "ArtAssets/HotUpdate";
-        public string HotUpdateDllDirectory => m_HotUpdateDllDirectory;
+        private string _hotUpdateDllDirectory = "ArtAssets/HotUpdate";
+        public string HotUpdateDllDirectory => _hotUpdateDllDirectory;
     }
 }

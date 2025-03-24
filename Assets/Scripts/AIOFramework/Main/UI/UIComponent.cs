@@ -5,6 +5,7 @@ using AIOFramework.ObjectPool;
 using AIOFramework.Runtime;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace AIOFramework.UI
 {
@@ -15,19 +16,21 @@ namespace AIOFramework.UI
     [AddComponentMenu("AIOFramework/UI")]
     public partial class UIComponent : GameFrameworkComponent
     {
-        IUIManager m_UIManager;
+        IUIManager _uiManager;
+        private Transform _instanceRoot = null;
 
-        [SerializeField] private Transform m_InstanceRoot = null;
-        [SerializeField] private string m_UIGroupHelperTypeName = "AIOFramework.Runtime.DefaultUIGroupHelper";
+        [SerializeField] private string _uiGroupHelperTypeName = "AIOFramework.UI.DefaultUIGroupHelper";
+
         // [SerializeField] private UIGroupDisplay[] m_UIGroups = null;
-        private readonly List<IUIForm> m_InternalUIFormResults = new List<IUIForm>();
-        [SerializeField] private float m_InstanceAutoReleaseInterval = 60f;
-        [SerializeField] private int m_InstanceCapacity = 16;
-        [SerializeField] private float m_InstanceExpireTime = 60f;
+        private readonly List<IUIForm> _internalUIFormResults = new List<IUIForm>();
+        [SerializeField] private float _instanceAutoReleaseInterval = 60f;
+        [SerializeField] private int _instanceCapacity = 16;
+        [SerializeField] private float _instanceExpireTime = 60f;
 
-        public IUIManager UIManager {
-            set {m_UIManager = value;}
-            get{return m_UIManager;}
+        public IUIManager UIManager
+        {
+            set { _uiManager = value; }
+            get { return _uiManager; }
         }
 
         /// <summary>
@@ -35,7 +38,7 @@ namespace AIOFramework.UI
         /// </summary>
         public int UIGroupCount
         {
-            get { return m_UIManager.UIGroupCount; }
+            get { return _uiManager.UIGroupCount; }
         }
 
 
@@ -44,8 +47,8 @@ namespace AIOFramework.UI
         /// </summary>
         public float InstanceAutoReleaseInterval
         {
-            get { return m_UIManager.InstanceAutoReleaseInterval; }
-            set { m_UIManager.InstanceAutoReleaseInterval = m_InstanceAutoReleaseInterval = value; }
+            get { return _uiManager.InstanceAutoReleaseInterval; }
+            set { _uiManager.InstanceAutoReleaseInterval = _instanceAutoReleaseInterval = value; }
         }
 
 
@@ -54,8 +57,8 @@ namespace AIOFramework.UI
         /// </summary>
         public int InstanceCapacity
         {
-            get { return m_UIManager.InstanceCapacity; }
-            set { m_UIManager.InstanceCapacity = m_InstanceCapacity = value; }
+            get { return _uiManager.InstanceCapacity; }
+            set { _uiManager.InstanceCapacity = _instanceCapacity = value; }
         }
 
 
@@ -64,10 +67,10 @@ namespace AIOFramework.UI
         /// </summary>
         public float InstanceExpireTime
         {
-            get { return m_UIManager.InstanceExpireTime; }
-            set { m_UIManager.InstanceExpireTime = m_InstanceExpireTime = value; }
+            get { return _uiManager.InstanceExpireTime; }
+            set { _uiManager.InstanceExpireTime = _instanceExpireTime = value; }
         }
-        
+
 
         private void OnOpenUIFormSuccess(object sender, OpenUISuccessEventArgs args)
         {
@@ -83,33 +86,33 @@ namespace AIOFramework.UI
         {
             Entrance.Event.Fire(this, args);
         }
-        
+
         public void Init(Type uiManagerType, Transform insRoot)
         {
-            m_UIManager = GameFrameworkEntry.GetModule(uiManagerType) as IUIManager;
-            if (m_UIManager == null)
+            _uiManager = GameFrameworkEntry.GetModule(uiManagerType) as IUIManager;
+            if (_uiManager == null)
             {
                 Log.Fatal("UI manager is null.");
                 return;
             }
-            
-            m_UIManager.SetAssetManager(Entrance.Resource);
-            m_UIManager.SetObjectPoolManager(GameFrameworkEntry.GetModule<IObjectPoolManager>());
-            m_UIManager.InstanceAutoReleaseInterval = m_InstanceAutoReleaseInterval;
-            m_UIManager.InstanceCapacity = m_InstanceCapacity;
-            m_UIManager.InstanceExpireTime = m_InstanceExpireTime;
-            m_UIManager.OpenUIFormSuccess += OnOpenUIFormSuccess;
-            m_UIManager.OpenUIFormFailure += OnOpenUIFormFailure;
-            m_UIManager.CloseUIFormComplete += OnCloseUIFormComplete;
-            
-            if (m_InstanceRoot == null)
+
+            _uiManager.SetAssetManager(Entrance.Resource);
+            _uiManager.SetObjectPoolManager(GameFrameworkEntry.GetModule<IObjectPoolManager>());
+            _uiManager.InstanceAutoReleaseInterval = _instanceAutoReleaseInterval;
+            _uiManager.InstanceCapacity = _instanceCapacity;
+            _uiManager.InstanceExpireTime = _instanceExpireTime;
+            _uiManager.OpenUIFormSuccess += OnOpenUIFormSuccess;
+            _uiManager.OpenUIFormFailure += OnOpenUIFormFailure;
+            _uiManager.CloseUIFormComplete += OnCloseUIFormComplete;
+
+            if (_instanceRoot == null)
             {
-                m_InstanceRoot = insRoot;
-                m_InstanceRoot.SetParent(gameObject.transform);
-                m_InstanceRoot.localScale = Vector3.one;
+                _instanceRoot = insRoot;
+                _instanceRoot.SetParent(gameObject.transform);
+                _instanceRoot.localScale = Vector3.one;
             }
 
-            m_InstanceRoot.gameObject.layer = LayerMask.NameToLayer("UI");
+            _instanceRoot.gameObject.layer = LayerMask.NameToLayer("UI");
 
             foreach (UIGroupEnum uiGroup in Enum.GetValues(typeof(UIGroupEnum)))
             {
@@ -133,7 +136,7 @@ namespace AIOFramework.UI
         /// <returns>是否存在界面组。</returns>
         public bool HasUIGroup(UIGroupEnum uiGroupName)
         {
-            return m_UIManager.HasUIGroup(uiGroupName);
+            return _uiManager.HasUIGroup(uiGroupName);
         }
 
         /// <summary>
@@ -143,7 +146,7 @@ namespace AIOFramework.UI
         /// <returns>要获取的界面组。</returns>
         public IUIGroup GetUIGroup(UIGroupEnum uiGroupName)
         {
-            return m_UIManager.GetUIGroup(uiGroupName);
+            return _uiManager.GetUIGroup(uiGroupName);
         }
 
         /// <summary>
@@ -152,7 +155,7 @@ namespace AIOFramework.UI
         /// <returns>所有界面组。</returns>
         public IUIGroup[] GetAllUIGroups()
         {
-            return m_UIManager.GetAllUIGroups();
+            return _uiManager.GetAllUIGroups();
         }
 
         /// <summary>
@@ -161,9 +164,9 @@ namespace AIOFramework.UI
         /// <param name="results">所有界面组。</param>
         public void GetAllUIGroups(List<IUIGroup> results)
         {
-            m_UIManager.GetAllUIGroups(results);
+            _uiManager.GetAllUIGroups(results);
         }
-        
+
         /// <summary>
         /// 增加界面组。
         /// </summary>
@@ -172,13 +175,13 @@ namespace AIOFramework.UI
         /// <returns>是否增加界面组成功。</returns>
         public bool AddUIGroup(UIGroupEnum uiGroupName, int depth)
         {
-            if (m_UIManager.HasUIGroup(uiGroupName))
+            if (_uiManager.HasUIGroup(uiGroupName))
             {
                 return false;
             }
 
             DefaultUIGroupHelper uiGroupHelper =
-                Helper.CreateHelper<DefaultUIGroupHelper>(m_UIGroupHelperTypeName, UIGroupCount);
+                Helper.CreateHelper<DefaultUIGroupHelper>(_uiGroupHelperTypeName, UIGroupCount);
             if (uiGroupHelper == null)
             {
                 Log.Error("Can not create UI group helper.");
@@ -189,11 +192,11 @@ namespace AIOFramework.UI
             uiGroupHelper.gameObject.layer = LayerMask.NameToLayer("UI");
             uiGroupHelper.Init();
             Transform transform = uiGroupHelper.transform;
-            transform.SetParent(m_InstanceRoot);
+            transform.SetParent(_instanceRoot);
             transform.localScale = Vector3.one;
             transform.localPosition = Vector3.zero;
 
-            return m_UIManager.AddUIGroup(uiGroupName, depth, uiGroupHelper);
+            return _uiManager.AddUIGroup(uiGroupName, depth, uiGroupHelper);
         }
 
         /// <summary>
@@ -203,7 +206,7 @@ namespace AIOFramework.UI
         /// <returns>是否存在界面。</returns>
         public bool HasUI(int serialId)
         {
-            return m_UIManager.HasUI(serialId);
+            return _uiManager.HasUI(serialId);
         }
 
         /// <summary>
@@ -213,7 +216,7 @@ namespace AIOFramework.UI
         /// <returns>是否存在界面。</returns>
         public bool HasUI(string uiFormAssetName)
         {
-            return m_UIManager.HasUI(uiFormAssetName);
+            return _uiManager.HasUI(uiFormAssetName);
         }
 
         /// <summary>
@@ -221,9 +224,9 @@ namespace AIOFramework.UI
         /// </summary>
         /// <typeparam name="TViewModel">页面控制模块</typeparam>
         /// <returns>页面唯一Id</returns>
-        public async UniTask<int> OpenUI<TViewModel>(UICtorInfo ctorInfo)where TViewModel : UIViewModelBase, new()
+        public async UniTask<int> OpenUI<TViewModel>(UICtorInfo ctorInfo) where TViewModel : UIViewModelBase, new()
         {
-            return await m_UIManager.OpenUI<TViewModel>(ctorInfo);
+            return await _uiManager.OpenUI<TViewModel>(ctorInfo);
         }
 
         /// <summary>
@@ -234,18 +237,18 @@ namespace AIOFramework.UI
         /// <returns>页面位移Id</returns>
         public async UniTask<int> OpenUI(UICtorInfo ctorInfo, UIViewModelBase viewModel)
         {
-            return await m_UIManager.OpenUI(ctorInfo, viewModel);
+            return await _uiManager.OpenUI(ctorInfo, viewModel);
         }
-        
-        
+
+
         /// <summary>
         /// 获取界面。
         /// </summary>
         /// <param name="serialId">界面序列编号。</param>
         /// <returns>要获取的界面。</returns>
-        public T GetUI<T>(int serialId) where T:IUIForm
+        public T GetUI<T>(int serialId) where T : IUIForm
         {
-            return m_UIManager.GetUI<T>(serialId);
+            return _uiManager.GetUI<T>(serialId);
         }
 
         /// <summary>
@@ -253,9 +256,9 @@ namespace AIOFramework.UI
         /// </summary>
         /// <param name="uiFormAssetName">界面资源名称。</param>
         /// <returns>要获取的界面。</returns>
-        public T GetUI<T>(string uiFormAssetName) where T:IUIForm
+        public T GetUI<T>(string uiFormAssetName) where T : IUIForm
         {
-            return m_UIManager.GetUI<T>(uiFormAssetName);
+            return _uiManager.GetUI<T>(uiFormAssetName);
         }
 
         /// <summary>
@@ -263,9 +266,9 @@ namespace AIOFramework.UI
         /// </summary>
         /// <param name="uiFormAssetName">界面资源名称。</param>
         /// <returns>要获取的界面。</returns>
-        public T[] GetAllUI<T>(string uiFormAssetName) where T:IUIForm
+        public T[] GetAllUI<T>(string uiFormAssetName) where T : IUIForm
         {
-            IUIForm[] uiForms = m_UIManager.GetAllUI(uiFormAssetName);
+            IUIForm[] uiForms = _uiManager.GetAllUI(uiFormAssetName);
             T[] uiFormImpls = new T[uiForms.Length];
             for (int i = 0; i < uiForms.Length; i++)
             {
@@ -280,7 +283,7 @@ namespace AIOFramework.UI
         /// </summary>
         /// <param name="uiFormAssetName">界面资源名称。</param>
         /// <param name="results">要获取的界面。</param>
-        public void GetAllUI<T>(string uiFormAssetName, List<T> results) where T:IUIForm
+        public void GetAllUI<T>(string uiFormAssetName, List<T> results) where T : IUIForm
         {
             if (results == null)
             {
@@ -289,8 +292,8 @@ namespace AIOFramework.UI
             }
 
             results.Clear();
-            m_UIManager.GetAllUI(uiFormAssetName, m_InternalUIFormResults);
-            foreach (IUIForm uiForm in m_InternalUIFormResults)
+            _uiManager.GetAllUI(uiFormAssetName, _internalUIFormResults);
+            foreach (IUIForm uiForm in _internalUIFormResults)
             {
                 results.Add((T)uiForm);
             }
@@ -300,9 +303,9 @@ namespace AIOFramework.UI
         /// 获取所有已加载的界面。
         /// </summary>
         /// <returns>所有已加载的界面。</returns>
-        public T[] GetAllLoadedUI<T>() where T:IUIForm
+        public T[] GetAllLoadedUI<T>() where T : IUIForm
         {
-            IUIForm[] uiForms = m_UIManager.GetAllLoadedUI();
+            IUIForm[] uiForms = _uiManager.GetAllLoadedUI();
             T[] uiFormImpls = new T[uiForms.Length];
             for (int i = 0; i < uiForms.Length; i++)
             {
@@ -316,7 +319,7 @@ namespace AIOFramework.UI
         /// 获取所有已加载的界面。
         /// </summary>
         /// <param name="results">所有已加载的界面。</param>
-        public void GetAllLoadedUIForms<T>(List<T> results)where T:IUIForm
+        public void GetAllLoadedUIForms<T>(List<T> results) where T : IUIForm
         {
             if (results == null)
             {
@@ -325,8 +328,8 @@ namespace AIOFramework.UI
             }
 
             results.Clear();
-            m_UIManager.GetAllLoadedUI(m_InternalUIFormResults);
-            foreach (T uiForm in m_InternalUIFormResults)
+            _uiManager.GetAllLoadedUI(_internalUIFormResults);
+            foreach (T uiForm in _internalUIFormResults)
             {
                 results.Add((T)uiForm);
             }
@@ -338,7 +341,7 @@ namespace AIOFramework.UI
         /// <returns>所有正在加载界面的序列编号。</returns>
         public int[] GetAllLoadingUISerialIds()
         {
-            return m_UIManager.GetAllLoadingUISerialIds();
+            return _uiManager.GetAllLoadingUISerialIds();
         }
 
         /// <summary>
@@ -347,7 +350,7 @@ namespace AIOFramework.UI
         /// <param name="results">所有正在加载界面的序列编号。</param>
         public void GetAllLoadingUISerialIds(List<int> results)
         {
-            m_UIManager.GetAllLoadingUISerialIds(results);
+            _uiManager.GetAllLoadingUISerialIds(results);
         }
 
         /// <summary>
@@ -357,7 +360,7 @@ namespace AIOFramework.UI
         /// <returns>是否正在加载界面。</returns>
         public bool IsLoadingUI(int serialId)
         {
-            return m_UIManager.IsLoadingUI(serialId);
+            return _uiManager.IsLoadingUI(serialId);
         }
 
         /// <summary>
@@ -367,37 +370,37 @@ namespace AIOFramework.UI
         /// <returns>界面是否合法。</returns>
         public bool IsValidUI(IUIForm uiForm)
         {
-            return m_UIManager.IsValidUI(uiForm);
+            return _uiManager.IsValidUI(uiForm);
         }
-        
+
         public void CloseUI(int serialId)
         {
-            m_UIManager.CloseUI(serialId);
+            _uiManager.CloseUI(serialId);
         }
 
         public void CloseUI(IUIForm uiForm)
         {
-            m_UIManager.CloseUI(uiForm);
+            _uiManager.CloseUI(uiForm);
         }
 
         public void CloseUI(IUIForm uiForm, object userData)
         {
-            m_UIManager.CloseUI(uiForm, userData);
+            _uiManager.CloseUI(uiForm, userData);
         }
 
         public void CloseAllLoadedUI()
         {
-            m_UIManager.CloseAllLoadedUI();
+            _uiManager.CloseAllLoadedUI();
         }
 
         public void CloseAllLoadingUI()
         {
-            m_UIManager.CloseAllLoadingUI();
+            _uiManager.CloseAllLoadingUI();
         }
 
         public void RefocusUI(IUIForm uiform)
         {
-            m_UIManager.RefocusUI(uiform);
+            _uiManager.RefocusUI(uiform);
         }
 
         /// <summary>
@@ -413,7 +416,7 @@ namespace AIOFramework.UI
                 return;
             }
 
-            m_UIManager.SetUIInstanceLocked(((MonoBehaviour)uiForm.Handle).gameObject, locked);
+            _uiManager.SetUIInstanceLocked(((MonoBehaviour)uiForm.Handle).gameObject, locked);
         }
     }
 }

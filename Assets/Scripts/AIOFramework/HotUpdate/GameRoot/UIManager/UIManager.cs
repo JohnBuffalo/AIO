@@ -12,78 +12,78 @@ namespace AIOFramework.UI
 {
     public class UIManager : GameFrameworkModule, IUIManager
     {
-        private readonly Dictionary<UIGroupEnum, UIGroup> uiGroups;
-        private readonly Dictionary<int, string> uiBeingLoaded;
-        private readonly HashSet<int> uiToReleaseOnLoad;
-        private readonly Queue<IUIForm> recycleQueue;
-        private IObjectPoolManager objectPoolManager;
-        private IAssetManager assetManager;
-        private int serial;
-        private IObjectPool<UIInstanceObject> instancePool;
-        private EventHandler<OpenUISuccessEventArgs> openUISuccessEventHandler;
-        private EventHandler<OpenUIFailureEventArgs> openUIFailureEventHandler;
-        private EventHandler<CloseUICompleteEventArgs> closeUICompleteEventHandler;
+        private readonly Dictionary<UIGroupEnum, UIGroup> _uiGroups;
+        private readonly Dictionary<int, string> _uiBeingLoaded;
+        private readonly HashSet<int> _uiToReleaseOnLoad;
+        private readonly Queue<IUIForm> _recycleQueue;
+        private IObjectPoolManager _objectPoolManager;
+        private IAssetManager _assetManager;
+        private int _serial;
+        private IObjectPool<UIInstanceObject> _instancePool;
+        private EventHandler<OpenUISuccessEventArgs> _openUISuccessEventHandler;
+        private EventHandler<OpenUIFailureEventArgs> _openUIFailureEventHandler;
+        private EventHandler<CloseUICompleteEventArgs> _closeUICompleteEventHandler;
 
         public UIManager()
         {
-            uiGroups = new Dictionary<UIGroupEnum, UIGroup>();
-            uiBeingLoaded = new Dictionary<int, string>();
-            recycleQueue = new Queue<IUIForm>();
-            uiToReleaseOnLoad = new HashSet<int>();
-            objectPoolManager = null;
-            assetManager = null;
-            serial = 0;
-            instancePool = null;
-            openUISuccessEventHandler = null;
-            openUIFailureEventHandler = null;
-            closeUICompleteEventHandler = null;
+            _uiGroups = new Dictionary<UIGroupEnum, UIGroup>();
+            _uiBeingLoaded = new Dictionary<int, string>();
+            _recycleQueue = new Queue<IUIForm>();
+            _uiToReleaseOnLoad = new HashSet<int>();
+            _objectPoolManager = null;
+            _assetManager = null;
+            _serial = 0;
+            _instancePool = null;
+            _openUISuccessEventHandler = null;
+            _openUIFailureEventHandler = null;
+            _closeUICompleteEventHandler = null;
         }
 
         public int UIGroupCount
         {
-            get { return uiGroups.Count; }
+            get { return _uiGroups.Count; }
         }
 
         public float InstanceAutoReleaseInterval
         {
-            get { return instancePool.AutoReleaseInterval; }
-            set { instancePool.AutoReleaseInterval = value; }
+            get { return _instancePool.AutoReleaseInterval; }
+            set { _instancePool.AutoReleaseInterval = value; }
         }
 
         public int InstanceCapacity
         {
-            get { return instancePool.Capacity; }
-            set { instancePool.Capacity = value; }
+            get { return _instancePool.Capacity; }
+            set { _instancePool.Capacity = value; }
         }
 
         public float InstanceExpireTime
         {
-            get { return instancePool.ExpireTime; }
-            set { instancePool.ExpireTime = value; }
+            get { return _instancePool.ExpireTime; }
+            set { _instancePool.ExpireTime = value; }
         }
 
         public int InstancePriority
         {
-            get { return instancePool.Priority; }
-            set { instancePool.Priority = value; }
+            get { return _instancePool.Priority; }
+            set { _instancePool.Priority = value; }
         }
 
         public event EventHandler<OpenUISuccessEventArgs> OpenUIFormSuccess
         {
-            add { openUISuccessEventHandler += value; }
-            remove { openUISuccessEventHandler -= value; }
+            add { _openUISuccessEventHandler += value; }
+            remove { _openUISuccessEventHandler -= value; }
         }
 
         public event EventHandler<OpenUIFailureEventArgs> OpenUIFormFailure
         {
-            add { openUIFailureEventHandler += value; }
-            remove { openUIFailureEventHandler -= value; }
+            add { _openUIFailureEventHandler += value; }
+            remove { _openUIFailureEventHandler -= value; }
         }
 
         public event EventHandler<CloseUICompleteEventArgs> CloseUIFormComplete
         {
-            add { closeUICompleteEventHandler += value; }
-            remove { closeUICompleteEventHandler -= value; }
+            add { _closeUICompleteEventHandler += value; }
+            remove { _closeUICompleteEventHandler -= value; }
         }
 
 
@@ -94,9 +94,9 @@ namespace AIOFramework.UI
         /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
         internal override void Update(float elapseSeconds, float realElapseSeconds)
         {
-            while (recycleQueue.Count > 0)
+            while (_recycleQueue.Count > 0)
             {
-                IUIForm uiForm = recycleQueue.Dequeue();
+                IUIForm uiForm = _recycleQueue.Dequeue();
                 uiForm.OnRecycle();
                 
                 ((UIViewBase)uiForm).SetActive(false);
@@ -106,10 +106,10 @@ namespace AIOFramework.UI
                 ((GameObject)uiForm.Handle).transform.SetParent(((MonoBehaviour)poolGroup.Helper).transform);
                 poolGroup.Refresh();
                 
-                instancePool.Unspawn(uiForm.Handle);
+                _instancePool.Unspawn(uiForm.Handle);
             }
 
-            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in uiGroups)
+            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in _uiGroups)
             {
                 uiGroup.Value.Update(elapseSeconds, realElapseSeconds);
             }
@@ -118,10 +118,10 @@ namespace AIOFramework.UI
         internal override void Shutdown()
         {
             CloseAllLoadedUI();
-            uiGroups.Clear();
-            uiBeingLoaded.Clear();
-            uiToReleaseOnLoad.Clear();
-            recycleQueue.Clear();
+            _uiGroups.Clear();
+            _uiBeingLoaded.Clear();
+            _uiToReleaseOnLoad.Clear();
+            _recycleQueue.Clear();
         }
 
         public void SetObjectPoolManager(IObjectPoolManager objectPoolManager)
@@ -131,8 +131,8 @@ namespace AIOFramework.UI
                 throw new GameFrameworkException("Object pool manager is invalid.");
             }
 
-            this.objectPoolManager = objectPoolManager;
-            instancePool = this.objectPoolManager.CreateSingleSpawnObjectPool<UIInstanceObject>("UI Instance Pool");
+            this._objectPoolManager = objectPoolManager;
+            _instancePool = this._objectPoolManager.CreateSingleSpawnObjectPool<UIInstanceObject>("UI Instance Pool");
         }
 
         public void SetAssetManager(IAssetManager assetManager)
@@ -142,18 +142,18 @@ namespace AIOFramework.UI
                 throw new GameFrameworkException("Resource manager is invalid.");
             }
 
-            this.assetManager = assetManager;
+            this._assetManager = assetManager;
         }
 
         public bool HasUIGroup(UIGroupEnum uiGroupName)
         {
-            return uiGroups.ContainsKey(uiGroupName);
+            return _uiGroups.ContainsKey(uiGroupName);
         }
 
         public IUIGroup GetUIGroup(UIGroupEnum uiGroupName)
         {
             UIGroup uiGroup = null;
-            if (uiGroups.TryGetValue(uiGroupName, out uiGroup))
+            if (_uiGroups.TryGetValue(uiGroupName, out uiGroup))
             {
                 return uiGroup;
             }
@@ -164,8 +164,8 @@ namespace AIOFramework.UI
         public IUIGroup[] GetAllUIGroups()
         {
             int index = 0;
-            IUIGroup[] results = new IUIGroup[uiGroups.Count];
-            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in uiGroups)
+            IUIGroup[] results = new IUIGroup[_uiGroups.Count];
+            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in _uiGroups)
             {
                 results[index++] = uiGroup.Value;
             }
@@ -181,7 +181,7 @@ namespace AIOFramework.UI
             }
 
             results.Clear();
-            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in uiGroups)
+            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in _uiGroups)
             {
                 results.Add(uiGroup.Value);
             }
@@ -199,14 +199,14 @@ namespace AIOFramework.UI
                 return false;
             }
 
-            uiGroups.Add(uiGroupName, new UIGroup(uiGroupName, uiGroupDepth, uiGroupHelper));
+            _uiGroups.Add(uiGroupName, new UIGroup(uiGroupName, uiGroupDepth, uiGroupHelper));
 
             return true;
         }
 
         public bool HasUI(int serialId)
         {
-            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in uiGroups)
+            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in _uiGroups)
             {
                 if (uiGroup.Value.HasUI(serialId))
                 {
@@ -224,7 +224,7 @@ namespace AIOFramework.UI
                 throw new GameFrameworkException("UI form asset name is invalid.");
             }
 
-            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in uiGroups)
+            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in _uiGroups)
             {
                 if (uiGroup.Value.HasUI(uiFormAssetName))
                 {
@@ -249,7 +249,7 @@ namespace AIOFramework.UI
         
         public IUIForm GetUI(int serialId)
         {
-            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in uiGroups)
+            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in _uiGroups)
             {
                 IUIForm uiForm = uiGroup.Value.GetUI(serialId);
                 if (uiForm != null)
@@ -268,7 +268,7 @@ namespace AIOFramework.UI
                 throw new GameFrameworkException("UI form asset name is invalid.");
             }
 
-            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in uiGroups)
+            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in _uiGroups)
             {
                 IUIForm uiForm = uiGroup.Value.GetUI(uiFormAssetName);
                 if (uiForm != null)
@@ -288,7 +288,7 @@ namespace AIOFramework.UI
             }
 
             List<IUIForm> results = new List<IUIForm>();
-            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in uiGroups)
+            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in _uiGroups)
             {
                 results.AddRange(uiGroup.Value.GetUIArray(uiAssetName));
             }
@@ -309,7 +309,7 @@ namespace AIOFramework.UI
             }
 
             results.Clear();
-            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in uiGroups)
+            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in _uiGroups)
             {
                 uiGroup.Value.InternalGetUIList(uiFormAssetName, results);
             }
@@ -318,7 +318,7 @@ namespace AIOFramework.UI
         public IUIForm[] GetAllLoadedUI()
         {
             List<IUIForm> results = new List<IUIForm>();
-            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in uiGroups)
+            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in _uiGroups)
             {
                 results.AddRange(uiGroup.Value.GetAllUI());
             }
@@ -334,7 +334,7 @@ namespace AIOFramework.UI
             }
 
             results.Clear();
-            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in uiGroups)
+            foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in _uiGroups)
             {
                 uiGroup.Value.InternalGetAllUIList(results);
             }
@@ -343,8 +343,8 @@ namespace AIOFramework.UI
         public int[] GetAllLoadingUISerialIds()
         {
             int index = 0;
-            int[] results = new int[uiBeingLoaded.Count];
-            foreach (KeyValuePair<int, string> uiFormBeingLoaded in uiBeingLoaded)
+            int[] results = new int[_uiBeingLoaded.Count];
+            foreach (KeyValuePair<int, string> uiFormBeingLoaded in _uiBeingLoaded)
             {
                 results[index++] = uiFormBeingLoaded.Key;
             }
@@ -360,7 +360,7 @@ namespace AIOFramework.UI
             }
 
             results.Clear();
-            foreach (KeyValuePair<int, string> uiFormBeingLoaded in uiBeingLoaded)
+            foreach (KeyValuePair<int, string> uiFormBeingLoaded in _uiBeingLoaded)
             {
                 results.Add(uiFormBeingLoaded.Key);
             }
@@ -368,7 +368,7 @@ namespace AIOFramework.UI
 
         public bool IsLoadingUI(int serialId)
         {
-            return uiBeingLoaded.ContainsKey(serialId);
+            return _uiBeingLoaded.ContainsKey(serialId);
         }
 
         public bool IsLoadingUI(string uiFormAssetName)
@@ -378,7 +378,7 @@ namespace AIOFramework.UI
                 throw new GameFrameworkException("UI form asset name is invalid.");
             }
 
-            return uiBeingLoaded.ContainsValue(uiFormAssetName);
+            return _uiBeingLoaded.ContainsValue(uiFormAssetName);
         }
 
         public bool IsValidUI(IUIForm uiForm)
@@ -411,7 +411,7 @@ namespace AIOFramework.UI
                 throw new GameFrameworkException("CtorInfo is invalid.");
             }
 
-            if (assetManager == null)
+            if (_assetManager == null)
             {
                 throw new GameFrameworkException("You must set asset manager first.");
             }
@@ -421,7 +421,7 @@ namespace AIOFramework.UI
                 throw new GameFrameworkException("UI form asset location is invalid.");
             }
 
-            int serialId = ++serial;
+            int serialId = ++_serial;
             string uiName = GetUIName(ctorInfo.Location);
             UIGroup uiGroup = (UIGroup)GetUIGroup(ctorInfo.Group);
             Log.Info($"[UIManager] OpenUI {uiName}");
@@ -431,18 +431,18 @@ namespace AIOFramework.UI
                 if (existUI != null)
                 {
                     Log.Info($"[UIManager] existUI {uiName} at {existUI.SerialId}");
-                    serial--;
+                    _serial--;
                     RefocusUI(existUI, ctorInfo);
                     ReferencePool.Release(viewModel);
                     return existUI.SerialId;
                 }
             }
             
-            UIInstanceObject uiInstanceObject = instancePool.Spawn(uiName);
+            UIInstanceObject uiInstanceObject = _instancePool.Spawn(uiName);
             if (uiInstanceObject == null)
             {
-                uiBeingLoaded.Add(serialId, ctorInfo.Location);
-                var loadResult = await assetManager.LoadAssetAsync<GameObject>(ctorInfo.Location);
+                _uiBeingLoaded.Add(serialId, ctorInfo.Location);
+                var loadResult = await _assetManager.LoadAssetAsync<GameObject>(ctorInfo.Location);
                 uiInstanceObject = LoadAssetSuccessCallback(loadResult.Item2, loadResult.Item1, serialId);
             }
 
@@ -456,19 +456,19 @@ namespace AIOFramework.UI
 
         private UIInstanceObject LoadAssetSuccessCallback(AssetHandle loadHandle, GameObject uiAsset, int serialId)
         {
-            if (uiToReleaseOnLoad.Contains(serialId))
+            if (_uiToReleaseOnLoad.Contains(serialId))
             {
-                uiToReleaseOnLoad.Remove(serialId);
-                assetManager.UnloadAsset(loadHandle);
+                _uiToReleaseOnLoad.Remove(serialId);
+                _assetManager.UnloadAsset(loadHandle);
                 return null;
             }
 
             var location = loadHandle.Provider.MainAssetInfo.AssetPath;
-            uiBeingLoaded.Remove(serialId);
+            _uiBeingLoaded.Remove(serialId);
             GameObject uiInstance = GameObject.Instantiate(uiAsset);
             UIInstanceObject uiInstanceObject =
                 UIInstanceObject.Create(GetUIName(location), location, uiInstance, loadHandle);
-            instancePool.Register(uiInstanceObject, true);
+            _instancePool.Register(uiInstanceObject, true);
 
             return uiInstanceObject;
         }
@@ -497,21 +497,21 @@ namespace AIOFramework.UI
                 uiView.OnOpen(null);
                 uiGroup.Refresh();
 
-                if (openUISuccessEventHandler != null)
+                if (_openUISuccessEventHandler != null)
                 {
                     OpenUISuccessEventArgs args = OpenUISuccessEventArgs.Create(uiView, null);
-                    openUISuccessEventHandler(this, args);
+                    _openUISuccessEventHandler(this, args);
                     ReferencePool.Release(args);
                 }
             }
             catch (Exception e)
             {
                 Log.Error(e.Message);
-                if (openUIFailureEventHandler != null)
+                if (_openUIFailureEventHandler != null)
                 {
                     OpenUIFailureEventArgs args =
                         OpenUIFailureEventArgs.Create(serialId, uiName, uiGroup.Name, e.ToString(), null);
-                    openUIFailureEventHandler(this, args);
+                    _openUIFailureEventHandler(this, args);
                     ReferencePool.Release(args);
                 }
             }
@@ -531,8 +531,8 @@ namespace AIOFramework.UI
         {
             if (IsLoadingUI(serialId))
             {
-                uiToReleaseOnLoad.Add(serialId);
-                uiBeingLoaded.Remove(serialId);
+                _uiToReleaseOnLoad.Add(serialId);
+                _uiBeingLoaded.Remove(serialId);
                 return;
             }
 
@@ -567,15 +567,15 @@ namespace AIOFramework.UI
             uiForm.OnClose(userData);
             uiGroup.Refresh();
             
-            if (closeUICompleteEventHandler != null)
+            if (_closeUICompleteEventHandler != null)
             {
                 CloseUICompleteEventArgs args =
                     CloseUICompleteEventArgs.Create(uiForm.SerialId, uiForm.UIAssetName, uiGroup, userData);
-                closeUICompleteEventHandler(this, args);
+                _closeUICompleteEventHandler(this, args);
                 ReferencePool.Release(args);
             }
 
-            recycleQueue.Enqueue(uiForm);
+            _recycleQueue.Enqueue(uiForm);
         }
 
         public void CloseAllLoadedUI()
@@ -599,12 +599,12 @@ namespace AIOFramework.UI
 
         public void CloseAllLoadingUI()
         {
-            foreach (KeyValuePair<int, string> uiFormBeingLoaded in uiBeingLoaded)
+            foreach (KeyValuePair<int, string> uiFormBeingLoaded in _uiBeingLoaded)
             {
-                uiToReleaseOnLoad.Add(uiFormBeingLoaded.Key);
+                _uiToReleaseOnLoad.Add(uiFormBeingLoaded.Key);
             }
 
-            uiBeingLoaded.Clear();
+            _uiBeingLoaded.Clear();
         }
 
         public void RefocusUI(IUIForm uiForm)
@@ -637,7 +637,7 @@ namespace AIOFramework.UI
                 throw new GameFrameworkException("UI instance is invalid.");
             }
 
-            instancePool.SetLocked(uiInstance, locked);
+            _instancePool.SetLocked(uiInstance, locked);
         }
 
         public void SetUIInstancePriority(object uiInstance, int priority)
@@ -647,7 +647,7 @@ namespace AIOFramework.UI
                 throw new GameFrameworkException("UI instance is invalid.");
             }
 
-            instancePool.SetPriority(uiInstance, priority);
+            _instancePool.SetPriority(uiInstance, priority);
         }
     }
 }

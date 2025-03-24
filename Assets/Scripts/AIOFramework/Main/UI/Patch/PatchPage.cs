@@ -14,10 +14,10 @@ namespace AIOFramework.Runtime
 {
     public class PatchPage : UIViewBase
     {
-        private Slider slider;
-        private TextMeshProUGUI ver_txt;
-        private TextMeshProUGUI info_txt;
-        private MessageBoxView messageBoxView;
+        private Slider _slider;
+        private TextMeshProUGUI _verTxt;
+        private TextMeshProUGUI _infoTxt;
+        private MessageBoxView _messageBoxView;
 
         protected override void Awake()
         {   
@@ -29,13 +29,13 @@ namespace AIOFramework.Runtime
             this.SetDataContext(vm);
             
             var messageBoxViewModel = new MessageBoxViewModel();
-            messageBoxView.BindContext(messageBoxViewModel);
+            _messageBoxView.BindContext(messageBoxViewModel);
             messageBoxViewModel.Display = false;
             
             BindingSet<PatchPage, PatchViewModel> bindingSet = this.CreateBindingSet<PatchPage, PatchViewModel>();
-            bindingSet.Bind(this.slider).For(v => v.value).To(vm => vm.Model.Progress).OneWay();
-            bindingSet.Bind(this.ver_txt).For(v => v.text).To(vm => vm.Model.Version).OneWay();
-            bindingSet.Bind(this.info_txt).For(v => v.text).To(vm => vm.Model.Info).OneWay();
+            bindingSet.Bind(this._slider).For(v => v.value).To(vm => vm.Model.Progress).OneWay();
+            bindingSet.Bind(this._verTxt).For(v => v.text).To(vm => vm.Model.Version).OneWay();
+            bindingSet.Bind(this._infoTxt).For(v => v.text).To(vm => vm.Model.Info).OneWay();
             bindingSet.Bind().For(v=>v.OnFindHotUpdate).To(vm=>vm.HotUpdateConfirmDialogRequest);
             bindingSet.Bind().For(v => v.OnInitPackageFailed).To(vm => vm.InitPackageFailedDialogRequest);
             bindingSet.Bind().For(v => v.OnHotUpdateFailed).To(vm => vm.HotUpdateFailedDialogRequest);
@@ -46,11 +46,11 @@ namespace AIOFramework.Runtime
 
         private void InitComponents()
         {
-            slider = GetVariable<Slider>("progress");
-            ver_txt = GetVariable<TextMeshProUGUI>("version");
-            info_txt = GetVariable<TextMeshProUGUI>("info");
-            info_txt.text = "AIO Launch";
-            messageBoxView = GetVariable<MessageBoxView>("messagebox");
+            _slider = GetVariable<Slider>("progress");
+            _verTxt = GetVariable<TextMeshProUGUI>("version");
+            _infoTxt = GetVariable<TextMeshProUGUI>("info");
+            _infoTxt.text = "AIO Launch";
+            _messageBoxView = GetVariable<MessageBoxView>("messagebox");
         }
 
         private void OnFindHotUpdate(object sender, InteractionEventArgs args)
@@ -98,7 +98,7 @@ namespace AIOFramework.Runtime
         private void ShowMessage(Notification notifaction, Action callback)
         {
             //打开页面,传递展示信息,传递回调
-            var messageBoxViewModel = messageBoxView.GetDataContext() as MessageBoxViewModel;
+            var messageBoxViewModel = _messageBoxView.GetDataContext() as MessageBoxViewModel;
             if(messageBoxViewModel == null)
                 return;
             

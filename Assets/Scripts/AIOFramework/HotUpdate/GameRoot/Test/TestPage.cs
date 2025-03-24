@@ -31,14 +31,14 @@ namespace AIOFramework.Runtime
 
     public class TestPageViewModel : UIViewModelBase
     {
-        private int serialId;
-        private string tips;
-        private bool showSprite;
-        private string spritePath;
+        private int _serialId;
+        private string _tips;
+        private bool _showSprite;
+        private string _spritePath;
         public int SerialId
         {
-            get { return serialId; }
-            set { Set(ref serialId, value); }
+            get { return _serialId; }
+            set { Set(ref _serialId, value); }
         }
 
         /// <summary>
@@ -46,20 +46,20 @@ namespace AIOFramework.Runtime
         /// </summary>
         public string Tips
         {
-            get { return tips; }
-            set { Set(ref tips, value); }
+            get { return _tips; }
+            set { Set(ref _tips, value); }
         }
 
         public string SpritePath
         {
-            get { return spritePath; }
-            set { Set(ref spritePath, value); }
+            get { return _spritePath; }
+            set { Set(ref _spritePath, value); }
         }
 
         public bool ShowSprite
         {
-            get { return showSprite; }
-            set { Set(ref showSprite, value); }
+            get { return _showSprite; }
+            set { Set(ref _showSprite, value); }
         }
 
         public async UniTask LoadImage()
@@ -71,10 +71,10 @@ namespace AIOFramework.Runtime
         public override void Clear()
         {
             base.Clear();
-            spritePath = null;
-            serialId = 0;
-            tips = null;
-            showSprite = false;
+            _spritePath = null;
+            _serialId = 0;
+            _tips = null;
+            _showSprite = false;
         }
     }
 }

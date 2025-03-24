@@ -5,33 +5,33 @@ namespace AIOFramework.Runtime
 {
     public class MessageBoxViewModel : UIViewModelBase
     {
-        private string title;
-        private string tip;
-        private bool display;
-        private SimpleCommand okCommand;
+        private string _title;
+        private string _tip;
+        private bool _display;
+        private SimpleCommand _okCommand;
 
         public SimpleCommand OkCommand
         {
-            get { return this.okCommand; }
-            set { this.Set(ref okCommand, value); }
+            get { return this._okCommand; }
+            set { this.Set(ref _okCommand, value); }
         }
 
         public string Tip
         {
-            get { return tip; }
-            set { this.Set(ref tip, value); }
+            get { return _tip; }
+            set { this.Set(ref _tip, value); }
         }
         
         public bool Display
         {
-            get { return display; }
-            set { this.Set(ref display, value); }
+            get { return _display; }
+            set { this.Set(ref _display, value); }
         }
         
         public string Title
         {
-            get { return title; }
-            set { this.Set(ref title, value); }
+            get { return _title; }
+            set { this.Set(ref _title, value); }
         }
     }
 }

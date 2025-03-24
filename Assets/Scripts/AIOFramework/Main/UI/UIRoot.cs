@@ -17,17 +17,17 @@ namespace AIOFramework.UI
                 return _instance;
             }
         }
-        private Camera m_Camera;
+        private Camera _camera;
 
         public Camera Camera
         {
             get
             {
-                if (m_Camera == null)
+                if (_camera == null)
                 {
-                    m_Camera = GetComponent<Camera>();
+                    _camera = GetComponent<Camera>();
                 }
-                return m_Camera;
+                return _camera;
             }
         }
         

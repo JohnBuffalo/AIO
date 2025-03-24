@@ -5,16 +5,16 @@ namespace AIOFramework.Runtime
 {
     public class TestRoot
     {
-        private static TestRoot instance;
+        private static TestRoot _instance;
         public static TestRoot Instance
         {
             get
             {
-                if (instance == null)
+                if (_instance == null)
                 {
-                    instance = new TestRoot();
+                    _instance = new TestRoot();
                 }
-                return instance;
+                return _instance;
             }
         }
         

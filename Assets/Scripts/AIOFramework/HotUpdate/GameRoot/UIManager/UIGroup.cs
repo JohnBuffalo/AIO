@@ -5,13 +5,13 @@ namespace AIOFramework.UI
 {
     public class UIGroup : IUIGroup
     {
-        private readonly string m_Name;
-        private int m_Depth = -1;
-        private int m_UIDepthGap = 50;
-        private bool m_Pause;
-        private readonly IUIGroupHelper m_UIGroupHelper;
-        private readonly GameFrameworkLinkedList<UIViewBase> m_UILinkedList;
-        private LinkedListNode<UIViewBase> m_CachedNode;
+        private readonly string _name;
+        private int _depth = -1;
+        private int _uiDepthGap = 50;
+        private bool _pause;
+        private readonly IUIGroupHelper _uiGroupHelper;
+        private readonly GameFrameworkLinkedList<UIViewBase> _uiLinkedList;
+        private LinkedListNode<UIViewBase> _cachedNode;
         public UIGroup(UIGroupEnum name, int depth, IUIGroupHelper uiGroupHelper)
         {
             if (uiGroupHelper == null)
@@ -19,31 +19,31 @@ namespace AIOFramework.UI
                 throw new GameFrameworkException("UI group helper is invalid.");
             }
 
-            m_Name = name.ToString();
-            m_Pause = false;
-            m_UIGroupHelper = uiGroupHelper;
-            m_UILinkedList = new GameFrameworkLinkedList<UIViewBase>();
-            m_CachedNode = null;
+            _name = name.ToString();
+            _pause = false;
+            _uiGroupHelper = uiGroupHelper;
+            _uiLinkedList = new GameFrameworkLinkedList<UIViewBase>();
+            _cachedNode = null;
             Depth = depth;
         }
 
         public string Name
         {
-            get { return m_Name; }
+            get { return _name; }
         }
 
         public int Depth
         {
-            get { return m_Depth; }
+            get { return _depth; }
             set
             {
-                if (m_Depth == value)
+                if (_depth == value)
                 {
                     return;
                 }
 
-                m_Depth = value;
-                m_UIGroupHelper.SetDepth(m_Depth);
+                _depth = value;
+                _uiGroupHelper.SetDepth(_depth);
                 Refresh();
             }
         }
@@ -53,15 +53,15 @@ namespace AIOFramework.UI
         /// </summary>
         public bool Pause
         {
-            get { return m_Pause; }
+            get { return _pause; }
             set
             {
-                if (m_Pause == value)
+                if (_pause == value)
                 {
                     return;
                 }
 
-                m_Pause = value;
+                _pause = value;
                 Refresh();
             }
         }
@@ -71,7 +71,7 @@ namespace AIOFramework.UI
         /// </summary>
         public int UICount
         {
-            get { return m_UILinkedList.Count; }
+            get { return _uiLinkedList.Count; }
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace AIOFramework.UI
         /// </summary>
         public IUIForm CurrentUI
         {
-            get { return m_UILinkedList.First != null ? m_UILinkedList.First.Value : null; }
+            get { return _uiLinkedList.First != null ? _uiLinkedList.First.Value : null; }
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace AIOFramework.UI
         /// </summary>
         public IUIGroupHelper Helper
         {
-            get { return m_UIGroupHelper; }
+            get { return _uiGroupHelper; }
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace AIOFramework.UI
         /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
         public void Update(float elapseSeconds, float realElapseSeconds)
         {
-            LinkedListNode<UIViewBase> current = m_UILinkedList.First;
+            LinkedListNode<UIViewBase> current = _uiLinkedList.First;
             while (current != null)
             {
                 if (current.Value.Paused)
@@ -105,16 +105,16 @@ namespace AIOFramework.UI
                     break;
                 }
 
-                m_CachedNode = current.Next;
+                _cachedNode = current.Next;
                 current.Value.OnUpdate(elapseSeconds, realElapseSeconds);
-                current = m_CachedNode;
-                m_CachedNode = null;
+                current = _cachedNode;
+                _cachedNode = null;
             }
         }
 
         public bool HasUI(int serialId)
         {
-            foreach (UIViewBase ui in m_UILinkedList)
+            foreach (UIViewBase ui in _uiLinkedList)
             {
                 if (ui.SerialId == serialId)
                 {
@@ -132,7 +132,7 @@ namespace AIOFramework.UI
                 throw new GameFrameworkException("UI form asset name is invalid.");
             }
 
-            foreach (var ui in m_UILinkedList)
+            foreach (var ui in _uiLinkedList)
             {
                 if (ui.UIAssetName == uiAssetName)
                 {
@@ -145,7 +145,7 @@ namespace AIOFramework.UI
 
         public IUIForm GetUI(int serialId)
         {
-            foreach (var ui in m_UILinkedList)
+            foreach (var ui in _uiLinkedList)
             {
                 if (ui.SerialId == serialId)
                 {
@@ -163,7 +163,7 @@ namespace AIOFramework.UI
                 throw new GameFrameworkException("UI form asset name is invalid.");
             }
 
-            foreach (var ui in m_UILinkedList)
+            foreach (var ui in _uiLinkedList)
             {
                 if (ui.UIAssetName == uiAssetName)
                 {
@@ -182,7 +182,7 @@ namespace AIOFramework.UI
             }
 
             List<IUIForm> results = new List<IUIForm>();
-            foreach (var ui in m_UILinkedList)
+            foreach (var ui in _uiLinkedList)
             {
                 if (ui.UIAssetName == uiAssetName)
                 {
@@ -206,7 +206,7 @@ namespace AIOFramework.UI
             }
 
             results.Clear();
-            foreach (var ui in m_UILinkedList)
+            foreach (var ui in _uiLinkedList)
             {
                 if (ui.UIAssetName == uiAssetName)
                 {
@@ -218,7 +218,7 @@ namespace AIOFramework.UI
         public IUIForm[] GetAllUI()
         {
             List<IUIForm> results = new List<IUIForm>();
-            foreach (var ui in m_UILinkedList)
+            foreach (var ui in _uiLinkedList)
             {
                 results.Add(ui);
             }
@@ -234,7 +234,7 @@ namespace AIOFramework.UI
             }
 
             results.Clear();
-            foreach (var ui in m_UILinkedList)
+            foreach (var ui in _uiLinkedList)
             {
                 results.Add(ui);
             }
@@ -246,7 +246,7 @@ namespace AIOFramework.UI
         /// <param name="ui">要增加的界面。</param>
         public void AddUI(UIViewBase ui)
         {
-            m_UILinkedList.AddFirst(ui);
+            _uiLinkedList.AddFirst(ui);
         }
 
         /// <summary>
@@ -267,15 +267,15 @@ namespace AIOFramework.UI
                 ui.OnPause();
             }
 
-            if (m_CachedNode != null && m_CachedNode.Value == ui)
+            if (_cachedNode != null && _cachedNode.Value == ui)
             {
-                m_CachedNode = m_CachedNode.Next;
+                _cachedNode = _cachedNode.Next;
             }
 
-            if (!m_UILinkedList.Remove(ui))
+            if (!_uiLinkedList.Remove(ui))
             {
                 throw new GameFrameworkException(Utility.Text.Format(
-                    "UI group '{0}' not exists specified UI form '[{1}]{2}'.", m_Name, ui.SerialId, ui.UIAssetName));
+                    "UI group '{0}' not exists specified UI form '[{1}]{2}'.", _name, ui.SerialId, ui.UIAssetName));
             }
         }
 
@@ -290,21 +290,21 @@ namespace AIOFramework.UI
                 throw new GameFrameworkException("Can not find UI form info.");
             }
 
-            m_UILinkedList.Remove(ui);
-            m_UILinkedList.AddFirst(ui);
+            _uiLinkedList.Remove(ui);
+            _uiLinkedList.AddFirst(ui);
         }
 
         public void Refresh()
         {
-            LinkedListNode<UIViewBase> current = m_UILinkedList.First;
-            bool pause = m_Pause;
+            LinkedListNode<UIViewBase> current = _uiLinkedList.First;
+            bool pause = _pause;
             bool cover = false;
             int depth = UICount;
             while (current != null && current.Value != null)
             {
                 current.Value.transform.SetAsFirstSibling();
                 LinkedListNode<UIViewBase> next = current.Next;
-                var uiDepth = Depth + depth-- * m_UIDepthGap;
+                var uiDepth = Depth + depth-- * _uiDepthGap;
                 current.Value.OnDepthChanged(Depth, uiDepth);
                 if (current.Value == null)
                 {
@@ -384,7 +384,7 @@ namespace AIOFramework.UI
         
         internal void InternalGetUIList(string uiFormAssetName, List<IUIForm> results)
         {
-            foreach (var ui in m_UILinkedList)
+            foreach (var ui in _uiLinkedList)
             {
                 if (ui.UIAssetName == uiFormAssetName)
                 {
@@ -395,7 +395,7 @@ namespace AIOFramework.UI
         
         internal void InternalGetAllUIList(List<IUIForm> results)
         {
-            foreach (var ui in m_UILinkedList)
+            foreach (var ui in _uiLinkedList)
             {
                 results.Add(ui);
             }

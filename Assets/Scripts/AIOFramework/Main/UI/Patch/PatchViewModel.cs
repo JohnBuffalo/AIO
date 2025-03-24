@@ -46,12 +46,12 @@ namespace AIOFramework.Runtime
     
     public class PatchViewModel : UIViewModelBase
     {
-        private PatchModel model;
+        private PatchModel _model;
         
         public PatchModel Model
         {
-            get { return model; }
-            set { Set(ref model, value, "Model"); }
+            get { return _model; }
+            set { Set(ref _model, value, "Model"); }
         }
         
         //打开热更新确认对话框

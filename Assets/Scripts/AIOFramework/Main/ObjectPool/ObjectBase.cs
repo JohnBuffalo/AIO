@@ -16,24 +16,24 @@ namespace AIOFramework.ObjectPool
     /// </summary>
     public abstract class ObjectBase : IReference
     {
-        private string location;
-        private string name;
-        private object target;
-        private bool locked;
-        private int priority;
-        private DateTime lastUseTime;
+        private string _location;
+        private string _name;
+        private object _target;
+        private bool _locked;
+        private int _priority;
+        private DateTime _lastUseTime;
 
         /// <summary>
         /// 初始化对象基类的新实例。
         /// </summary>
         public ObjectBase()
         {
-            location = null;
-            name = null;
-            target = null;
-            locked = false;
-            priority = 0;
-            lastUseTime = default(DateTime);
+            _location = null;
+            _name = null;
+            _target = null;
+            _locked = false;
+            _priority = 0;
+            _lastUseTime = default(DateTime);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace AIOFramework.ObjectPool
         {
             get
             {
-                return location;
+                return _location;
             }
         }
         
@@ -54,7 +54,7 @@ namespace AIOFramework.ObjectPool
         {
             get
             {
-                return name;
+                return _name;
             }
         }
 
@@ -65,7 +65,7 @@ namespace AIOFramework.ObjectPool
         {
             get
             {
-                return target;
+                return _target;
             }
         }
 
@@ -76,11 +76,11 @@ namespace AIOFramework.ObjectPool
         {
             get
             {
-                return locked;
+                return _locked;
             }
             set
             {
-                locked = value;
+                _locked = value;
             }
         }
 
@@ -91,11 +91,11 @@ namespace AIOFramework.ObjectPool
         {
             get
             {
-                return priority;
+                return _priority;
             }
             set
             {
-                priority = value;
+                _priority = value;
             }
         }
 
@@ -117,11 +117,11 @@ namespace AIOFramework.ObjectPool
         {
             get
             {
-                return lastUseTime;
+                return _lastUseTime;
             }
             internal set
             {
-                lastUseTime = value;
+                _lastUseTime = value;
             }
         }
 
@@ -184,11 +184,11 @@ namespace AIOFramework.ObjectPool
                 throw new GameFrameworkException(Utility.Text.Format("Target '{0}' is invalid.", name));
             }
 
-            this.name = name ?? string.Empty;
-            this.target = target;
-            this.locked = locked;
-            this.priority = priority;
-            lastUseTime = DateTime.UtcNow;
+            this._name = name ?? string.Empty;
+            this._target = target;
+            this._locked = locked;
+            this._priority = priority;
+            _lastUseTime = DateTime.UtcNow;
         }
 
         protected void Initialize(string location, string name, object target, int priority, bool locked)
@@ -197,12 +197,12 @@ namespace AIOFramework.ObjectPool
             {
                 throw new GameFrameworkException(Utility.Text.Format("Target '{0}' is invalid.", name));
             }
-            this.location = location ?? string.Empty;
-            this.name = name ?? string.Empty;
-            this.target = target;
-            this.locked = locked;
-            this.priority = priority;
-            lastUseTime = DateTime.UtcNow;
+            this._location = location ?? string.Empty;
+            this._name = name ?? string.Empty;
+            this._target = target;
+            this._locked = locked;
+            this._priority = priority;
+            _lastUseTime = DateTime.UtcNow;
         }
 
         /// <summary>
@@ -210,12 +210,12 @@ namespace AIOFramework.ObjectPool
         /// </summary>
         public virtual void Clear()
         {
-            location = null;
-            name = null;
-            target = null;
-            locked = false;
-            priority = 0;
-            lastUseTime = default(DateTime);
+            _location = null;
+            _name = null;
+            _target = null;
+            _locked = false;
+            _priority = 0;
+            _lastUseTime = default(DateTime);
         }
 
         /// <summary>

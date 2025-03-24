@@ -8,7 +8,7 @@ namespace AIOFramework.Runtime
 {
     public class UIInstanceObject : ObjectBase
     {
-        private HandleBase handle;
+        private HandleBase _handle;
 
         public static UIInstanceObject Create(string name, string location, GameObject m_UIInstance, HandleBase handle)
         {
@@ -19,7 +19,7 @@ namespace AIOFramework.Runtime
             
             UIInstanceObject instanceObj = ReferencePool.Acquire<UIInstanceObject>();
             instanceObj.Initialize(name, m_UIInstance);
-            instanceObj.handle = handle;
+            instanceObj._handle = handle;
             return instanceObj;
         }
         
@@ -27,7 +27,7 @@ namespace AIOFramework.Runtime
         protected internal override void Release(bool isShutdown)
         {
             Entrance.Resource.DestroyInstance(Target as GameObject);
-            Entrance.Resource.UnloadAsset(handle);
+            Entrance.Resource.UnloadAsset(_handle);
         }
     }
 }

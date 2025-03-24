@@ -9,16 +9,16 @@ namespace AIOFramework.Runtime
 {
     public class MessageBoxView : UIViewBase
     {
-        private GameObject panel;
-        private TextMeshProUGUI tip;
-        private Button button;
+        private GameObject _panel;
+        private TextMeshProUGUI _tip;
+        private Button _button;
 
         protected override void Awake()
         {
             base.Awake();
-            panel = gameObject;
-            tip = GetVariable<TextMeshProUGUI>("tips");
-            button = GetVariable<Button>("button");
+            _panel = gameObject;
+            _tip = GetVariable<TextMeshProUGUI>("tips");
+            _button = GetVariable<Button>("button");
         }
 
         public void BindContext(MessageBoxViewModel vm)
@@ -30,9 +30,9 @@ namespace AIOFramework.Runtime
         {
             BindingSet<MessageBoxView, MessageBoxViewModel> bindingSet =
                 this.CreateBindingSet<MessageBoxView, MessageBoxViewModel>();
-            bindingSet.Bind(panel).For(v => v.activeSelf).To(vm => vm.Display).OneWay();
-            bindingSet.Bind(tip).For(v => v.text).To(vm => vm.Tip).OneWay();
-            bindingSet.Bind(button).For(v => v.onClick).To(vm => vm.OkCommand).CommandParameter(this.GetDataContext);
+            bindingSet.Bind(_panel).For(v => v.activeSelf).To(vm => vm.Display).OneWay();
+            bindingSet.Bind(_tip).For(v => v.text).To(vm => vm.Tip).OneWay();
+            bindingSet.Bind(_button).For(v => v.onClick).To(vm => vm.OkCommand).CommandParameter(this.GetDataContext);
             bindingSet.Build();
         }
         

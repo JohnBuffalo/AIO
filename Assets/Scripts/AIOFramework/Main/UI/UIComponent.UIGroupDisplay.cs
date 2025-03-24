@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace AIOFramework.UI
 {
@@ -9,16 +10,15 @@ namespace AIOFramework.UI
         private sealed class UIGroupDisplay
         {
             [SerializeField]
-            private string m_Name = null;
+            private string _name = null;
 
-            [SerializeField]
-            private int m_Depth = 0;
+            private int _depth = 0;
 
             public string Name
             {
                 get
                 {
-                    return m_Name;
+                    return _name;
                 }
             }
 
@@ -26,7 +26,7 @@ namespace AIOFramework.UI
             {
                 get
                 {
-                    return m_Depth;
+                    return _depth;
                 }
             }
         }

@@ -49,16 +49,16 @@ namespace AIOFramework.Runtime
 
     public class TestWindowViewModel : UIViewModelBase
     {
-        private int serialId;
-        private string tips;
-        private bool showSprite;
-        private Button button;
-        private SimpleCommand closeWindowCommand;
+        private int _serialId;
+        private string _tips;
+        private bool _showSprite;
+        private Button _button;
+        private SimpleCommand _closeWindowCommand;
 
         public int SerialId
         {
-            get { return serialId; }
-            set { Set(ref serialId, value); }
+            get { return _serialId; }
+            set { Set(ref _serialId, value); }
         }
 
         /// <summary>
@@ -66,20 +66,20 @@ namespace AIOFramework.Runtime
         /// </summary>
         public string Tips
         {
-            get { return tips; }
-            set { Set(ref tips, value); }
+            get { return _tips; }
+            set { Set(ref _tips, value); }
         }
 
         public Button Button
         {
-            get { return button; }
-            set { Set(ref button, value); }
+            get { return _button; }
+            set { Set(ref _button, value); }
         }
 
         public SimpleCommand CloseWindowCommand
         {
-            get { return closeWindowCommand; }
-            set { Set(ref closeWindowCommand, value); }
+            get { return _closeWindowCommand; }
+            set { Set(ref _closeWindowCommand, value); }
         }
 
         public override void Clear()
