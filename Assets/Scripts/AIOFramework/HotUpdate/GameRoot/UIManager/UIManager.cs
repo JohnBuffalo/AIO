@@ -499,9 +499,7 @@ namespace AIOFramework.UI
 
                 if (_openUISuccessEventHandler != null)
                 {
-                    OpenUISuccessEventArgs args = OpenUISuccessEventArgs.Create(uiView, null);
-                    _openUISuccessEventHandler(this, args);
-                    ReferencePool.Release(args);
+                    _openUISuccessEventHandler(this, OpenUISuccessEventArgs.Create(uiView, null));
                 }
             }
             catch (Exception e)
@@ -509,10 +507,7 @@ namespace AIOFramework.UI
                 Log.Error(e.Message);
                 if (_openUIFailureEventHandler != null)
                 {
-                    OpenUIFailureEventArgs args =
-                        OpenUIFailureEventArgs.Create(serialId, uiName, uiGroup.Name, e.ToString(), null);
-                    _openUIFailureEventHandler(this, args);
-                    ReferencePool.Release(args);
+                    _openUIFailureEventHandler(this, OpenUIFailureEventArgs.Create(serialId, uiName, uiGroup.Name, e.ToString(), null));
                 }
             }
         }
@@ -569,10 +564,7 @@ namespace AIOFramework.UI
 
             if (_closeUICompleteEventHandler != null)
             {
-                CloseUICompleteEventArgs args =
-                    CloseUICompleteEventArgs.Create(uiForm.SerialId, uiForm.UIAssetName, uiGroup, userData);
-                _closeUICompleteEventHandler(this, args);
-                ReferencePool.Release(args);
+                _closeUICompleteEventHandler(this, CloseUICompleteEventArgs.Create(uiForm.SerialId, uiForm.UIAssetName, uiGroup, userData));
             }
 
             _recycleQueue.Enqueue(uiForm);

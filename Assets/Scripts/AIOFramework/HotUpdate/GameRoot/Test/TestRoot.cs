@@ -21,16 +21,16 @@ namespace AIOFramework.Runtime
 
         public async UniTask Test()
         {
-            AddListeners();
+            // AddListeners();
             await TestUI();
             await TestScene();
         }
 
         public async UniTask TestUI()
         {
-            // var ctorInfo = ReferencePool.Acquire<TestPageCtorInfo>();
-            // ctorInfo.Tips = "1";
-            // var uid = await Game.UI.OpenUI<TestPageViewModel>(ctorInfo);
+            var ctorInfo = ReferencePool.Acquire<TestPageCtorInfo>();
+            ctorInfo.Tips = "1";
+            var uid = await Game.UI.OpenUI<TestPageViewModel>(ctorInfo);
             // await UniTask.Delay(1000);
 
             // var ctorInfo2 = ReferencePool.Acquire<TestPageCtorInfo2>();
@@ -45,13 +45,13 @@ namespace AIOFramework.Runtime
             // await uiPage.GetViewModel<TestPageViewModel>().LoadImage();
             // await UniTask.Delay(1000);
 
-            for (int i = 0; i < 3; i++)
-            {
-                var windowCtor = ReferencePool.Acquire<TestWindowCtorInfo>();
-                var uid = await Game.UI.OpenUI<TestWindowViewModel>(windowCtor);
-                var uiWindow = Game.UI.GetUI<TestWindow>(uid);
-                uiWindow.GetViewModel<TestWindowViewModel>().Tips = uid.ToString();
-            }
+            // for (int i = 0; i < 3; i++)
+            // {
+            //     var windowCtor = ReferencePool.Acquire<TestWindowCtorInfo>();
+            //     var uid = await Game.UI.OpenUI<TestWindowViewModel>(windowCtor);
+            //     var uiWindow = Game.UI.GetUI<TestWindow>(uid);
+            //     uiWindow.GetViewModel<TestWindowViewModel>().Tips = uid.ToString();
+            // }
 
             // await UniTask.Delay(2000);
             // var toCloseUI = Game.UI.GetUI<TestPage>(ctorInfo.AssetName);
@@ -63,8 +63,8 @@ namespace AIOFramework.Runtime
 
             //异步 加载-加载
             SceneProxy proxy = await Game.Scene.LoadSceneAsync("Assets/ArtAssets/Scene/level1.unity", UnityEngine.SceneManagement.LoadSceneMode.Additive);
-            // SceneProxy proxy2 = await Game.Scene.LoadSceneAsync("Assets/ArtAssets/Scene/level1.unity", UnityEngine.SceneManagement.LoadSceneMode.Additive);
-            // await Game.Scene.UnloadSceneAsync(proxy.SceneHandle, null);
+            SceneProxy proxy2 = await Game.Scene.LoadSceneAsync("Assets/ArtAssets/Scene/level1.unity", UnityEngine.SceneManagement.LoadSceneMode.Additive);
+            await Game.Scene.UnloadSceneAsync(proxy.SceneHandle, null);
 
             //同步 加载-加载
             // Game.Scene.LoadSceneAsync("Assets/ArtAssets/Scene/level1.unity", UnityEngine.SceneManagement.LoadSceneMode.Additive);
@@ -79,7 +79,7 @@ namespace AIOFramework.Runtime
             // Game.Scene.UnloadSceneAsync("Assets/ArtAssets/Scene/level2.unity");
 
             //卸载-加载
-            await Game.Scene.LoadSceneAsync("Assets/ArtAssets/Scene/level2.unity", UnityEngine.SceneManagement.LoadSceneMode.Additive);
+            // await Game.Scene.LoadSceneAsync("Assets/ArtAssets/Scene/level2.unity", UnityEngine.SceneManagement.LoadSceneMode.Additive);
             // await Game.Scene.UnloadSceneAsync("Assets/ArtAssets/Scene/level2.unity");
             // await Game.Scene.LoadSceneAsync("Assets/ArtAssets/Scene/level2.unity", UnityEngine.SceneManagement.LoadSceneMode.Additive);
 

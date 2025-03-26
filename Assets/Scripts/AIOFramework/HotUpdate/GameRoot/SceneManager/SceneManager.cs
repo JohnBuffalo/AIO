@@ -494,9 +494,7 @@ namespace AIOFramework.Runtime
             Log.Info($"[SceneManager] LoadSceneSuccess {location}");
             if (_loadSceneSuccessEventHandler != null)
             {
-                LoadSceneSuccessEventArgs loadSceneSuccessEventArgs = LoadSceneSuccessEventArgs.Create(location, handle, userData);
-                _loadSceneSuccessEventHandler(this, loadSceneSuccessEventArgs);
-                ReferencePool.Release(loadSceneSuccessEventArgs);
+                _loadSceneSuccessEventHandler(this, LoadSceneSuccessEventArgs.Create(location, handle, userData));
             }
         }
 
@@ -507,9 +505,7 @@ namespace AIOFramework.Runtime
             Log.Error(appendErrorMessage);
             if (_loadSceneFailureEventHandler != null)
             {
-                LoadSceneFailureEventArgs loadSceneFailureEventArgs = LoadSceneFailureEventArgs.Create(location, appendErrorMessage, userData);
-                _loadSceneFailureEventHandler(this, loadSceneFailureEventArgs);
-                ReferencePool.Release(loadSceneFailureEventArgs);
+                _loadSceneFailureEventHandler(this, LoadSceneFailureEventArgs.Create(location, appendErrorMessage, userData));
                 return;
             }
         }
@@ -522,9 +518,7 @@ namespace AIOFramework.Runtime
             Log.Info($"[SceneManager] UnloadSceneSuccess {location}");
             if (_unloadSceneSuccessEventHandler != null)
             {
-                UnloadSceneSuccessEventArgs unloadSceneSuccessEventArgs = UnloadSceneSuccessEventArgs.Create(location, userData);
-                _unloadSceneSuccessEventHandler(this, unloadSceneSuccessEventArgs);
-                ReferencePool.Release(unloadSceneSuccessEventArgs);
+                _unloadSceneSuccessEventHandler(this, UnloadSceneSuccessEventArgs.Create(location, userData));
             }
         }
 
@@ -534,9 +528,7 @@ namespace AIOFramework.Runtime
             Log.Error($"[SceneManager] Unload scene failure, scene asset name '{location}'.");
             if (_unloadSceneFailureEventHandler != null)
             {
-                UnloadSceneFailureEventArgs unloadSceneFailureEventArgs = UnloadSceneFailureEventArgs.Create(location, userData);
-                _unloadSceneFailureEventHandler(this, unloadSceneFailureEventArgs);
-                ReferencePool.Release(unloadSceneFailureEventArgs);
+                _unloadSceneFailureEventHandler(this, UnloadSceneFailureEventArgs.Create(location, userData));
                 return;
             }
         }

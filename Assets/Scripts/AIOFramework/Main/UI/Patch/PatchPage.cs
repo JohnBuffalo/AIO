@@ -28,7 +28,7 @@ namespace AIOFramework.Runtime
         {
             this.SetDataContext(vm);
             
-            var messageBoxViewModel = new MessageBoxViewModel();
+            var messageBoxViewModel = ReferencePool.Acquire<MessageBoxViewModel>();
             _messageBoxView.BindContext(messageBoxViewModel);
             messageBoxViewModel.Display = false;
             

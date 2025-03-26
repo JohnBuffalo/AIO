@@ -60,6 +60,10 @@ namespace AIOFramework.Runtime
 
         private void Awake()
         {
+            var audioListener = _camera.GetComponent<AudioListener>();
+            if(audioListener != null){
+                audioListener.enabled = false;
+            }
             _camera.gameObject.SetActive(false);
         }
 

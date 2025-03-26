@@ -23,7 +23,7 @@ namespace AIOFramework.Runtime
 
         public void BindContext(MessageBoxViewModel vm)
         {
-            this.SetDataContext(vm);
+            ViewModel = vm;
         }
 
         protected override void Start()

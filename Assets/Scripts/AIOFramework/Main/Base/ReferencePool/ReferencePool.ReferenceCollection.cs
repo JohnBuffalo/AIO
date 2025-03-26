@@ -131,7 +131,7 @@ namespace AIOFramework.Runtime
                 reference.Clear();
                 lock (m_References)
                 {
-                    if (m_EnableStrictCheck && m_References.Contains(reference))
+                    if (s_enableStrictCheck && m_References.Contains(reference))
                     {
                         throw new GameFrameworkException("The reference has been released.");
                     }
