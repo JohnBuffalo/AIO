@@ -7,11 +7,11 @@ namespace AIOFramework.Runtime
 {
     public static class GameEntry
     {
-        private static readonly GameFrameworkLinkedList<GameFrameworkComponent> s_GameFrameworkComponents = new GameFrameworkLinkedList<GameFrameworkComponent>();
+        private static readonly GameFrameworkLinkedList<GameFrameworkComponent> s_gameFrameworkComponents = new GameFrameworkLinkedList<GameFrameworkComponent>();
         /// <summary>
         /// 游戏框架所在的场景编号。
         /// </summary>
-        internal const int GameFrameworkSceneId = 0;
+        internal const int _gameFrameworkSceneId = 0;
 
         /// <summary>
         /// 获取游戏框架组件。
@@ -30,7 +30,7 @@ namespace AIOFramework.Runtime
         /// <returns>要获取的游戏框架组件。</returns>
         public static GameFrameworkComponent GetComponent(Type type)
         {
-            LinkedListNode<GameFrameworkComponent> current = s_GameFrameworkComponents.First;
+            LinkedListNode<GameFrameworkComponent> current = s_gameFrameworkComponents.First;
             while (current != null)
             {
                 if (current.Value.GetType() == type)
@@ -51,7 +51,7 @@ namespace AIOFramework.Runtime
         /// <returns>要获取的游戏框架组件。</returns>
         public static GameFrameworkComponent GetComponent(string typeName)
         {
-            LinkedListNode<GameFrameworkComponent> current = s_GameFrameworkComponents.First;
+            LinkedListNode<GameFrameworkComponent> current = s_gameFrameworkComponents.First;
             while (current != null)
             {
                 Type type = current.Value.GetType();
@@ -80,7 +80,7 @@ namespace AIOFramework.Runtime
                 baseComponent = null;
             }
 
-            s_GameFrameworkComponents.Clear();
+            s_gameFrameworkComponents.Clear();
 
             if (shutdownType == ShutdownType.None)
             {
@@ -89,7 +89,7 @@ namespace AIOFramework.Runtime
 
             if (shutdownType == ShutdownType.Restart)
             {
-                SceneManager.LoadScene(GameFrameworkSceneId);
+                SceneManager.LoadScene(_gameFrameworkSceneId);
                 return;
             }
 
@@ -117,7 +117,7 @@ namespace AIOFramework.Runtime
 
             Type type = gameFrameworkComponent.GetType();
 
-            LinkedListNode<GameFrameworkComponent> current = s_GameFrameworkComponents.First;
+            LinkedListNode<GameFrameworkComponent> current = s_gameFrameworkComponents.First;
             while (current != null)
             {
                 if (current.Value.GetType() == type)
@@ -129,7 +129,7 @@ namespace AIOFramework.Runtime
                 current = current.Next;
             }
 
-            s_GameFrameworkComponents.AddLast(gameFrameworkComponent);
+            s_gameFrameworkComponents.AddLast(gameFrameworkComponent);
         }
     }
 }

@@ -31,6 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2136313611056236298}
+  - {fileID: 401471219345378113}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2259467361966894755
@@ -43,6 +44,50 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9dd26928b29744b8853d67d5625d4c1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &3779245064608905742
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 401471219345378113}
+  - component: {fileID: 5212737889050208115}
+  m_Layer: 0
+  m_Name: Scene
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &401471219345378113
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3779245064608905742}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2403651781564791683}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5212737889050208115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3779245064608905742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4077f97a1ab2e4c48a76e984dd85ae25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4187747126703784636
@@ -89,8 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d523f9a5a9448ab8bb03e6632f16633, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_InstanceRoot: {fileID: 0}
-  m_UIGroupHelperTypeName: AIOFramework.UI.DefaultUIGroupHelper
-  m_InstanceAutoReleaseInterval: 5
-  m_InstanceCapacity: 16
-  m_InstanceExpireTime: 5
+  _uiGroupHelperTypeName: AIOFramework.UI.DefaultUIGroupHelper
+  _instanceAutoReleaseInterval: 60
+  _instanceCapacity: 16
+  _instanceExpireTime: 60

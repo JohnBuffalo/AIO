@@ -2,14 +2,14 @@
 
 namespace AIOFramework.Runtime
 {
-    public class PackageVersionEventArgs : GameEventArgs
+    public class PackageVersionEventArgs : Event.BaseEventArgs
     {
         public override void Clear()
         {
             PackageVersion = null;
         }
-        public static readonly int EventId = typeof(PackageVersionEventArgs).GetHashCode();
-        public override int Id => EventId;
+        public static readonly int s_EventId = typeof(PackageVersionEventArgs).GetHashCode();
+        public override int Id => s_EventId;
         public string PackageVersion { get; private set; }
         public static PackageVersionEventArgs Create(string version)
         {

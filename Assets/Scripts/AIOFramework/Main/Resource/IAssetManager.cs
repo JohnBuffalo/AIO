@@ -14,6 +14,11 @@ namespace AIOFramework.Resource
     public interface IAssetManager
     {
         /// <summary>
+        /// 资源包
+        /// </summary>
+        ResourcePackage ResourcePackage { get; }
+
+        /// <summary>
         /// 初始化资源管理器。
         /// </summary>
         void Initialize();
@@ -102,23 +107,23 @@ namespace AIOFramework.Resource
         /// 异步卸载指定包中的所有资源。
         /// </summary>
         /// <param name="packageName">资源包名称。</param>
-        void UnloadAllAssetsAsync(string packageName, UnloadAllAssetsOptions options = null);
+        UniTask UnloadAllAssetsAsync(string packageName, UnloadAllAssetsOptions options = null);
 
         /// <summary>
         /// 异步卸载所有资源。
         /// </summary>
-        void UnloadAllAssetsAsync(UnloadAllAssetsOptions options = null);
+        UniTask UnloadAllAssetsAsync(UnloadAllAssetsOptions options = null);
 
         /// <summary>
         /// 异步卸载未使用的资源。
         /// </summary>
         /// <param name="packageName">资源包名称。</param>
-        void UnloadUnusedAssetsAsync(string packageName);
+        UniTask UnloadUnusedAssetsAsync(string packageName);
 
         /// <summary>
         /// 异步卸载未使用的资源。
         /// </summary>
-        void UnloadUnusedAssetsAsync();
+        UniTask UnloadUnusedAssetsAsync();
 
         /// <summary>
         /// 销毁指定的Unity对象。
@@ -177,19 +182,14 @@ namespace AIOFramework.Resource
         UniTask<(IReadOnlyList<T>,SubAssetsHandle)> LoadSubAssetsAsync<T>(AssetInfo assetInfo, uint priority = 0)
             where T : UnityEngine.Object;
 
+        /// <summary>
+        /// 异步加载指定路径的原始文件。
+        /// </summary>
+        /// <param name="path">文件路径。</param>
+        /// <param name="priority">加载优先级。</param>
+        /// <returns>加载完成的原始文件。</returns>
         UniTask<(byte[], RawFileHandle)> LoadRawFileAsync(string path, uint priority = 0);
         
-        /// <summary>
-        /// 异步加载场景
-        /// </summary>
-        /// <param name="path">场景路径</param>
-        /// <param name="mode">场景加载模式，默认为单场景加载</param>
-        /// <param name="activateOnLoad">加载完成后是否立即激活场景，默认为true</param>
-        /// <param name="priority">加载优先级，默认为0</param>
-        /// <returns>加载完成的场景</returns>
-        UniTask<(Scene,SceneHandle)> LoadSceneAsync(string path, LoadSceneMode mode = LoadSceneMode.Single,
-            bool activateOnLoad = true, uint priority = 0);
-
         /// <summary>
         /// 异步实例化对象
         /// </summary>

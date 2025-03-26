@@ -14,14 +14,14 @@ namespace AIOFramework.Event
     /// </summary>
     internal sealed class EventManager : GameFrameworkModule, IEventManager
     {
-        private readonly EventPool<GameEventArgs> m_EventPool;
+        private readonly EventPool<BaseEventArgs> _eventPool;
 
         /// <summary>
         /// 初始化事件管理器的新实例。
         /// </summary>
         public EventManager()
         {
-            m_EventPool = new EventPool<GameEventArgs>(EventPoolMode.AllowNoHandler | EventPoolMode.AllowMultiHandler);
+            _eventPool = new EventPool<BaseEventArgs>(EventPoolMode.AllowNoHandler | EventPoolMode.AllowMultiHandler);
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace AIOFramework.Event
         {
             get
             {
-                return m_EventPool.EventHandlerCount;
+                return _eventPool.EventHandlerCount;
             }
         }
 
@@ -42,7 +42,7 @@ namespace AIOFramework.Event
         {
             get
             {
-                return m_EventPool.EventCount;
+                return _eventPool.EventCount;
             }
         }
 
@@ -65,7 +65,7 @@ namespace AIOFramework.Event
         /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
         internal override void Update(float elapseSeconds, float realElapseSeconds)
         {
-            m_EventPool.Update(elapseSeconds, realElapseSeconds);
+            _eventPool.Update(elapseSeconds, realElapseSeconds);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace AIOFramework.Event
         /// </summary>
         internal override void Shutdown()
         {
-            m_EventPool.Shutdown();
+            _eventPool.Shutdown();
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace AIOFramework.Event
         /// <returns>事件处理函数的数量。</returns>
         public int Count(int id)
         {
-            return m_EventPool.Count(id);
+            return _eventPool.Count(id);
         }
 
         /// <summary>
@@ -92,9 +92,9 @@ namespace AIOFramework.Event
         /// <param name="id">事件类型编号。</param>
         /// <param name="handler">要检查的事件处理函数。</param>
         /// <returns>是否存在事件处理函数。</returns>
-        public bool Check(int id, EventHandler<GameEventArgs> handler)
+        public bool Check(int id, EventHandler<BaseEventArgs> handler)
         {
-            return m_EventPool.Check(id, handler);
+            return _eventPool.Check(id, handler);
         }
 
         /// <summary>
@@ -102,9 +102,9 @@ namespace AIOFramework.Event
         /// </summary>
         /// <param name="id">事件类型编号。</param>
         /// <param name="handler">要订阅的事件处理函数。</param>
-        public void Subscribe(int id, EventHandler<GameEventArgs> handler)
+        public void Subscribe(int id, EventHandler<BaseEventArgs> handler)
         {
-            m_EventPool.Subscribe(id, handler);
+            _eventPool.Subscribe(id, handler);
         }
 
         /// <summary>
@@ -112,18 +112,18 @@ namespace AIOFramework.Event
         /// </summary>
         /// <param name="id">事件类型编号。</param>
         /// <param name="handler">要取消订阅的事件处理函数。</param>
-        public void Unsubscribe(int id, EventHandler<GameEventArgs> handler)
+        public void Unsubscribe(int id, EventHandler<BaseEventArgs> handler)
         {
-            m_EventPool.Unsubscribe(id, handler);
+            _eventPool.Unsubscribe(id, handler);
         }
 
         /// <summary>
         /// 设置默认事件处理函数。
         /// </summary>
         /// <param name="handler">要设置的默认事件处理函数。</param>
-        public void SetDefaultHandler(EventHandler<GameEventArgs> handler)
+        public void SetDefaultHandler(EventHandler<BaseEventArgs> handler)
         {
-            m_EventPool.SetDefaultHandler(handler);
+            _eventPool.SetDefaultHandler(handler);
         }
 
         /// <summary>
@@ -131,9 +131,9 @@ namespace AIOFramework.Event
         /// </summary>
         /// <param name="sender">事件源。</param>
         /// <param name="e">事件参数。</param>
-        public void Fire(object sender, GameEventArgs e)
+        public void Fire(object sender, BaseEventArgs e)
         {
-            m_EventPool.Fire(sender, e);
+            _eventPool.Fire(sender, e);
         }
 
         /// <summary>
@@ -141,9 +141,9 @@ namespace AIOFramework.Event
         /// </summary>
         /// <param name="sender">事件源。</param>
         /// <param name="e">事件参数。</param>
-        public void FireNow(object sender, GameEventArgs e)
+        public void FireNow(object sender, BaseEventArgs e)
         {
-            m_EventPool.FireNow(sender, e);
+            _eventPool.FireNow(sender, e);
         }
     }
 }

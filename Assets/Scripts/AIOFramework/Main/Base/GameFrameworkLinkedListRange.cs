@@ -18,8 +18,8 @@ namespace AIOFramework.Runtime
     [StructLayout(LayoutKind.Auto)]
     public struct GameFrameworkLinkedListRange<T> : IEnumerable<T>, IEnumerable
     {
-        private readonly LinkedListNode<T> m_First;
-        private readonly LinkedListNode<T> m_Terminal;
+        private readonly LinkedListNode<T> _first;
+        private readonly LinkedListNode<T> _terminal;
 
         /// <summary>
         /// 初始化游戏框架链表范围的新实例。
@@ -33,8 +33,8 @@ namespace AIOFramework.Runtime
                 throw new GameFrameworkException("Range is invalid.");
             }
 
-            m_First = first;
-            m_Terminal = terminal;
+            _first = first;
+            _terminal = terminal;
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace AIOFramework.Runtime
         {
             get
             {
-                return m_First != null && m_Terminal != null && m_First != m_Terminal;
+                return _first != null && _terminal != null && _first != _terminal;
             }
         }
 
@@ -55,7 +55,7 @@ namespace AIOFramework.Runtime
         {
             get
             {
-                return m_First;
+                return _first;
             }
         }
 
@@ -66,7 +66,7 @@ namespace AIOFramework.Runtime
         {
             get
             {
-                return m_Terminal;
+                return _terminal;
             }
         }
 
@@ -83,7 +83,7 @@ namespace AIOFramework.Runtime
                 }
 
                 int count = 0;
-                for (LinkedListNode<T> current = m_First; current != null && current != m_Terminal; current = current.Next)
+                for (LinkedListNode<T> current = _first; current != null && current != _terminal; current = current.Next)
                 {
                     count++;
                 }
@@ -99,7 +99,7 @@ namespace AIOFramework.Runtime
         /// <returns>是否包含指定值。</returns>
         public bool Contains(T value)
         {
-            for (LinkedListNode<T> current = m_First; current != null && current != m_Terminal; current = current.Next)
+            for (LinkedListNode<T> current = _first; current != null && current != _terminal; current = current.Next)
             {
                 if (current.Value.Equals(value))
                 {
@@ -155,7 +155,7 @@ namespace AIOFramework.Runtime
                 }
 
                 m_GameFrameworkLinkedListRange = range;
-                m_Current = m_GameFrameworkLinkedListRange.m_First;
+                m_Current = m_GameFrameworkLinkedListRange._first;
                 m_CurrentValue = default(T);
             }
 
@@ -194,7 +194,7 @@ namespace AIOFramework.Runtime
             /// <returns>返回下一个结点。</returns>
             public bool MoveNext()
             {
-                if (m_Current == null || m_Current == m_GameFrameworkLinkedListRange.m_Terminal)
+                if (m_Current == null || m_Current == m_GameFrameworkLinkedListRange._terminal)
                 {
                     return false;
                 }
@@ -209,7 +209,7 @@ namespace AIOFramework.Runtime
             /// </summary>
             void IEnumerator.Reset()
             {
-                m_Current = m_GameFrameworkLinkedListRange.m_First;
+                m_Current = m_GameFrameworkLinkedListRange._first;
                 m_CurrentValue = default(T);
             }
         }

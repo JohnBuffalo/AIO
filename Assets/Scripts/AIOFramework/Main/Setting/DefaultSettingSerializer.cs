@@ -13,7 +13,7 @@ namespace AIOFramework.Setting
     /// </summary>
     public sealed class DefaultSettingSerializer : GameFrameworkSerializer<DefaultSetting>
     {
-        private static readonly byte[] Header = new byte[] { (byte)'G', (byte)'F', (byte)'S' };
+        private static readonly byte[] s_header = new byte[] { (byte)'G', (byte)'F', (byte)'S' };
 
         /// <summary>
         /// 初始化默认游戏配置序列化器的新实例。
@@ -28,7 +28,7 @@ namespace AIOFramework.Setting
         /// <returns>默认游戏配置头标识。</returns>
         protected override byte[] GetHeader()
         {
-            return Header;
+            return s_header;
         }
     }
 }

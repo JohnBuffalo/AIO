@@ -13,7 +13,7 @@ namespace AIOFramework.Fsm
     [AddComponentMenu("AIOFramework/FSM")]
     public sealed class FsmComponent : GameFrameworkComponent
     {
-        private IFsmManager m_FsmManager = null;
+        private IFsmManager _fsmManager = null;
 
         /// <summary>
         /// 获取有限状态机数量。
@@ -22,7 +22,7 @@ namespace AIOFramework.Fsm
         {
             get
             {
-                return m_FsmManager.Count;
+                return _fsmManager.Count;
             }
         }
 
@@ -33,8 +33,8 @@ namespace AIOFramework.Fsm
         {
             base.Awake();
 
-            m_FsmManager = GameFrameworkEntry.GetModule<IFsmManager>();
-            if (m_FsmManager == null)
+            _fsmManager = GameFrameworkEntry.GetModule<IFsmManager>();
+            if (_fsmManager == null)
             {
                 Log.Fatal("FSM manager is invalid.");
                 return;
@@ -52,7 +52,7 @@ namespace AIOFramework.Fsm
         /// <returns>是否存在有限状态机。</returns>
         public bool HasFsm<T>() where T : class
         {
-            return m_FsmManager.HasFsm<T>();
+            return _fsmManager.HasFsm<T>();
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace AIOFramework.Fsm
         /// <returns>是否存在有限状态机。</returns>
         public bool HasFsm(Type ownerType)
         {
-            return m_FsmManager.HasFsm(ownerType);
+            return _fsmManager.HasFsm(ownerType);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace AIOFramework.Fsm
         /// <returns>是否存在有限状态机。</returns>
         public bool HasFsm<T>(string name) where T : class
         {
-            return m_FsmManager.HasFsm<T>(name);
+            return _fsmManager.HasFsm<T>(name);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace AIOFramework.Fsm
         /// <returns>是否存在有限状态机。</returns>
         public bool HasFsm(Type ownerType, string name)
         {
-            return m_FsmManager.HasFsm(ownerType, name);
+            return _fsmManager.HasFsm(ownerType, name);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace AIOFramework.Fsm
         /// <returns>要获取的有限状态机。</returns>
         public IFsm<T> GetFsm<T>() where T : class
         {
-            return m_FsmManager.GetFsm<T>();
+            return _fsmManager.GetFsm<T>();
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace AIOFramework.Fsm
         /// <returns>要获取的有限状态机。</returns>
         public FsmBase GetFsm(Type ownerType)
         {
-            return m_FsmManager.GetFsm(ownerType);
+            return _fsmManager.GetFsm(ownerType);
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace AIOFramework.Fsm
         /// <returns>要获取的有限状态机。</returns>
         public IFsm<T> GetFsm<T>(string name) where T : class
         {
-            return m_FsmManager.GetFsm<T>(name);
+            return _fsmManager.GetFsm<T>(name);
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace AIOFramework.Fsm
         /// <returns>要获取的有限状态机。</returns>
         public FsmBase GetFsm(Type ownerType, string name)
         {
-            return m_FsmManager.GetFsm(ownerType, name);
+            return _fsmManager.GetFsm(ownerType, name);
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace AIOFramework.Fsm
         /// </summary>
         public FsmBase[] GetAllFsms()
         {
-            return m_FsmManager.GetAllFsms();
+            return _fsmManager.GetAllFsms();
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace AIOFramework.Fsm
         /// <param name="results">所有有限状态机。</param>
         public void GetAllFsms(List<FsmBase> results)
         {
-            m_FsmManager.GetAllFsms(results);
+            _fsmManager.GetAllFsms(results);
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace AIOFramework.Fsm
         /// <returns>要创建的有限状态机。</returns>
         public IFsm<T> CreateFsm<T>(T owner, params FsmState<T>[] states) where T : class
         {
-            return m_FsmManager.CreateFsm(owner, states);
+            return _fsmManager.CreateFsm(owner, states);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace AIOFramework.Fsm
         /// <returns>要创建的有限状态机。</returns>
         public IFsm<T> CreateFsm<T>(string name, T owner, params FsmState<T>[] states) where T : class
         {
-            return m_FsmManager.CreateFsm(name, owner, states);
+            return _fsmManager.CreateFsm(name, owner, states);
         }
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace AIOFramework.Fsm
         /// <returns>要创建的有限状态机。</returns>
         public IFsm<T> CreateFsm<T>(T owner, List<FsmState<T>> states) where T : class
         {
-            return m_FsmManager.CreateFsm(owner, states);
+            return _fsmManager.CreateFsm(owner, states);
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace AIOFramework.Fsm
         /// <returns>要创建的有限状态机。</returns>
         public IFsm<T> CreateFsm<T>(string name, T owner, List<FsmState<T>> states) where T : class
         {
-            return m_FsmManager.CreateFsm(name, owner, states);
+            return _fsmManager.CreateFsm(name, owner, states);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace AIOFramework.Fsm
         /// <returns>是否销毁有限状态机成功。</returns>
         public bool DestroyFsm<T>() where T : class
         {
-            return m_FsmManager.DestroyFsm<T>();
+            return _fsmManager.DestroyFsm<T>();
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace AIOFramework.Fsm
         /// <returns>是否销毁有限状态机成功。</returns>
         public bool DestroyFsm(Type ownerType)
         {
-            return m_FsmManager.DestroyFsm(ownerType);
+            return _fsmManager.DestroyFsm(ownerType);
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace AIOFramework.Fsm
         /// <returns>是否销毁有限状态机成功。</returns>
         public bool DestroyFsm<T>(string name) where T : class
         {
-            return m_FsmManager.DestroyFsm<T>(name);
+            return _fsmManager.DestroyFsm<T>(name);
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace AIOFramework.Fsm
         /// <returns>是否销毁有限状态机成功。</returns>
         public bool DestroyFsm(Type ownerType, string name)
         {
-            return m_FsmManager.DestroyFsm(ownerType, name);
+            return _fsmManager.DestroyFsm(ownerType, name);
         }
 
         /// <summary>
@@ -246,7 +246,7 @@ namespace AIOFramework.Fsm
         /// <returns>是否销毁有限状态机成功。</returns>
         public bool DestroyFsm<T>(IFsm<T> fsm) where T : class
         {
-            return m_FsmManager.DestroyFsm(fsm);
+            return _fsmManager.DestroyFsm(fsm);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace AIOFramework.Fsm
         /// <returns>是否销毁有限状态机成功。</returns>
         public bool DestroyFsm(FsmBase fsm)
         {
-            return m_FsmManager.DestroyFsm(fsm);
+            return _fsmManager.DestroyFsm(fsm);
         }
     }
 }

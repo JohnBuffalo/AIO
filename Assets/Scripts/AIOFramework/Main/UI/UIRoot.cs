@@ -25,7 +25,7 @@ namespace AIOFramework.UI
             {
                 if (_camera == null)
                 {
-                    _camera = GetComponent<Camera>();
+                    _camera = GetComponentInChildren<Camera>();
                 }
                 return _camera;
             }

@@ -30,7 +30,7 @@ namespace AIOFramework.Setting
     public class GameSetting
     {
         [SerializeField] 
-        private ServerTypeEnum _serverType = ServerTypeEnum.Intranet;
+        private ServerTypeEnum _serverType = ServerTypeEnum.Local;
 
         public ServerTypeEnum ServerType => _serverType;
 

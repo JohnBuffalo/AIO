@@ -5,7 +5,9 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
-namespace AIOFramework.Runtime
+using AIOFramework.Runtime;
+
+namespace AIOFramework.Event
 {
     internal sealed partial class EventPool<T> where T : BaseEventArgs
     {

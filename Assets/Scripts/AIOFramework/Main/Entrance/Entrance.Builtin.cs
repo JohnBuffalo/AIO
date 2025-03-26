@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using AIOFramework.Event;
 using AIOFramework.Fsm;
+using AIOFramework.ObjectPool;
 using AIOFramework.Resource;
 
 namespace AIOFramework.Runtime
@@ -11,6 +12,8 @@ namespace AIOFramework.Runtime
         public static ResourceComponent Resource { get; private set; }
         public static EventComponent Event { get; private set; }
         public static ProcedureComponent Procedure { get; private set; }
+        public static FsmComponent Fsm { get; private set; }
+        public static ObjectPoolComponent ObjectPool { get; private set; }
 
         private void InitBuiltinComponents()
         {
@@ -18,6 +21,8 @@ namespace AIOFramework.Runtime
             Resource = GameEntry.GetComponent<ResourceComponent>();
             Event = GameEntry.GetComponent<EventComponent>();
             Procedure = GameEntry.GetComponent<ProcedureComponent>();
+            Fsm = GameEntry.GetComponent<FsmComponent>();   
+            ObjectPool = GameEntry.GetComponent<ObjectPoolComponent>();
         }
     }
 }

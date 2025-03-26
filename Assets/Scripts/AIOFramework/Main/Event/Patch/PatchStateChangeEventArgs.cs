@@ -2,10 +2,10 @@
 
 namespace AIOFramework.Runtime
 {
-    public class PatchStateChangeEventArgs : GameEventArgs
+    public class PatchStateChangeEventArgs : Event.BaseEventArgs
     {
-        public static readonly int EventId = typeof(PatchStateChangeEventArgs).GetHashCode();
-        public override int Id => EventId;
+        public static readonly int s_EventId = typeof(PatchStateChangeEventArgs).GetHashCode();
+        public override int Id => s_EventId;
         public string Tips { get; private set; }
         public override void Clear()
         {

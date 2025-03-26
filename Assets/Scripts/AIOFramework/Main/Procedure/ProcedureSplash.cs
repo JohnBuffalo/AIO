@@ -8,7 +8,7 @@ namespace AIOFramework.Runtime
     /// </summary>
     public class ProcedureSplash : ProcedureBase
     {
-        private bool m_SplashFinished = false;
+        private bool _splashFinished = false;
 
         protected internal override void OnEnter(ProcedureOwner procedureOwner)
         {
@@ -22,14 +22,14 @@ namespace AIOFramework.Runtime
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
 
-            if (!m_SplashFinished) return;
+            if (!_splashFinished) return;
 
             ChangeState<ProcedureInitPackage>(procedureOwner);
         }
 
         private void Splash()
         {
-            m_SplashFinished = true;
+            _splashFinished = true;
         }
     }
 }

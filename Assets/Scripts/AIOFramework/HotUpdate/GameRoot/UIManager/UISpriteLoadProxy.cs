@@ -13,7 +13,6 @@ namespace AIOFramework.UI
     public class UISpriteLoadProxy : UILoadProxyBase
     {
         private Image target;
-        private string _curLocation;
 
         [SerializeField]
         private Sprite defaultSprite;

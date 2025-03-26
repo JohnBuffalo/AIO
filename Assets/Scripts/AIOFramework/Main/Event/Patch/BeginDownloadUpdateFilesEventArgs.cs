@@ -3,14 +3,14 @@ using AIOFramework.Event;
 
 namespace AIOFramework.Runtime
 {
-    public class BeginDownloadUpdateFilesEventArgs : GameEventArgs
+    public class BeginDownloadUpdateFilesEventArgs : Event.BaseEventArgs
     {
         public override void Clear()
         {
         }
 
-        public static readonly int EventId = typeof(BeginDownloadUpdateFilesEventArgs).GetHashCode();
-        public override int Id => EventId;
+        public static readonly int s_EventId = typeof(BeginDownloadUpdateFilesEventArgs).GetHashCode();
+        public override int Id => s_EventId;
         
         public static BeginDownloadUpdateFilesEventArgs Create()
         {

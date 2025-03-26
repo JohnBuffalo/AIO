@@ -7,7 +7,7 @@
 
 using System;
 
-namespace AIOFramework.Runtime
+namespace AIOFramework.Event
 {
     /// <summary>
     /// 事件池模式。

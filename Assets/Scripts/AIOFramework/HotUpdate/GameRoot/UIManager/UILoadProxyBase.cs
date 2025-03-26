@@ -10,7 +10,7 @@ namespace AIOFramework.UI
     public abstract class UILoadProxyBase : MonoBehaviour, IUILoadProxy
     {
         public List<HandleBase> Handles { get; set; } = new List<HandleBase>();
-        private string _curLocation;
+        protected string _curLocation;
         
         public virtual string CurLocation
         {

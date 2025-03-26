@@ -1,29 +1,27 @@
 ﻿using YooAsset;
 using UnityEngine;
 using System.Collections.Generic;
-using System.Globalization;
 using AIOFramework.Runtime;
-using UnityEngine.SceneManagement;
 using Cysharp.Threading.Tasks;
 
 namespace AIOFramework.Resource
 {
     public partial class ResourceComponent : GameFrameworkComponent, IAssetManager
     {
-        private Dictionary<string, List<HandleBase>> handles = new Dictionary<string, List<HandleBase>>();
+        private Dictionary<string, List<HandleBase>> _handles = new Dictionary<string, List<HandleBase>>();
 
-        private ResourcePackage resourcePackage;
+        private ResourcePackage _resourcePackage;
 
-        private ResourcePackage ResourcePackage
+        public ResourcePackage ResourcePackage
         {
             get
             {
-                if (resourcePackage == null)
+                if (_resourcePackage == null)
                 {
-                    resourcePackage = YooAssets.GetPackage(PackageName);
+                    _resourcePackage = YooAssets.GetPackage(PackageName);
                 }
 
-                return resourcePackage;
+                return _resourcePackage;
             }
         }
 
@@ -125,7 +123,7 @@ namespace AIOFramework.Resource
 
         public T TryPopHandle<T>(string assetPath) where T : HandleBase
         {
-            if (handles.TryGetValue(assetPath, out var handleList))
+            if (_handles.TryGetValue(assetPath, out var handleList))
             {
                 T handle = handleList[^1] as T;
                 if (handle == null) return null;
@@ -138,7 +136,7 @@ namespace AIOFramework.Resource
 
         public bool TryPopHandle(HandleBase handle)
         {
-            if (handles.TryGetValue(handle.Provider.MainAssetInfo.AssetPath, out var handleList))
+            if (_handles.TryGetValue(handle.Provider.MainAssetInfo.AssetPath, out var handleList))
             {
                 for (int i = handleList.Count - 1; i >= 0; i--)
                 {
@@ -155,10 +153,10 @@ namespace AIOFramework.Resource
 
         public void RecordHandle<T>(string assetPath, T handle) where T : HandleBase
         {
-            if (!handles.TryGetValue(assetPath, out var handleList))
+            if (!_handles.TryGetValue(assetPath, out var handleList))
             {
                 handleList = new List<HandleBase>();
-                handles.Add(assetPath, handleList);
+                _handles.Add(assetPath, handleList);
             }
 
             handleList.Add(handle);
@@ -185,19 +183,24 @@ namespace AIOFramework.Resource
         #region 资源卸载
 
         /// <summary>
-        /// 通过Handle卸载资源
+        /// 通过Handle卸载资源,推荐使用
         /// </summary>
         /// <param name="handle"></param>
         public void UnloadAsset(HandleBase handle)
         {
             var assetPath = handle.Provider.MainAssetInfo.AssetPath;
-            Log.Info($"Unload Asset:{assetPath}");
+
             if (TryReleaseHandle(handle))
             {
                 ResourcePackage.TryUnloadUnusedAsset(assetPath);
             }
         }
 
+        /// <summary>
+        /// 通过Handle卸载资源,推荐使用
+        /// </summary>
+        /// <param name="packageName">资源包名称</param>
+        /// <param name="handle"></param>   
         public void UnloadAsset(string packageName, HandleBase handle)
         {
             var assetPath = handle.Provider.MainAssetInfo.AssetPath;
@@ -209,7 +212,7 @@ namespace AIOFramework.Resource
         }
 
         /// <summary>
-        /// 卸载资源
+        /// 卸载资源, 不推荐直接使用路径卸载
         /// </summary>
         /// <param name="assetPath">资源路径</param>
         public void UnloadAsset(string assetPath)
@@ -221,7 +224,7 @@ namespace AIOFramework.Resource
         }
 
         /// <summary>
-        /// 卸载资源
+        /// 卸载资源, 不推荐直接使用路径卸载
         /// </summary>
         /// <param name="packageName">资源包名称</param>
         /// <param name="assetPath">资源路径</param>
@@ -238,38 +241,40 @@ namespace AIOFramework.Resource
         /// 强制回收所有资源
         /// </summary>
         /// <param name="packageName">资源包名称</param>
-        public void UnloadAllAssetsAsync(string packageName, UnloadAllAssetsOptions options)
+        /// <param name="options">卸载选项</param>
+        public async UniTask UnloadAllAssetsAsync(string packageName, UnloadAllAssetsOptions options)
         {
-            handles.Clear();
+            _handles.Clear();
             var package = YooAssets.GetPackage(packageName);
-            package.UnloadAllAssetsAsync(options);
+            await package.UnloadAllAssetsAsync(options);
         }
 
         /// <summary>
         /// 强制回收所有资源
         /// </summary>
-        public void UnloadAllAssetsAsync(UnloadAllAssetsOptions options)
+        /// <param name="options">卸载选项</param>
+        public async UniTask UnloadAllAssetsAsync(UnloadAllAssetsOptions options)
         {
-            handles.Clear();
-            ResourcePackage.UnloadAllAssetsAsync(options);
+            _handles.Clear();
+            await ResourcePackage.UnloadAllAssetsAsync(options);
         }
 
         /// <summary>
-        /// 卸载无用资源, 尽量不用
+        /// 卸载无用资源
         /// </summary>
         /// <param name="packageName">资源包名称</param>
-        public void UnloadUnusedAssetsAsync(string packageName)
+        public async UniTask UnloadUnusedAssetsAsync(string packageName)
         {
             var package = YooAssets.GetPackage(packageName);
-            package.UnloadUnusedAssetsAsync();
+            await package.UnloadUnusedAssetsAsync();
         }
 
         /// <summary>
-        /// 卸载无用资源, 尽量不用
+        /// 卸载无用资源
         /// </summary>
-        public void UnloadUnusedAssetsAsync()
+        public async UniTask UnloadUnusedAssetsAsync()
         {
-            ResourcePackage.UnloadUnusedAssetsAsync();
+           await ResourcePackage.UnloadUnusedAssetsAsync();
         }
 
         /// <summary>
@@ -439,34 +444,6 @@ namespace AIOFramework.Resource
             }
         }
 
-        /// <summary>
-        /// 异步加载场景
-        /// </summary>
-        /// <param name="path">场景路径</param>
-        /// <param name="mode">加载场景的模式，默认为Single</param>
-        /// <param name="activateOnLoad">加载完成后是否激活场景，默认为true</param>
-        /// <param name="priority">加载优先级，默认为0</param>
-        /// <returns>加载成功返回加载的场景，失败返回null</returns>
-        public async UniTask<(Scene,SceneHandle)> LoadSceneAsync(string path, LoadSceneMode mode = LoadSceneMode.Single,
-            bool activateOnLoad = true, uint priority = 0) 
-        {
-            SceneHandle handle =
-                ResourcePackage.LoadSceneAsync(path, mode, LocalPhysicsMode.None, activateOnLoad == false, priority);
-            await handle.ToUniTask();
-
-            if (handle.Status == EOperationStatus.Succeed)
-            {
-                var scene = handle.SceneObject;
-                RecordHandle<SceneHandle>(path, handle);
-                return (scene,handle);
-            }
-            else
-            {
-                Log.Error("Failed to LoadSceneAsync: " + handle.LastError);
-                return (default,null);
-            }
-        }
-
 
         /// <summary>
         /// 异步实例化一个Unity对象
@@ -481,9 +458,23 @@ namespace AIOFramework.Resource
             Vector3 position = default, Quaternion rotation = default) where T : UnityEngine.Object
         {
             (T,AssetHandle) result = await LoadAssetAsync<T>(location);
-            T instance = Object.Instantiate(result.Item1, position, rotation, parent);
+            var insOp = result.Item2.InstantiateAsync(position, rotation, parent,true);
 
-            return (instance,result.Item2);
+            await insOp.ToUniTask();
+
+            if (insOp.Status == EOperationStatus.Succeed)
+            {
+                var instance = insOp.Result as T;
+                return (instance, result.Item2);
+            }
+            else
+            {
+                Log.Error("Failed to InstantiateAsync: " + insOp.Error);
+                return (null,null);
+            }
+            
+            // T instance = Object.Instantiate(result.Item1, position, rotation, parent);
+            // return (instance,result.Item2);
         }
 
         #endregion

@@ -10,17 +10,17 @@ namespace AIOFramework.Resource
     public partial class ResourceComponent : GameFrameworkComponent
     {
         [SerializeField] 
-        private string m_PackageName = "DefaultPackage";
-        public string PackageName => m_PackageName;
+        private string _packageName = "DefaultPackage";
+        public string PackageName => _packageName;
         
         [SerializeField] 
-        private EPlayMode m_PlayMode = EPlayMode.EditorSimulateMode;
+        private EPlayMode _playMode = EPlayMode.EditorSimulateMode;
         public EPlayMode PlayMode
         {
             get
             {
 #if UNITY_EDITOR
-                return m_PlayMode;
+                return _playMode;
 #elif UNITY_WEBGL
                 return EPlayMode.WebPlayMode;
 #else
@@ -31,8 +31,8 @@ namespace AIOFramework.Resource
 
         [SerializeField]
         [Tooltip("异步操作每帧最大时间切片(毫秒)")]
-        private long m_TimeSlice = 1000L;
-        public long TimeSlice => m_TimeSlice;
+        private long _timeSlice = 1000L;
+        public long TimeSlice => _timeSlice;
         
         protected override void Awake()
         {

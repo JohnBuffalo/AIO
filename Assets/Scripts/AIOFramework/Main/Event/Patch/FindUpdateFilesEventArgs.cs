@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace AIOFramework
 {
-    public class FindUpdateFilesEventArgs : GameEventArgs
+    public class FindUpdateFilesEventArgs : Event.BaseEventArgs
     {
-        public static readonly int EventId = typeof(FindUpdateFilesEventArgs).GetHashCode();
+        public static readonly int s_EventId = typeof(FindUpdateFilesEventArgs).GetHashCode();
 
         public int TotalCount { get; private set; }
         public long TotalSizeBytes { get; private set; }
-        public override int Id => EventId;
+        public override int Id => s_EventId;
 
         public static FindUpdateFilesEventArgs Create(int totalCount, long totalSizeBytes)
         {

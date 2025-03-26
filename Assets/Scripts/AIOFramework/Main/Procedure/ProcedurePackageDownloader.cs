@@ -12,13 +12,13 @@ namespace AIOFramework.Runtime
 {
     public class ProcedurePackageDownloader : ProcedureBase
     {
-        private ProcedureOwner procedureOwner;
+        private ProcedureOwner _procedureOwner;
 
         protected internal override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
             AddListeners();
-            this.procedureOwner = procedureOwner;
+            this._procedureOwner = procedureOwner;
             Entrance.Event.Fire(this, PatchStateChangeEventArgs.Create("CreatePackageDownloader"));
             CreateDownloader(procedureOwner).Forget();
         }
@@ -31,17 +31,17 @@ namespace AIOFramework.Runtime
 
         private void AddListeners()
         {
-            Entrance.Event.Subscribe(BeginDownloadUpdateFilesEventArgs.EventId, OnBeginDownloadUpdateFiles);
+            Entrance.Event.Subscribe(BeginDownloadUpdateFilesEventArgs.s_EventId, OnBeginDownloadUpdateFiles);
         }
 
         private void RemoveListeners()
         {
-            Entrance.Event.Unsubscribe(BeginDownloadUpdateFilesEventArgs.EventId, OnBeginDownloadUpdateFiles);
+            Entrance.Event.Unsubscribe(BeginDownloadUpdateFilesEventArgs.s_EventId, OnBeginDownloadUpdateFiles);
         }
 
-        private void OnBeginDownloadUpdateFiles(object sender, GameEventArgs e)
+        private void OnBeginDownloadUpdateFiles(object sender, Event.BaseEventArgs e)
         {
-            ChangeState<ProcedureDownloadPackageFiles>(procedureOwner);
+            ChangeState<ProcedureDownloadPackageFiles>(_procedureOwner);
         }
 
         private async UniTask CreateDownloader(ProcedureOwner procedureOwner)

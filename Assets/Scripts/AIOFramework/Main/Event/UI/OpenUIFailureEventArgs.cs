@@ -3,10 +3,10 @@
 
 namespace AIOFramework.Event
 {
-    public class OpenUIFailureEventArgs : GameEventArgs
+    public class OpenUIFailureEventArgs : BaseEventArgs
     {
-        public static readonly int EventId = typeof(OpenUIFailureEventArgs).GetHashCode();
-        public override int Id => EventId;
+        public static readonly int s_EventId = typeof(OpenUIFailureEventArgs).GetHashCode();
+        public override int Id => s_EventId;
 
         public int SerialId
         {

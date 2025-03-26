@@ -16,16 +16,16 @@ namespace AIOFramework.Procedure
     /// </summary>
     internal sealed class ProcedureManager : GameFrameworkModule, IProcedureManager
     {
-        private IFsmManager m_FsmManager;
-        private IFsm<IProcedureManager> m_ProcedureFsm;
+        private IFsmManager _fsmManager;
+        private IFsm<IProcedureManager> _procedureFsm;
 
         /// <summary>
         /// 初始化流程管理器的新实例。
         /// </summary>
         public ProcedureManager()
         {
-            m_FsmManager = null;
-            m_ProcedureFsm = null;
+            _fsmManager = null;
+            _procedureFsm = null;
         }
 
         /// <summary>
@@ -47,12 +47,12 @@ namespace AIOFramework.Procedure
         {
             get
             {
-                if (m_ProcedureFsm == null)
+                if (_procedureFsm == null)
                 {
                     throw new GameFrameworkException("You must initialize procedure first.");
                 }
 
-                return (ProcedureBase)m_ProcedureFsm.CurrentState;
+                return (ProcedureBase)_procedureFsm.CurrentState;
             }
         }
 
@@ -63,12 +63,12 @@ namespace AIOFramework.Procedure
         {
             get
             {
-                if (m_ProcedureFsm == null)
+                if (_procedureFsm == null)
                 {
                     throw new GameFrameworkException("You must initialize procedure first.");
                 }
 
-                return m_ProcedureFsm.CurrentStateTime;
+                return _procedureFsm.CurrentStateTime;
             }
         }
 
@@ -86,15 +86,15 @@ namespace AIOFramework.Procedure
         /// </summary>
         internal override void Shutdown()
         {
-            if (m_FsmManager != null)
+            if (_fsmManager != null)
             {
-                if (m_ProcedureFsm != null)
+                if (_procedureFsm != null)
                 {
-                    m_FsmManager.DestroyFsm(m_ProcedureFsm);
-                    m_ProcedureFsm = null;
+                    _fsmManager.DestroyFsm(_procedureFsm);
+                    _procedureFsm = null;
                 }
 
-                m_FsmManager = null;
+                _fsmManager = null;
             }
         }
 
@@ -110,8 +110,8 @@ namespace AIOFramework.Procedure
                 throw new GameFrameworkException("FSM manager is invalid.");
             }
 
-            m_FsmManager = fsmManager;
-            m_ProcedureFsm = m_FsmManager.CreateFsm(this, procedures);
+            _fsmManager = fsmManager;
+            _procedureFsm = _fsmManager.CreateFsm(this, procedures);
         }
 
         /// <summary>
@@ -120,12 +120,12 @@ namespace AIOFramework.Procedure
         /// <typeparam name="T">要开始的流程类型。</typeparam>
         public void StartProcedure<T>() where T : ProcedureBase
         {
-            if (m_ProcedureFsm == null)
+            if (_procedureFsm == null)
             {
                 throw new GameFrameworkException("You must initialize procedure first.");
             }
 
-            m_ProcedureFsm.Start<T>();
+            _procedureFsm.Start<T>();
         }
 
         /// <summary>
@@ -134,12 +134,12 @@ namespace AIOFramework.Procedure
         /// <param name="procedureType">要开始的流程类型。</param>
         public void StartProcedure(Type procedureType)
         {
-            if (m_ProcedureFsm == null)
+            if (_procedureFsm == null)
             {
                 throw new GameFrameworkException("You must initialize procedure first.");
             }
 
-            m_ProcedureFsm.Start(procedureType);
+            _procedureFsm.Start(procedureType);
         }
 
         /// <summary>
@@ -149,12 +149,12 @@ namespace AIOFramework.Procedure
         /// <returns>是否存在流程。</returns>
         public bool HasProcedure<T>() where T : ProcedureBase
         {
-            if (m_ProcedureFsm == null)
+            if (_procedureFsm == null)
             {
                 throw new GameFrameworkException("You must initialize procedure first.");
             }
 
-            return m_ProcedureFsm.HasState<T>();
+            return _procedureFsm.HasState<T>();
         }
 
         /// <summary>
@@ -164,12 +164,12 @@ namespace AIOFramework.Procedure
         /// <returns>是否存在流程。</returns>
         public bool HasProcedure(Type procedureType)
         {
-            if (m_ProcedureFsm == null)
+            if (_procedureFsm == null)
             {
                 throw new GameFrameworkException("You must initialize procedure first.");
             }
 
-            return m_ProcedureFsm.HasState(procedureType);
+            return _procedureFsm.HasState(procedureType);
         }
 
         /// <summary>
@@ -179,12 +179,12 @@ namespace AIOFramework.Procedure
         /// <returns>要获取的流程。</returns>
         public ProcedureBase GetProcedure<T>() where T : ProcedureBase
         {
-            if (m_ProcedureFsm == null)
+            if (_procedureFsm == null)
             {
                 throw new GameFrameworkException("You must initialize procedure first.");
             }
 
-            return m_ProcedureFsm.GetState<T>();
+            return _procedureFsm.GetState<T>();
         }
 
         /// <summary>
@@ -194,12 +194,12 @@ namespace AIOFramework.Procedure
         /// <returns>要获取的流程。</returns>
         public ProcedureBase GetProcedure(Type procedureType)
         {
-            if (m_ProcedureFsm == null)
+            if (_procedureFsm == null)
             {
                 throw new GameFrameworkException("You must initialize procedure first.");
             }
 
-            return (ProcedureBase)m_ProcedureFsm.GetState(procedureType);
+            return (ProcedureBase)_procedureFsm.GetState(procedureType);
         }
     }
 }

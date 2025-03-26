@@ -3,10 +3,10 @@ using AIOFramework.UI;
 
 namespace AIOFramework.Event
 {
-    public class CloseUICompleteEventArgs : GameEventArgs
+    public class CloseUICompleteEventArgs : BaseEventArgs
     {
-        public static readonly int EventId = typeof(CloseUICompleteEventArgs).GetHashCode();
-        public override int Id => EventId;
+        public static readonly int s_EventId = typeof(CloseUICompleteEventArgs).GetHashCode();
+        public override int Id => s_EventId;
 
         public int SerialId
         {

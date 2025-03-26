@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e87e3b833c8435f88d8ecc523427171, type: 3}
   m_Name: GlobalSettings
   m_EditorClassIdentifier: 
-  m_GameSetting:
-    _serverType: 1
-    _version: 0.1.1
+  _gameSetting:
+    _serverType: 0
+    _version: 0.0.0
     _cleanCommitPathRes: 1
     _localResourceUrl: https://10.0.234.51:8080
     _innerResourceUrl: https://10.0.234.51:8080
     _extraResourceUrl: https://10.0.234.51:8080
     _formalResourceUrl: https://10.0.234.51:8080
-    localServerDirectory: D:/UnityReferences/AIOHttpsServer
-    hotUpdateDllDirectory: ArtAssets/HotUpdate
+    _localServerDirectory: D:/UnityReferences/AIOHttpsServer
+    _hotUpdateDllDirectory: ArtAssets/HotUpdate

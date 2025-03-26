@@ -5,7 +5,6 @@ namespace AIOFramework.UI
 {
     public class UIPrefabLoadProxy : UILoadProxyBase
     {
-        private string _curLocation;
         
         public override async void OnLocationChange()
         {

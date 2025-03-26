@@ -18,28 +18,24 @@ namespace HotUpdate
         public static UIComponent UI { get; private set; }
         public static FsmComponent Fsm { get; private set; }
         public static ObjectPoolComponent ObjectPool { get; private set; }
-
+        public static SceneComponent Scene { get; private set; }
         private async void Start()
         {
             await LoadDlls();
 
             ReferToBuiltInComponents();
             InitHotUpdateComponents();
+            Fsm.DestroyFsm<IProcedureManager>(); //删除热更状态机
             DontDestroyOnLoad(this);
 
-            TestRoot.Instance.Test().Forget();
+            _ = TestRoot.Instance.Test();
         }
 
         private void InitHotUpdateComponents()
         {
-            ObjectPool = GameEntry.GetComponent<ObjectPoolComponent>();
-
             UI = GameEntry.GetComponent<UIComponent>();
             UI.Init(typeof(UIManager), UIRoot.Instance.Canvas.transform);
-            
-            Fsm = GameEntry.GetComponent<FsmComponent>();
-            Fsm.DestroyFsm<IProcedureManager>(); //删除热更状态机
-            
+            Scene = GameEntry.GetComponent<SceneComponent>();
         }
 
         private void ReferToBuiltInComponents()
@@ -47,6 +43,8 @@ namespace HotUpdate
             Base = Entrance.Base;
             Resource = Entrance.Resource;
             Event = Entrance.Event;
+            Fsm = Entrance.Fsm;
+            ObjectPool = Entrance.ObjectPool;
         }
         
     }

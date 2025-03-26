@@ -20,9 +20,9 @@ namespace AIOFramework.Editor
 
         private void OnEnable()
         {
-            m_PackageName = serializedObject.FindProperty("m_PackageName");
-            m_PlayMode = serializedObject.FindProperty("m_PlayMode");
-            m_TimeSlice = serializedObject.FindProperty("m_TimeSlice");
+            m_PackageName = serializedObject.FindProperty("_packageName");
+            m_PlayMode = serializedObject.FindProperty("_playMode");
+            m_TimeSlice = serializedObject.FindProperty("_timeSlice");
             
             RefreshModes();
             RefreshTypeNames();

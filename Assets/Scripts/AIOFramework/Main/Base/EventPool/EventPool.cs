@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using AIOFramework.Runtime;
 
-namespace AIOFramework.Runtime
+namespace AIOFramework.Event
 {
     /// <summary>
     /// 事件池。

@@ -2,10 +2,10 @@
 
 namespace AIOFramework.Runtime
 {
-    public class SpaceNotEnoughEventArgs:GameEventArgs
+    public class SpaceNotEnoughEventArgs: Event.BaseEventArgs
     {
-        public static readonly int EventId = typeof(SpaceNotEnoughEventArgs).GetHashCode();
-        public override int Id => EventId;
+        public static readonly int s_EventId = typeof(SpaceNotEnoughEventArgs).GetHashCode();
+        public override int Id => s_EventId;
         
         public long NeedSpace { get; private set; }
         public long FreeSpace { get; private set; }

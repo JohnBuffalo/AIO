@@ -17,11 +17,11 @@ namespace AIOFramework.Resource
         public async UniTask<bool> InitPackageAsync(string packageName, string hostServerURL,
             string fallbackHostServerURL, bool isDefaultPackage = false)
         {
-            resourcePackage = GetAssetsPackage(packageName) ?? CreateAssetsPackage(packageName);
-            if (isDefaultPackage) SetDefaultAssetsPackage(resourcePackage);
+            _resourcePackage = GetAssetsPackage(packageName) ?? CreateAssetsPackage(packageName);
+            if (isDefaultPackage) SetDefaultAssetsPackage(_resourcePackage);
 
             InitializationOperation initOperation =
-                CreateInitializationOperationHandler(resourcePackage, hostServerURL, fallbackHostServerURL);
+                CreateInitializationOperationHandler(_resourcePackage, hostServerURL, fallbackHostServerURL);
 
             await initOperation.ToUniTask();
 

@@ -6,10 +6,10 @@ namespace AIOFramework.Event
     /// <summary>
     /// 打开界面成功事件。
     /// </summary>
-    public sealed class OpenUISuccessEventArgs : GameEventArgs
+    public sealed class OpenUISuccessEventArgs : BaseEventArgs
     {
-        public static readonly int EventId = typeof(OpenUISuccessEventArgs).GetHashCode();
-        public override int Id =>EventId;
+        public static readonly int s_EventId = typeof(OpenUISuccessEventArgs).GetHashCode();
+        public override int Id =>s_EventId;
 
         /// <summary>
         /// 初始化打开界面成功事件的新实例。

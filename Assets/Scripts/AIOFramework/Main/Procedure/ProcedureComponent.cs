@@ -13,14 +13,14 @@ namespace AIOFramework.Runtime
     [AddComponentMenu("AIOFramework/Procedure")]
     public class ProcedureComponent : GameFrameworkComponent
     {
-        private IProcedureManager m_ProcedureManager = null;
-        private ProcedureBase m_EntranceProcedure = null;
+        private IProcedureManager _procedureManager = null;
+        private ProcedureBase _entranceProcedure = null;
         
         [SerializeField]
-        private string[] m_AvailableProcedureTypeNames = null;
+        private string[] _availableProcedureTypeNames = null;
 
         [SerializeField]
-        private string m_EntranceProcedureTypeName = null;
+        private string _entranceProcedureTypeName = null;
         
         /// <summary>
         /// 获取当前流程。
@@ -29,7 +29,7 @@ namespace AIOFramework.Runtime
         {
             get
             {
-                return m_ProcedureManager.CurrentProcedure;
+                return _procedureManager.CurrentProcedure;
             }
         }
         /// <summary>
@@ -39,7 +39,7 @@ namespace AIOFramework.Runtime
         {
             get
             {
-                return m_ProcedureManager.CurrentProcedureTime;
+                return _procedureManager.CurrentProcedureTime;
             }
         }
 
@@ -50,8 +50,8 @@ namespace AIOFramework.Runtime
         {
             base.Awake();
 
-            m_ProcedureManager = GameFrameworkEntry.GetModule<IProcedureManager>();
-            if (m_ProcedureManager == null)
+            _procedureManager = GameFrameworkEntry.GetModule<IProcedureManager>();
+            if (_procedureManager == null)
             {
                 Log.Fatal("Procedure manager is invalid.");
                 return;
@@ -60,40 +60,40 @@ namespace AIOFramework.Runtime
 
         private IEnumerator Start()
         {
-            ProcedureBase[] procedures = new ProcedureBase[m_AvailableProcedureTypeNames.Length];
-            for (int i = 0; i < m_AvailableProcedureTypeNames.Length; i++)
+            ProcedureBase[] procedures = new ProcedureBase[_availableProcedureTypeNames.Length];
+            for (int i = 0; i < _availableProcedureTypeNames.Length; i++)
             {
-                Type procedureType = Utility.Assembly.GetType(m_AvailableProcedureTypeNames[i]);
+                Type procedureType = Utility.Assembly.GetType(_availableProcedureTypeNames[i]);
                 if (procedureType == null)
                 {
-                    Log.Error("Can not find procedure type '{0}'.", m_AvailableProcedureTypeNames[i]);
+                    Log.Error("Can not find procedure type '{0}'.", _availableProcedureTypeNames[i]);
                     yield break;
                 }
 
                 procedures[i] = (ProcedureBase)Activator.CreateInstance(procedureType);
                 if (procedures[i] == null)
                 {
-                    Log.Error("Can not create procedure instance '{0}'.", m_AvailableProcedureTypeNames[i]);
+                    Log.Error("Can not create procedure instance '{0}'.", _availableProcedureTypeNames[i]);
                     yield break;
                 }
 
-                if (m_EntranceProcedureTypeName == m_AvailableProcedureTypeNames[i])
+                if (_entranceProcedureTypeName == _availableProcedureTypeNames[i])
                 {
-                    m_EntranceProcedure = procedures[i];
+                    _entranceProcedure = procedures[i];
                 }
             }
 
-            if (m_EntranceProcedure == null)
+            if (_entranceProcedure == null)
             {
                 Log.Error("Entrance procedure is invalid.");
                 yield break;
             }
 
-            m_ProcedureManager.Initialize(GameFrameworkEntry.GetModule<IFsmManager>(), procedures);
+            _procedureManager.Initialize(GameFrameworkEntry.GetModule<IFsmManager>(), procedures);
 
             yield return new WaitForEndOfFrame();
 
-            m_ProcedureManager.StartProcedure(m_EntranceProcedure.GetType());
+            _procedureManager.StartProcedure(_entranceProcedure.GetType());
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace AIOFramework.Runtime
         /// <returns>是否存在流程。</returns>
         public bool HasProcedure<T>() where T : ProcedureBase
         {
-            return m_ProcedureManager.HasProcedure<T>();
+            return _procedureManager.HasProcedure<T>();
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace AIOFramework.Runtime
         /// <returns>是否存在流程。</returns>
         public bool HasProcedure(Type procedureType)
         {
-            return m_ProcedureManager.HasProcedure(procedureType);
+            return _procedureManager.HasProcedure(procedureType);
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace AIOFramework.Runtime
         /// <returns>要获取的流程。</returns>
         public ProcedureBase GetProcedure<T>() where T : ProcedureBase
         {
-            return m_ProcedureManager.GetProcedure<T>();
+            return _procedureManager.GetProcedure<T>();
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace AIOFramework.Runtime
         /// <returns>要获取的流程。</returns>
         public ProcedureBase GetProcedure(Type procedureType)
         {
-            return m_ProcedureManager.GetProcedure(procedureType);
+            return _procedureManager.GetProcedure(procedureType);
         }
     }
 }

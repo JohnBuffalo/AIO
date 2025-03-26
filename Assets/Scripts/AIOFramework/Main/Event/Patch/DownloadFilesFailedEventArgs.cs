@@ -3,10 +3,10 @@ using AIOFramework.Runtime;
 
 namespace AIOFramework
 {
-    public class DownloadFilesFailedEventArgs : GameEventArgs
+    public class DownloadFilesFailedEventArgs : Event.BaseEventArgs
     {
-        public static readonly int EventId = typeof(DownloadFilesFailedEventArgs).GetHashCode();
-        public override int Id => EventId;
+        public static readonly int s_EventId = typeof(DownloadFilesFailedEventArgs).GetHashCode();
+        public override int Id => s_EventId;
 
         public string FileName { get; private set; }
         public string Error { get; private set; }

@@ -9,8 +9,8 @@ namespace AIOFramework.Setting
     [CustomEditor(typeof(SettingComponent))]
     internal sealed class SettingComponentInspector : GameFrameworkInspector
     {
-        private HelperInfo<SettingHelperBase> m_SettingHelperInfo = new HelperInfo<SettingHelperBase>("Setting");
 
+        private HelperInfo<SettingHelperBase> _settingHelperInfo = new HelperInfo<SettingHelperBase>("setting");
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
@@ -19,7 +19,7 @@ namespace AIOFramework.Setting
 
             EditorGUI.BeginDisabledGroup(EditorApplication.isPlayingOrWillChangePlaymode);
             {
-                m_SettingHelperInfo.Draw();
+                _settingHelperInfo.Draw();
             }
             EditorGUI.EndDisabledGroup();
 
@@ -62,14 +62,14 @@ namespace AIOFramework.Setting
 
         private void OnEnable()
         {
-            m_SettingHelperInfo.Init(serializedObject);
+            _settingHelperInfo.Init(serializedObject);
 
             RefreshTypeNames();
         }
 
         private void RefreshTypeNames()
         {
-            m_SettingHelperInfo.Refresh();
+            _settingHelperInfo.Refresh();
             serializedObject.ApplyModifiedProperties();
         }
     }

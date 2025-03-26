@@ -2,10 +2,10 @@
 
 namespace AIOFramework.Runtime
 {
-    public class HotUpdateFinishEventArgs : GameEventArgs
+    public class HotUpdateFinishEventArgs : Event.BaseEventArgs
     {
-        public static readonly int EventID = typeof(HotUpdateFinishEventArgs).GetHashCode();
-        public override int Id => EventID;
+        public static readonly int s_EventID = typeof(HotUpdateFinishEventArgs).GetHashCode();
+        public override int Id => s_EventID;
         
         public static HotUpdateFinishEventArgs Create()
         {

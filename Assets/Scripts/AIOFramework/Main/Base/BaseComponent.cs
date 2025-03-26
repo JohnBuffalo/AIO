@@ -13,12 +13,12 @@ namespace AIOFramework.Runtime
     public class BaseComponent : GameFrameworkComponent
     {
         private const int DefaultDpi = 96; // default windows dpi
-        private float m_GameSpeedBeforePause = 1f;
-        [SerializeField] private int m_FrameRate = 30;
-        [SerializeField] private float m_GameSpeed = 1f;
-        [SerializeField] private bool m_RunInBackground = true;
-        [SerializeField] private bool m_NeverSleep = true;
-        [SerializeField] private string m_LogHelperTypeName = "AIOFramework.Runtime.DefaultLogHelper";
+        private float _gameSpeedBeforePause = 1f;
+        [SerializeField] private int _frameRate = 30;
+        [SerializeField] private float _gameSpeed = 1f;
+        [SerializeField] private bool _runInBackground = true;
+        [SerializeField] private bool _neverSleep = true;
+        [SerializeField] private string _logHelperTypeName = "AIOFramework.Runtime.DefaultLogHelper";
         /// <summary>
         /// 获取或设置游戏帧率.
         /// </summary>
@@ -26,11 +26,11 @@ namespace AIOFramework.Runtime
         {
             get
             {
-                return m_FrameRate;
+                return _frameRate;
             }
             set
             {
-                Application.targetFrameRate = m_FrameRate = value;
+                Application.targetFrameRate = _frameRate = value;
             }
         }
         
@@ -41,11 +41,11 @@ namespace AIOFramework.Runtime
         {
             get
             {
-                return m_GameSpeed;
+                return _gameSpeed;
             }
             set
             {
-                Time.timeScale = m_GameSpeed = value >= 0f ? value : 0f;
+                Time.timeScale = _gameSpeed = value >= 0f ? value : 0f;
             }
         }
         
@@ -56,7 +56,7 @@ namespace AIOFramework.Runtime
         {
             get
             {
-                return m_GameSpeed <= 0f;
+                return _gameSpeed <= 0f;
             }
         }
         
@@ -67,7 +67,7 @@ namespace AIOFramework.Runtime
         {
             get
             {
-                return m_GameSpeed == 1f;
+                return _gameSpeed == 1f;
             }
         }
         
@@ -78,11 +78,11 @@ namespace AIOFramework.Runtime
         {
             get
             {
-                return m_RunInBackground;
+                return _runInBackground;
             }
             set
             {
-                Application.runInBackground = m_RunInBackground = value;
+                Application.runInBackground = _runInBackground = value;
             }
         }
         
@@ -93,11 +93,11 @@ namespace AIOFramework.Runtime
         {
             get
             {
-                return m_NeverSleep;
+                return _neverSleep;
             }
             set
             {
-                m_NeverSleep = value;
+                _neverSleep = value;
                 Screen.sleepTimeout = value ? SleepTimeout.NeverSleep : SleepTimeout.SystemSetting;
             }
         }
@@ -122,10 +122,10 @@ namespace AIOFramework.Runtime
                 Utility.Converter.ScreenDpi = DefaultDpi;
             }
 
-            Application.targetFrameRate = m_FrameRate;
-            Time.timeScale = m_GameSpeed;
-            Application.runInBackground = m_RunInBackground;
-            Screen.sleepTimeout = m_NeverSleep ? SleepTimeout.NeverSleep : SleepTimeout.SystemSetting;
+            Application.targetFrameRate = _frameRate;
+            Time.timeScale = _gameSpeed;
+            Application.runInBackground = _runInBackground;
+            Screen.sleepTimeout = _neverSleep ? SleepTimeout.NeverSleep : SleepTimeout.SystemSetting;
 #else
             Log.Error("Game Framework only applies with Unity 5.3 and above, but current Unity version is {0}.", Application.unityVersion);
             GameEntry.Shutdown(ShutdownType.Quit);
@@ -164,7 +164,7 @@ namespace AIOFramework.Runtime
                 return;
             }
 
-            m_GameSpeedBeforePause = GameSpeed;
+            _gameSpeedBeforePause = GameSpeed;
             GameSpeed = 0f;
         }
         
@@ -178,7 +178,7 @@ namespace AIOFramework.Runtime
                 return;
             }
 
-            GameSpeed = m_GameSpeedBeforePause;
+            GameSpeed = _gameSpeedBeforePause;
         }
         
         /// <summary>
@@ -218,21 +218,21 @@ namespace AIOFramework.Runtime
         
         private void InitLogHelper()
         {
-            if (string.IsNullOrEmpty(m_LogHelperTypeName))
+            if (string.IsNullOrEmpty(_logHelperTypeName))
             {
                 return;
             }
 
-            Type logHelperType = Utility.Assembly.GetType(m_LogHelperTypeName);
+            Type logHelperType = Utility.Assembly.GetType(_logHelperTypeName);
             if (logHelperType == null)
             {
-                throw new GameFrameworkException(Utility.Text.Format("Can not find log helper type '{0}'.", m_LogHelperTypeName));
+                throw new GameFrameworkException(Utility.Text.Format("Can not find log helper type '{0}'.", _logHelperTypeName));
             }
 
             GameFrameworkLog.ILogHelper logHelper = (GameFrameworkLog.ILogHelper)Activator.CreateInstance(logHelperType);
             if (logHelper == null)
             {
-                throw new GameFrameworkException(Utility.Text.Format("Can not create log helper instance '{0}'.", m_LogHelperTypeName));
+                throw new GameFrameworkException(Utility.Text.Format("Can not create log helper instance '{0}'.", _logHelperTypeName));
             }
 
             GameFrameworkLog.SetLogHelper(logHelper);

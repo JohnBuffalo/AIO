@@ -2,10 +2,10 @@ using AIOFramework.Event;
 
 namespace AIOFramework.Runtime
 {
-    public class DownloadProgressEventArgs : GameEventArgs
+    public class DownloadProgressEventArgs : Event.BaseEventArgs
     {
-        public static readonly int EventID = typeof(DownloadProgressEventArgs).GetHashCode();
-        public override int Id => EventID;
+        public static readonly int s_EventID = typeof(DownloadProgressEventArgs).GetHashCode();
+        public override int Id => s_EventID;
 
         public int TotalDownloadCount { get; private set; }
         public int CurrentDownloadCount { get; private set; }

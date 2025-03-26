@@ -98,14 +98,14 @@ namespace AIOFramework.UI
             {
                 IUIForm uiForm = _recycleQueue.Dequeue();
                 uiForm.OnRecycle();
-                
+
                 ((UIViewBase)uiForm).SetActive(false);
                 UIGroup poolGroup = (UIGroup)GetUIGroup(UIGroupEnum.Pool);
                 poolGroup.AddUI((UIViewBase)uiForm);
                 ((UIViewBase)uiForm).UIGroup = poolGroup;
                 ((GameObject)uiForm.Handle).transform.SetParent(((MonoBehaviour)poolGroup.Helper).transform);
                 poolGroup.Refresh();
-                
+
                 _instancePool.Unspawn(uiForm.Handle);
             }
 
@@ -235,18 +235,18 @@ namespace AIOFramework.UI
             return false;
         }
 
-        public T GetUI<T>(int serialId) where T :  IUIForm
+        public T GetUI<T>(int serialId) where T : IUIForm
         {
             var ui = GetUI(serialId);
             return (T)ui;
         }
-        
-        public T GetUI<T>(string assetName) where T :  IUIForm
+
+        public T GetUI<T>(string assetName) where T : IUIForm
         {
             var ui = GetUI(assetName);
             return (T)ui;
         }
-        
+
         public IUIForm GetUI(int serialId)
         {
             foreach (KeyValuePair<UIGroupEnum, UIGroup> uiGroup in _uiGroups)
@@ -397,7 +397,7 @@ namespace AIOFramework.UI
             var pageUid = await OpenUI(ctorInfo, viewModel);
             return pageUid;
         }
-        
+
 
         public async UniTask<int> OpenUI(UICtorInfo ctorInfo, UIViewModelBase viewModel)
         {
@@ -437,7 +437,7 @@ namespace AIOFramework.UI
                     return existUI.SerialId;
                 }
             }
-            
+
             UIInstanceObject uiInstanceObject = _instancePool.Spawn(uiName);
             if (uiInstanceObject == null)
             {
@@ -472,7 +472,7 @@ namespace AIOFramework.UI
 
             return uiInstanceObject;
         }
-        
+
 
         private void InternalOpenUI(int serialId, string uiName, UICtorInfo ctorInfo, GameObject uiInstance,
             UIViewModelBase viewModel)
@@ -566,7 +566,7 @@ namespace AIOFramework.UI
             uiGroup.RemoveUI((UIViewBase)uiForm);
             uiForm.OnClose(userData);
             uiGroup.Refresh();
-            
+
             if (_closeUICompleteEventHandler != null)
             {
                 CloseUICompleteEventArgs args =

@@ -84,42 +84,42 @@ namespace AIOFramework.Runtime
 
         private void AddListeners()
         {
-            Entrance.Event.Subscribe(PatchStateChangeEventArgs.EventId, OnPatchStateChange);
-            Entrance.Event.Subscribe(FindUpdateFilesEventArgs.EventId, OnFindUpdateFiles);
-            Entrance.Event.Subscribe(PackageVersionEventArgs.EventId, OnPackageVersion);
-            Entrance.Event.Subscribe(InitPackageFailedEventArgs.EventId, OnInitPackageFailed);
-            Entrance.Event.Subscribe(DownloadFilesFailedEventArgs.EventId, OnDownloadFilesFailed);
-            Entrance.Event.Subscribe(DownloadProgressEventArgs.EventID, OnDownloadProgress);
-            Entrance.Event.Subscribe(HotUpdateFinishEventArgs.EventID, OnHotUpdateFinish);
-            Entrance.Event.Subscribe(SpaceNotEnoughEventArgs.EventId, OnSpaceNotEnough);
+            Entrance.Event.Subscribe(PatchStateChangeEventArgs.s_EventId, OnPatchStateChange);
+            Entrance.Event.Subscribe(FindUpdateFilesEventArgs.s_EventId, OnFindUpdateFiles);
+            Entrance.Event.Subscribe(PackageVersionEventArgs.s_EventId, OnPackageVersion);
+            Entrance.Event.Subscribe(InitPackageFailedEventArgs.s_EventId, OnInitPackageFailed);
+            Entrance.Event.Subscribe(DownloadFilesFailedEventArgs.s_EventId, OnDownloadFilesFailed);
+            Entrance.Event.Subscribe(DownloadProgressEventArgs.s_EventID, OnDownloadProgress);
+            Entrance.Event.Subscribe(HotUpdateFinishEventArgs.s_EventID, OnHotUpdateFinish);
+            Entrance.Event.Subscribe(SpaceNotEnoughEventArgs.s_EventId, OnSpaceNotEnough);
         }
 
         private void RemoveAllListeners()
         {
             Log.Info("PatchPage RemoveAllListeners");
-            Entrance.Event.Unsubscribe(PatchStateChangeEventArgs.EventId, OnPatchStateChange);
-            Entrance.Event.Unsubscribe(FindUpdateFilesEventArgs.EventId, OnFindUpdateFiles);
-            Entrance.Event.Unsubscribe(PackageVersionEventArgs.EventId, OnPackageVersion);
-            Entrance.Event.Unsubscribe(InitPackageFailedEventArgs.EventId, OnInitPackageFailed);
-            Entrance.Event.Unsubscribe(DownloadFilesFailedEventArgs.EventId, OnDownloadFilesFailed);
-            Entrance.Event.Unsubscribe(DownloadProgressEventArgs.EventID, OnDownloadProgress);
-            Entrance.Event.Unsubscribe(HotUpdateFinishEventArgs.EventID, OnHotUpdateFinish);
-            Entrance.Event.Unsubscribe(SpaceNotEnoughEventArgs.EventId, OnSpaceNotEnough);
+            Entrance.Event.Unsubscribe(PatchStateChangeEventArgs.s_EventId, OnPatchStateChange);
+            Entrance.Event.Unsubscribe(FindUpdateFilesEventArgs.s_EventId, OnFindUpdateFiles);
+            Entrance.Event.Unsubscribe(PackageVersionEventArgs.s_EventId, OnPackageVersion);
+            Entrance.Event.Unsubscribe(InitPackageFailedEventArgs.s_EventId, OnInitPackageFailed);
+            Entrance.Event.Unsubscribe(DownloadFilesFailedEventArgs.s_EventId, OnDownloadFilesFailed);
+            Entrance.Event.Unsubscribe(DownloadProgressEventArgs.s_EventID, OnDownloadProgress);
+            Entrance.Event.Unsubscribe(HotUpdateFinishEventArgs.s_EventID, OnHotUpdateFinish);
+            Entrance.Event.Unsubscribe(SpaceNotEnoughEventArgs.s_EventId, OnSpaceNotEnough);
         }
 
-        void OnPatchStateChange(object sender, GameEventArgs gameEventArgs)
+        void OnPatchStateChange(object sender, Event.BaseEventArgs gameEventArgs)
         {
             PatchStateChangeEventArgs args = gameEventArgs as PatchStateChangeEventArgs;
             Model.Info = args.Tips;
         }
 
-        void OnPackageVersion(object sender, GameEventArgs gameEventArgs)
+        void OnPackageVersion(object sender, Event.BaseEventArgs gameEventArgs)
         {
             PackageVersionEventArgs args = gameEventArgs as PackageVersionEventArgs;
             Model.Version = args.PackageVersion;
         }
 
-        void OnDownloadProgress(object sender, GameEventArgs gameEventArgs)
+        void OnDownloadProgress(object sender, Event.BaseEventArgs gameEventArgs)
         {
             DownloadProgressEventArgs args = gameEventArgs as DownloadProgressEventArgs;
             Model.TotalFileCount = args.TotalDownloadCount;
@@ -130,7 +130,7 @@ namespace AIOFramework.Runtime
             Model.Info = $"{Model.DownloadFileCount}/{Model.TotalFileCount}\t{currentSizeMB}MB/{totalSizeMB}MB";
         }
 
-        void OnFindUpdateFiles(object sender, GameEventArgs gameEventArgs)
+        void OnFindUpdateFiles(object sender, Event.BaseEventArgs gameEventArgs)
         {
             FindUpdateFilesEventArgs args = gameEventArgs as FindUpdateFilesEventArgs;
             float sizeMB = args.TotalSizeBytes / 1048576f;
@@ -150,7 +150,7 @@ namespace AIOFramework.Runtime
             OpenHotUpdateConfirmDialogCommand.Execute(null);
         }
 
-        void OnInitPackageFailed(object sender, GameEventArgs gameEventArgs)
+        void OnInitPackageFailed(object sender, Event.BaseEventArgs gameEventArgs)
         {
             InitPackageFailedCommand = new SimpleCommand(() =>
             {
@@ -167,7 +167,7 @@ namespace AIOFramework.Runtime
             OpenHotUpdateConfirmDialogCommand.Execute(null);
         }
 
-        void OnDownloadFilesFailed(object sender, GameEventArgs gameEventArgs)
+        void OnDownloadFilesFailed(object sender, Event.BaseEventArgs gameEventArgs)
         {
             DownloadFilesFailedEventArgs args = gameEventArgs as DownloadFilesFailedEventArgs;
             OpenHotUpdateFailedDialogCommand = new SimpleCommand(() =>
@@ -185,7 +185,7 @@ namespace AIOFramework.Runtime
             OpenHotUpdateFailedDialogCommand.Execute(null);
         }
 
-        void OnHotUpdateFinish(object sender, GameEventArgs gameEventArgs)
+        void OnHotUpdateFinish(object sender, Event.BaseEventArgs gameEventArgs)
         {
             HotUpdateFinishCommand = new SimpleCommand(() =>
             {
@@ -194,7 +194,7 @@ namespace AIOFramework.Runtime
             HotUpdateFinishCommand.Execute(null);
         }
 
-        void OnSpaceNotEnough(object sender, GameEventArgs gameEventArgs)
+        void OnSpaceNotEnough(object sender, Event.BaseEventArgs gameEventArgs)
         {
             SpaceNotEnoughEventArgs args = gameEventArgs as SpaceNotEnoughEventArgs;
             string needSpace = (args.NeedSpace / 1048576f).ToString("f1");
