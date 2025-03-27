@@ -136,7 +136,7 @@ MonoBehaviour:
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/ArtRaw/ShaderVariant
+      - CollectPath: Assets/ArtRaws/ShaderVariant
         CollectorGUID: 2da6f5e12ff78ed47bcddfbe9ed34cde
         CollectorType: 1
         AddressRuleName: AddressByFileName
